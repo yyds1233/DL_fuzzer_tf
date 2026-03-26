@@ -1,0 +1,114 @@
+{
+  "generator": {
+    "stage": "A-doc-rank-extract-llm-tf",
+    "version": "2026-03-23-tf-v3"
+  },
+  "api_name": "tf.raw_ops.Conv2D",
+  "rank_candidates": [
+    4
+  ],
+  "rank_any": false,
+  "rank_min": null,
+  "rank_max": 4,
+  "marker": "__RANK_FROM_DOC__",
+  "status": "assigned",
+  "param_rank_details": {
+    "input": {
+      "role": "primary",
+      "semantic_role": "data_tensor",
+      "fixed_ranks": [
+        4
+      ],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": true,
+      "description_summary": "Primary 4-D input tensor whose layout depends on the chosen data_format."
+    },
+    "filter": {
+      "role": "aux",
+      "semantic_role": "weight_tensor",
+      "fixed_ranks": [
+        4
+      ],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "4-D convolution kernel tensor shaped [filter_height, filter_width, in_channels, out_channels]."
+    },
+    "strides": {
+      "role": "attr",
+      "semantic_role": "fixed_arity_list",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Length-4 list of stride values for the sliding window over each dimension."
+    },
+    "padding": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Specifies the padding algorithm, such as SAME, VALID, or EXPLICIT."
+    },
+    "use_cudnn_on_gpu": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Boolean flag indicating whether to use cuDNN when running on GPU."
+    },
+    "explicit_paddings": {
+      "role": "attr",
+      "semantic_role": "fixed_arity_list",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "List specifying the explicit padding values before and after each dimension when padding='EXPLICIT'."
+    },
+    "data_format": {
+      "role": "attr",
+      "semantic_role": "layout_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "String indicating the memory layout of the input and output tensors (e.g., NHWC or NCHW)."
+    },
+    "dilations": {
+      "role": "attr",
+      "semantic_role": "fixed_arity_list",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Length-4 list of dilation factors for the convolution dimensions, with batch and depth dilations forced to 1."
+    },
+    "name": {
+      "role": "attr",
+      "semantic_role": "meta",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Optional operation name."
+    },
+    "T": {
+      "role": "attr",
+      "semantic_role": "dtype_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Type attribute constraining input and filter tensors to share the same dtype."
+    }
+  },
+  "llm_reasoning": "Documentation specifies the input tensor is 4-D, so the operation’s primary data tensor has fixed rank 4.",
+  "extraction_method": "llm",
+  "llm_raw_response": "{\n  \"api_name\": \"tf.raw_ops.Conv2D\",\n  \"primary_rank\": {\n    \"fixed_ranks\": [4],\n    \"rank_any\": false,\n    \"rank_min\": null,\n    \"rank_max\": null\n  },\n  \"params\": {\n    \"input\": {\n      \"semantic_role\": \"data_tensor\",\n      \"rank\": 4,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Primary 4-D input tensor whose layout depends on the chosen data_format.\"\n    },\n    \"filter\": {\n      \"semantic_role\": \"weight_tensor\",\n      \"rank\": 4,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"4-D convolution kernel tensor shaped [filter_height, filter_width, in_channels, out_channels].\"\n    },\n    \"strides\": {\n      \"semantic_role\": \"fixed_arity_list\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Length-4 list of stride values for the sliding window over each dimension.\"\n    },\n    \"padding\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Specifies the padding algorithm, such as SAME, VALID, or EXPLICIT.\"\n    },\n    \"use_cudnn_on_gpu\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Boolean flag indicating whether to use cuDNN when running on GPU.\"\n    },\n    \"explicit_paddings\": {\n      \"semantic_role\": \"fixed_arity_list\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"List specifying the explicit padding values before and after each dimension when padding='EXPLICIT'.\"\n    },\n    \"data_format\": {\n      \"semantic_role\": \"layout_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"String indicating the memory layout of the input and output tensors (e.g., NHWC or NCHW).\"\n    },\n    \"dilations\": {\n      \"semantic_role\": \"fixed_arity_list\",\n      \"rank\": null,\n      \"rank_any\": false,\n"
+}

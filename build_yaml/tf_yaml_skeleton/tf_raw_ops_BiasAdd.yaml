@@ -1,0 +1,152 @@
+generator:
+  stage: B-json-to-yaml-skeleton-tf
+  version: 2026-03-23-tf-v2
+api_name: tf.raw_ops.BiasAdd
+category: BiasAdd
+primary_param: value
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: true
+  rank_min: null
+  rank_max: null
+tf:
+  op_name: BiasAdd
+  raw_api_name: tf.raw_ops.BiasAdd
+  schema_str: null
+  is_stateful: false
+  allows_uninitialized_input: false
+  input_meta:
+  - name: value
+    description: null
+    type_enum: 0
+    type_name: null
+    type_attr: T
+    number_attr: null
+    type_list_attr: null
+    is_ref: false
+  - name: bias
+    description: null
+    type_enum: 0
+    type_name: null
+    type_attr: T
+    number_attr: null
+    type_list_attr: null
+    is_ref: false
+  attr_meta:
+  - name: T
+    type: type
+    description: null
+    has_default: false
+    default_value: null
+    has_minimum: false
+    minimum: null
+    has_allowed_values: true
+    allowed_values:
+      kind: list
+      type:
+      - float32
+      - float64
+      - int32
+      - uint8
+      - int16
+      - int8
+      - complex64
+      - int64
+      - qint8
+      - quint8
+      - qint32
+      - bfloat16
+      - qint16
+      - quint16
+      - uint16
+      - complex128
+      - float16
+      - uint32
+      - uint64
+  - name: data_format
+    type: string
+    description: null
+    has_default: true
+    default_value: NHWC
+    has_minimum: false
+    minimum: null
+    has_allowed_values: true
+    allowed_values:
+      kind: list
+      s:
+      - NHWC
+      - NCHW
+  output_meta:
+  - name: output
+    description: null
+    type_enum: 0
+    type_name: null
+    type_attr: T
+    number_attr: null
+    type_list_attr: null
+    is_ref: false
+shape_vars: {}
+params:
+  value:
+    origin: input
+    kind: tensor
+    dtype_from_attr: T
+    shape_spec:
+    - TODO_SHAPE
+    role: primary
+  bias:
+    origin: input
+    kind: tensor
+    dtype_from_attr: T
+    shape_spec:
+    - TODO_SHAPE
+    role: aux
+  data_format:
+    origin: attr
+    kind: enum
+    values:
+    - NHWC
+    - NCHW
+    default: NHWC
+    role: attr
+constraints: []
+_param_rank_details:
+  value:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: true
+    description_summary: Input tensor to which the bias vector will be added, and
+      it may have any number of dimensions.
+  bias:
+    role: aux
+    semantic_role: weight_tensor
+    fixed_ranks:
+    - 1
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: 1-D bias vector whose length matches the last dimension of
+      the value tensor for broadcasting addition.
+  data_format:
+    role: attr
+    semantic_role: layout_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Specifies the layout order of dimensions in value and determines
+      which axis the bias is added to.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional operation name.

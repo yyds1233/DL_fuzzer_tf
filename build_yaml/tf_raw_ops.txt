@@ -1,0 +1,5 @@
+tf.raw_ops.Conv2D
+tf.raw_ops.BiasAdd
+tf.raw_ops.MatMul
+tf.raw_ops.Transpose
+tf.raw_ops.Reshape

@@ -1,0 +1,7 @@
+{
+  "tf.raw_ops.Conv2D": ["/root/build_yaml/api_txt/conv2d.txt"],
+  "tf.raw_ops.BiasAdd": ["/root/build_yaml/api_txt/bias_add.txt"],
+  "tf.raw_ops.MatMul": ["/root/build_yaml/api_txt/matmul.txt"],
+  "tf.raw_ops.Transpose": ["/root/build_yaml/api_txt/transpose.txt"],
+  "tf.raw_ops.Reshape": ["/root/build_yaml/api_txt/reshape.txt"]
+}

@@ -1,0 +1,96 @@
+{
+  "generator": {
+    "stage": "A-doc-rank-extract-llm-tf",
+    "version": "2026-03-23-tf-v3"
+  },
+  "api_name": "tf.raw_ops.MatMul",
+  "rank_candidates": [
+    2
+  ],
+  "rank_any": false,
+  "rank_min": null,
+  "rank_max": 2,
+  "marker": "__RANK_FROM_DOC__",
+  "status": "assigned",
+  "param_rank_details": {
+    "a": {
+      "role": "primary",
+      "semantic_role": "data_tensor",
+      "fixed_ranks": [
+        2
+      ],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": true,
+      "description_summary": "Left matrix input tensor whose inner dimension participates in multiplication."
+    },
+    "b": {
+      "role": "primary",
+      "semantic_role": "data_tensor",
+      "fixed_ranks": [
+        2
+      ],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": true,
+      "description_summary": "Right matrix input tensor whose outer dimension must align with the inner dimension of a."
+    },
+    "transpose_a": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Boolean flag indicating whether to transpose tensor a before multiplication."
+    },
+    "transpose_b": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Boolean flag indicating whether to transpose tensor b before multiplication."
+    },
+    "grad_a": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Boolean attribute controlling gradient-related behavior for the a input."
+    },
+    "grad_b": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Boolean attribute controlling gradient-related behavior for the b input."
+    },
+    "T": {
+      "role": "attr",
+      "semantic_role": "dtype_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Type attribute specifying the allowed numeric element type for both inputs and the output."
+    },
+    "name": {
+      "role": "attr",
+      "semantic_role": "meta",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Optional operation name."
+    }
+  },
+  "llm_reasoning": "The documentation explicitly states that both inputs must be two-dimensional matrices, so the operation’s primary tensors are fixed-rank 2.",
+  "extraction_method": "llm",
+  "llm_raw_response": "{\n  \"api_name\": \"tf.raw_ops.MatMul\",\n  \"primary_rank\": {\n    \"fixed_ranks\": [2],\n    \"rank_any\": false,\n    \"rank_min\": null,\n    \"rank_max\": null\n  },\n  \"params\": {\n    \"a\": {\n      \"semantic_role\": \"data_tensor\",\n      \"rank\": 2,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Left matrix input tensor whose inner dimension participates in multiplication.\"\n    },\n    \"b\": {\n      \"semantic_role\": \"data_tensor\",\n      \"rank\": 2,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Right matrix input tensor whose outer dimension must align with the inner dimension of a.\"\n    },\n    \"transpose_a\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Boolean flag indicating whether to transpose tensor a before multiplication.\"\n    },\n    \"transpose_b\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Boolean flag indicating whether to transpose tensor b before multiplication.\"\n    },\n    \"grad_a\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Boolean attribute controlling gradient-related behavior for the a input.\"\n    },\n    \"grad_b\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Boolean attribute controlling gradient-related behavior for the b input.\"\n    },\n    \"T\": {\n      \"semantic_role\": \"dtype_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Type attribute specifying the allowed numeric element type for both inputs and the output.\"\n    },\n    \"name\": {\n      \"semantic_role\": \"meta\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Optional operat"
+}
