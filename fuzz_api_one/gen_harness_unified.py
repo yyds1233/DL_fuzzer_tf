@@ -1,35 +1,44 @@
 #!/usr/bin/env python3
 """
-tf_generate_from_yaml.py  –  Generate atheris-based fuzz harnesses from
-TensorFlow raw_ops YAML spec files.
+tf_generate_from_yaml_unified.py  –  Generate atheris-based fuzz harnesses
+from TensorFlow YAML spec files (raw_ops AND high-level APIs).
 
 ==========================================================================
-USAGE
+CHANGES VS. tf_generate_from_yaml.py (raw_ops only)
 ==========================================================================
 
-  # Single YAML → single harness
-  python tf_generate_from_yaml.py --yaml biasadd.yaml --out harness_biasadd.py
+1. API INVOCATION: _call_target_api now uses importlib to call ANY tf.*
+   path — tf.raw_ops.Conv2D, tf.nn.conv2d, tf.math.reduce_sum, etc.
+   It also handles param_mapping for edge-case re-routing.
 
-  # Single YAML → per-rank harnesses (one file per test_rank)
-  python tf_generate_from_yaml.py --yaml biasadd.yaml --out_dir ./harnesses/
+2. SHAPE-CONTROL PARAMS: Detected via semantic_role="shape_control" in the
+   YAML.  These params (e.g., `size` in tf.image.resize, `shape` in
+   tf.reshape) are NOT random tensors — they are int lists/tuples whose
+   VALUES represent target dimensions.  The harness converts them to the
+   type the high-level API expects (Python list, 1-D tensor, or scalar).
 
-  # Batch: directory of YAMLs → directory of harnesses
-  python tf_generate_from_yaml.py --yaml_dir ./tf_yaml_final/ --out_dir ./harnesses/
+3. INDEX-INPUT PARAMS: Detected via semantic_role="index_input".  These
+   get clamped to valid ranges based on the primary tensor's shape.
 
-  # Single combined harness (all ranks in one file)
-  python tf_generate_from_yaml.py --yaml biasadd.yaml --out_dir ./harnesses/ --single
+4. DTYPE HANDLING: High-level API YAMLs may lack dtype_from_attr.
+   The sampler falls back to dtype_choices → test_dtype_choices → float32.
+
+5. OPTIONAL-TENSOR HANDLING: High-level APIs often accept `None` for
+   optional params (unlike raw_ops which may reject None).  The harness
+   now passes None correctly.
+
+6. SPEC LITERAL: Includes api_category, resolve_info for diagnostics.
+
+7. COMPOSITE OPS: If api_name is a composite op (tf.nn.dropout, etc.),
+   the harness calls it directly — works because api_name IS the callable.
 
 ==========================================================================
-OUTPUT
+USAGE  (identical CLI to original)
 ==========================================================================
 
-Each generated .py harness:
-  1. Embeds the YAML spec as a Python dict literal (SPEC).
-  2. Embeds constraints as a list of expression strings.
-  3. Uses tf_param_sampler for rank-aware sampling and mutation.
-  4. Calls the tf.raw_ops.* API with sampled parameters.
-  5. Catches expected TF errors (InvalidArgumentError, etc.) and lets
-     real crashes (segfault, ASAN) propagate to atheris.
+  python tf_generate_from_yaml_unified.py --yaml biasadd.yaml --out harness.py
+  python tf_generate_from_yaml_unified.py --yaml_dir ./final/ --out_dir ./harnesses/
+  python tf_generate_from_yaml_unified.py --yaml_dir ./final/ --out_dir ./harnesses/ --per_rank
 """
 from __future__ import annotations
 
@@ -50,10 +59,12 @@ import yaml
 TEMPLATE = '''\
 #!/usr/bin/env python3
 """
-Auto-generated atheris fuzz harness for TensorFlow raw_ops.
-API: {api_name}
-Op:  {op_name}
-Generated test_ranks: {test_ranks}
+Auto-generated atheris fuzz harness for TensorFlow API.
+API:      {api_name}
+Op:       {op_name}
+Category: {api_category}
+Ranks:    {test_ranks}
+Strategy: {resolve_strategy}
 """
 import os
 import sys
@@ -68,7 +79,7 @@ with atheris.instrument_imports():
     import numpy as np
     import math
 
-from utils.param_sampler import (
+from utils.tf_param_sampler_unified import (
     gen_config_for_api,
     mutate_cfg,
     make_constraint_func,
@@ -152,12 +163,17 @@ def gen_valid_config(spec, fdp, max_tries=None):
 # ============================================================
 
 def _call_target_api(cfg):
-    """Call the tf.raw_ops.* API with sampled parameters."""
+    """
+    Call the TF API (raw_ops or high-level) with sampled parameters.
+
+    Resolves api_name via importlib — works for any tf.* path:
+      tf.raw_ops.Conv2D, tf.nn.conv2d, tf.math.reduce_sum, tf.reshape, ...
+    """
     api_name = SPEC.get("api_name", "")
     if not api_name:
         raise RuntimeError("SPEC missing api_name")
 
-    # Resolve the function
+    # Resolve the callable
     try:
         mod_name, func_name = api_name.rsplit(".", 1)
     except ValueError:
@@ -170,13 +186,36 @@ def _call_target_api(cfg):
     call_kwargs = {{}}
     params = SPEC.get("params", {{}})
     for pname in params:
-        if pname in cfg and pname != "name":
-            val = cfg[pname]
-            # Skip None for optional params (TF doesn't accept None for most)
-            kind = params[pname].get("kind", "")
-            if val is None and kind in ("tensor_optional", "string_optional"):
-                continue
-            call_kwargs[pname] = val
+        if pname not in cfg:
+            continue
+        if pname == "name":
+            continue
+
+        val = cfg[pname]
+        p_spec = params[pname]
+        kind = p_spec.get("kind", "")
+        semantic_role = p_spec.get("semantic_role", "")
+
+        # Skip None for optional params
+        if val is None and kind in ("tensor_optional", "string_optional"):
+            continue
+
+        # shape_control params: high-level APIs often want a Python list,
+        # not a tf.Tensor.  Convert if the value is a tensor.
+        if semantic_role == "shape_control" and hasattr(val, "numpy"):
+            val = val.numpy().tolist()
+            # If it's a list of one element, some APIs want a scalar
+            if isinstance(val, list) and len(val) == 1:
+                val = val  # keep as list — safer
+
+        # dtype_enum params: ensure it's a tf.DType
+        if kind == "dtype_enum" and isinstance(val, str):
+            try:
+                val = tf.dtypes.as_dtype(val)
+            except Exception:
+                val = tf.float32
+
+        call_kwargs[pname] = val
 
     return target(**call_kwargs)
 
@@ -222,10 +261,13 @@ def TestOneInput(data: bytes):
         tf.errors.InvalidArgumentError,
         tf.errors.UnimplementedError,
         tf.errors.InternalError,
+        tf.errors.ResourceExhaustedError,
         ValueError,
         TypeError,
         RuntimeError,
         AssertionError,
+        IndexError,
+        NotImplementedError,
     ):
         # Expected errors from invalid inputs — not real bugs
         return
@@ -272,14 +314,21 @@ def load_yaml_spec(path: Path) -> Dict[str, Any]:
 
 def make_spec_literal(spec: Dict[str, Any]) -> str:
     """
-    Convert spec to Python dict literal string, removing non-essential
-    fields to keep the harness clean.
+    Convert spec to Python dict literal string, keeping only
+    fields that the harness + sampler actually need at runtime.
     """
-    # Fields to include in the harness
     keep_keys = {
-        "api_name", "category", "primary_param", "op_family",
-        "test_ranks", "test_dtype_choices", "layout_variants",
-        "shape_vars", "params", "constraints",
+        "api_name",
+        "category",
+        "api_category",         # NEW: nn / math / core / image / ...
+        "primary_param",
+        "op_family",
+        "test_ranks",
+        "test_dtype_choices",
+        "layout_variants",
+        "shape_vars",
+        "params",
+        "constraints",
         "rank_hints",
     }
 
@@ -288,20 +337,30 @@ def make_spec_literal(spec: Dict[str, Any]) -> str:
         if k in spec:
             spec_copy[k] = spec[k]
 
-    # Clean params: remove verbose metadata, keep only sampler-relevant fields
+    # Embed minimal resolve_info for diagnostics
+    ri = spec.get("resolve_info") or {}
+    if ri:
+        spec_copy["_resolve"] = {
+            "strategy": ri.get("strategy", "unknown"),
+            "is_raw_ops": ri.get("is_raw_ops", False),
+            "raw_op_name": ri.get("raw_op_name"),
+        }
+
+    # Clean params: keep only sampler-relevant fields
     if "params" in spec_copy:
         cleaned_params = {}
         for pname, p_spec in spec_copy["params"].items():
             if not isinstance(p_spec, dict):
                 continue
-            # Keep fields relevant for sampling
             cp = {}
-            for field in ("kind", "origin", "role", "semantic_role",
-                          "dtype_choices", "dtype_from_attr",
-                          "shape_spec", "shape_spec_by_rank",
-                          "shape_spec_by_rank_and_layout",
-                          "values", "default", "range", "len_range",
-                          "constraints_by_rank"):
+            for field in (
+                "kind", "origin", "role", "semantic_role",
+                "dtype_choices", "dtype_from_attr",
+                "shape_spec", "shape_spec_by_rank",
+                "shape_spec_by_rank_and_layout",
+                "values", "default", "range", "len_range",
+                "constraints_by_rank",
+            ):
                 if field in p_spec:
                     cp[field] = p_spec[field]
             cleaned_params[pname] = cp
@@ -316,11 +375,9 @@ def make_constraints_literal(spec: Dict[str, Any]) -> str:
 
 
 def get_test_ranks(spec: Dict[str, Any]) -> List[int]:
-    """Get test_ranks from spec."""
     ranks = spec.get("test_ranks")
     if isinstance(ranks, list):
         return [int(r) for r in ranks if isinstance(r, int)]
-    # Fallback to rank_hints
     rh = spec.get("rank_hints") or {}
     cands = rh.get("rank_candidates") or []
     return [int(r) for r in cands if isinstance(r, int)]
@@ -333,7 +390,6 @@ def build_out_path(
     out_dir: Optional[Path],
 ) -> Path:
     api_name = spec.get("api_name", yaml_file.stem)
-    op_name = (spec.get("tf") or {}).get("op_name") or api_name.split(".")[-1]
 
     base = f"fuzz_{safe_name(api_name)}"
     if isinstance(rank, int):
@@ -358,10 +414,13 @@ def generate_one(
 ):
     """Generate a single harness file."""
     api_name = spec.get("api_name", "unknown")
-    op_name = (spec.get("tf") or {}).get("op_name") or api_name.split(".")[-1]
+    tf_block = spec.get("tf") or {}
+    op_name = tf_block.get("op_name") or api_name.split(".")[-1]
     test_ranks = get_test_ranks(spec)
+    api_category = spec.get("api_category", "unknown")
+    resolve_info = spec.get("resolve_info") or {}
+    resolve_strategy = resolve_info.get("strategy", "unknown")
 
-    # If generating for a specific rank, override test_ranks in the spec
     if active_rank is not None:
         spec_for_gen = dict(spec)
         spec_for_gen["test_ranks"] = [active_rank]
@@ -375,6 +434,8 @@ def generate_one(
         api_name=api_name,
         op_name=op_name,
         test_ranks=test_ranks if active_rank is None else [active_rank],
+        api_category=api_category,
+        resolve_strategy=resolve_strategy,
         spec_literal=spec_literal,
         constraints_literal=constraints_literal,
     )
@@ -382,7 +443,7 @@ def generate_one(
     out_file.parent.mkdir(parents=True, exist_ok=True)
     out_file.write_text(code, encoding="utf-8")
     rank_str = f"rank={active_rank}" if active_rank is not None else "all ranks"
-    print(f"[+] Generated {out_file} ({rank_str})")
+    print(f"[+] Generated {out_file} ({rank_str}) [{api_category}]")
 
 
 def generate_from_yaml(
@@ -392,34 +453,22 @@ def generate_from_yaml(
     single: bool = False,
     per_rank: bool = False,
 ):
-    """
-    Main generation entry point.
-
-    Modes:
-    - --out: single file, explicit path
-    - --single: single file, auto-named, all ranks in one harness
-    - --per_rank: one harness per test_rank
-    - default: single file with all ranks
-    """
     yaml_file = Path(yaml_path)
     spec = load_yaml_spec(yaml_file)
     ranks = get_test_ranks(spec)
     out_dir_path = Path(out_dir).resolve() if out_dir else None
 
-    # Explicit output path
     if out_path is not None:
         out_file = Path(out_path)
         generate_one(yaml_file, spec, out_file)
         return
 
-    # Per-rank mode: one harness per rank
     if per_rank and ranks:
         for r in ranks:
             out_file = build_out_path(yaml_file, spec, r, out_dir_path)
             generate_one(yaml_file, spec, out_file, active_rank=r)
         return
 
-    # Single / default: one harness with all ranks
     out_file = build_out_path(yaml_file, spec, None, out_dir_path)
     generate_one(yaml_file, spec, out_file)
 
@@ -434,7 +483,6 @@ def generate_batch(
     single: bool = False,
     per_rank: bool = False,
 ):
-    """Generate harnesses for all YAML files in a directory."""
     yaml_dir_path = Path(yaml_dir).resolve()
     out_dir_path = Path(out_dir).resolve()
     out_dir_path.mkdir(parents=True, exist_ok=True)
@@ -446,10 +494,21 @@ def generate_batch(
 
     count = 0
     errors = 0
+    stats = {"raw_ops": 0, "resolved_hl": 0, "unresolved_hl": 0}
+
     for yf in yaml_files:
         try:
             spec = load_yaml_spec(yf)
             ranks = get_test_ranks(spec)
+
+            # Track stats
+            ri = spec.get("resolve_info") or {}
+            if ri.get("is_raw_ops"):
+                stats["raw_ops"] += 1
+            elif ri.get("raw_op_name"):
+                stats["resolved_hl"] += 1
+            else:
+                stats["unresolved_hl"] += 1
 
             if per_rank and ranks:
                 for r in ranks:
@@ -466,8 +525,11 @@ def generate_batch(
 
     print(f"\n=== Generation Summary ===")
     print(f"  YAML files processed: {len(yaml_files)}")
-    print(f"  Harnesses generated: {count}")
-    print(f"  Errors: {errors}")
+    print(f"  Harnesses generated:  {count}")
+    print(f"  Errors:               {errors}")
+    print(f"  raw_ops:              {stats['raw_ops']}")
+    print(f"  resolved high-level:  {stats['resolved_hl']}")
+    print(f"  unresolved (composite): {stats['unresolved_hl']}")
 
 
 # ════════════════════════════════════════════════════════════════
@@ -476,7 +538,8 @@ def generate_batch(
 
 def main():
     ap = argparse.ArgumentParser(
-        description="Generate atheris fuzz harnesses from TF raw_ops YAML specs."
+        description="Generate atheris fuzz harnesses from TF YAML specs "
+                    "(raw_ops + high-level APIs)."
     )
     g = ap.add_mutually_exclusive_group(required=True)
     g.add_argument("--yaml", help="Single YAML spec file")

@@ -1,0 +1,72 @@
+{
+  "generator": {
+    "stage": "A-doc-rank-extract-llm-tf",
+    "version": "2026-03-23-tf-v3"
+  },
+  "api_name": "tf.gather",
+  "rank_candidates": [],
+  "rank_any": true,
+  "rank_min": 1,
+  "rank_max": null,
+  "marker": "__RANK_FROM_DOC__",
+  "status": "assigned",
+  "param_rank_details": {
+    "params": {
+      "role": "primary",
+      "semantic_role": "data_tensor",
+      "fixed_ranks": [],
+      "rank_min": 1,
+      "rank_any": true,
+      "included_in_api_rank": true,
+      "description_summary": "Tensor to gather values from, must have rank at least axis+1."
+    },
+    "indices": {
+      "role": "attr",
+      "semantic_role": "index_input",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": true,
+      "included_in_api_rank": false,
+      "description_summary": "Integer tensor of indices specifying which slices along the given axis to gather."
+    },
+    "axis": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Scalar integer axis indicating which dimension of params to gather from."
+    },
+    "validate_indices": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Deprecated boolean flag that previously controlled index validation."
+    },
+    "batch_dims": {
+      "role": "attr",
+      "semantic_role": "scalar_attr",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Integer specifying how many leading dimensions of params and indices are treated as batch dimensions."
+    },
+    "name": {
+      "role": "attr",
+      "semantic_role": "meta",
+      "fixed_ranks": [],
+      "rank_min": null,
+      "rank_any": false,
+      "included_in_api_rank": false,
+      "description_summary": "Optional name for the operation."
+    }
+  },
+  "llm_reasoning": "Documentation states that the params tensor can have any rank >= 1, so the primary tensor accepts arbitrary rank with a minimum of 1.",
+  "extraction_method": "llm",
+  "llm_raw_response": "{\n  \"api_name\": \"tf.gather\",\n  \"primary_rank\": {\n    \"fixed_ranks\": [],\n    \"rank_any\": true,\n    \"rank_min\": 1,\n    \"rank_max\": null\n  },\n  \"params\": {\n    \"params\": {\n      \"semantic_role\": \"data_tensor\",\n      \"rank\": null,\n      \"rank_any\": true,\n      \"rank_min\": 1,\n      \"description_summary\": \"Tensor to gather values from, must have rank at least axis+1.\"\n    },\n    \"indices\": {\n      \"semantic_role\": \"index_input\",\n      \"rank\": null,\n      \"rank_any\": true,\n      \"rank_min\": null,\n      \"description_summary\": \"Integer tensor of indices specifying which slices along the given axis to gather.\"\n    },\n    \"axis\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Scalar integer axis indicating which dimension of params to gather from.\"\n    },\n    \"validate_indices\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Deprecated boolean flag that previously controlled index validation.\"\n    },\n    \"batch_dims\": {\n      \"semantic_role\": \"scalar_attr\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Integer specifying how many leading dimensions of params and indices are treated as batch dimensions.\"\n    },\n    \"name\": {\n      \"semantic_role\": \"meta\",\n      \"rank\": null,\n      \"rank_any\": false,\n      \"rank_min\": null,\n      \"description_summary\": \"Optional name for the operation.\"\n    }\n  },\n  \"reasoning\": \"Documentation states that the params tensor can have any rank >= 1, so the primary tensor accepts arbitrary rank with a minimum of 1.\"\n}"
+}

@@ -1,0 +1,16 @@
+{
+  "model": "gpt-5-codex",
+  "doc_txt": "/root/build_yaml/api_txt/nn_conv2d.txt",
+  "yaml_in": "/root/high_level/06_patch/tf.nn.conv2d.yaml",
+  "yaml_out": "/root/high_level/07_constrain/tf.nn.conv2d.final.yaml",
+  "confidence": 0.52,
+  "constraints_added": 4,
+  "per_rank_constraints_added": {},
+  "changes": [
+    "Added rank and channel-alignment requirements between input and filters depending on data format.",
+    "Constrained stride and dilation vectors to valid Conv2D patterns for each data format."
+  ],
+  "warnings": [],
+  "validation_errors": [],
+  "raw_model_output_snippet": "{\"constraints_append\":[\"input.ndim == 4\",\"(data_format == 'NHWC' and filters.shape[2] == input.shape[3]) or (data_format == 'NCHW' and filters.shape[2] == input.shape[1])\",\"(data_format == 'NHWC' and strides[0] == 1 and strides[3] == 1) or (data_format == 'NCHW' and strides[0] == 1 and strides[1] == 1)\",\"(data_format == 'NHWC' and dilations[0] == 1 and dilations[3] == 1) or (data_format == 'NCHW' and dilations[0] == 1 and dilations[1] == 1)\"],\"constraints_remove\":[],\"per_rank_constraints\":{},\"changes\":[\"Added rank and channel-alignment requirements between input and filters depending on data format.\",\"Constrained stride and dilation vectors to valid Conv2D patterns for each data format.\"],\"warnings\":[],\"confidence\":0.52}"
+}

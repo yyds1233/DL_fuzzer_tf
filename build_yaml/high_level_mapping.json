@@ -1,0 +1,4 @@
+{
+  "tf.nn.conv2d": ["/root/build_yaml/api_txt/nn_conv2d.txt"],
+  "tf.gather": ["/root/build_yaml/api_txt/gather.txt"]
+}

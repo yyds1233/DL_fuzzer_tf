@@ -1,0 +1,226 @@
+generator:
+  stage: B-enrich-unified-tf
+  version: 2026-03-23-tf-v3
+api_name: tf.nn.conv2d
+category: Conv2D
+api_category: nn
+api_module: tf.nn
+primary_param: input
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: false
+  rank_min: 4
+  rank_max: null
+tf:
+  op_name: Conv2D
+  raw_api_name: tf.raw_ops.Conv2D
+  high_level_api_name: tf.nn.conv2d
+  schema_str: null
+  is_stateful: false
+  allows_uninitialized_input: false
+  input_meta:
+  - name: input
+    description: null
+    type_enum: 0
+    type_name: null
+    type_attr: T
+    number_attr: null
+    type_list_attr: null
+    is_ref: false
+  - name: filter
+    description: null
+    type_enum: 0
+    type_name: null
+    type_attr: T
+    number_attr: null
+    type_list_attr: null
+    is_ref: false
+  attr_meta:
+  - name: T
+    type: type
+    description: null
+    has_default: false
+    default_value: null
+    has_minimum: false
+    minimum: null
+    has_allowed_values: true
+    allowed_values:
+      kind: list
+      type:
+      - float16
+      - bfloat16
+      - float32
+      - float64
+      - int32
+  - name: strides
+    type: list(int)
+    description: null
+    has_default: false
+    default_value: null
+    has_minimum: false
+    minimum: null
+    has_allowed_values: false
+    allowed_values: null
+  - name: use_cudnn_on_gpu
+    type: bool
+    description: null
+    has_default: true
+    default_value: true
+    has_minimum: false
+    minimum: null
+    has_allowed_values: false
+    allowed_values: null
+  - name: padding
+    type: string
+    description: null
+    has_default: false
+    default_value: null
+    has_minimum: false
+    minimum: null
+    has_allowed_values: true
+    allowed_values:
+      kind: list
+      s:
+      - SAME
+      - VALID
+      - EXPLICIT
+  - name: explicit_paddings
+    type: list(int)
+    description: null
+    has_default: true
+    default_value:
+      kind: list
+    has_minimum: false
+    minimum: null
+    has_allowed_values: false
+    allowed_values: null
+  - name: data_format
+    type: string
+    description: null
+    has_default: true
+    default_value: NHWC
+    has_minimum: false
+    minimum: null
+    has_allowed_values: true
+    allowed_values:
+      kind: list
+      s:
+      - NHWC
+      - NCHW
+  - name: dilations
+    type: list(int)
+    description: null
+    has_default: true
+    default_value:
+      kind: list
+      i: &id001
+      - 1
+      - 1
+      - 1
+      - 1
+    has_minimum: false
+    minimum: null
+    has_allowed_values: false
+    allowed_values: null
+  output_meta:
+  - name: output
+    description: null
+    type_enum: 0
+    type_name: null
+    type_attr: T
+    number_attr: null
+    type_list_attr: null
+    is_ref: false
+  param_mapping:
+    filters: filter
+  inverse_mapping:
+    filter: filters
+resolve_info:
+  strategy: static_mapping
+  confidence: 0.95
+  is_raw_ops: false
+  raw_op_name: Conv2D
+  raw_op_names:
+  - Conv2D
+shape_vars: {}
+params:
+  input:
+    origin: input
+    kind: tensor
+    dtype_from_attr: T
+    shape_spec:
+    - TODO_SHAPE
+    role: primary
+    semantic_role: data_tensor
+  filters:
+    origin: input
+    kind: tensor
+    dtype_from_attr: T
+    shape_spec:
+    - TODO_SHAPE
+    role: aux
+    semantic_role: weight_tensor
+    _expected_rank: 4
+  strides:
+    origin: attr
+    kind: int_list
+    len_range:
+    - 4
+    - 4
+    range:
+    - 1
+    - 4
+    role: attr
+    semantic_role: fixed_arity_list
+  use_cudnn_on_gpu:
+    origin: attr
+    kind: bool
+    default: true
+    role: attr
+    semantic_role: scalar_attr
+  padding:
+    origin: attr
+    kind: enum
+    values:
+    - SAME
+    - VALID
+    - EXPLICIT
+    role: attr
+    semantic_role: scalar_attr
+  explicit_paddings:
+    origin: attr
+    kind: int_list
+    len_range:
+    - 8
+    - 8
+    range:
+    - 0
+    - 4
+    role: attr
+    semantic_role: fixed_arity_list
+  data_format:
+    origin: attr
+    kind: enum
+    values:
+    - NHWC
+    - NCHW
+    default: NHWC
+    role: attr
+    semantic_role: layout_attr
+  dilations:
+    origin: attr
+    kind: int_list
+    len_range:
+    - 4
+    - 4
+    range:
+    - 1
+    - 4
+    role: attr
+    default: *id001
+    semantic_role: scalar_attr
+constraints: []
+op_family: conv2d

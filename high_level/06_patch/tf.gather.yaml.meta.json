@@ -1,0 +1,100 @@
+{
+  "model": "gpt-5-codex",
+  "doc_txt": "/root/build_yaml/api_txt/gather.txt",
+  "yaml_in": "/root/high_level/05_enriched/tf_gather.yaml",
+  "yaml_out": "/root/high_level/06_patch/tf.gather.yaml",
+  "rank_plan": {
+    "test_ranks": [
+      1,
+      2,
+      3
+    ],
+    "test_dtype_choices": [
+      "int32",
+      "int64",
+      "int16"
+    ],
+    "layouts": {},
+    "variant_plan": [
+      {
+        "rank": 1,
+        "layout": null
+      },
+      {
+        "rank": 2,
+        "layout": null
+      },
+      {
+        "rank": 3,
+        "layout": null
+      }
+    ],
+    "tensor_params_needing_shape": [
+      {
+        "name": "params",
+        "role": "primary",
+        "semantic_role": "data_tensor"
+      },
+      {
+        "name": "indices",
+        "role": "aux",
+        "semantic_role": "index_input"
+      },
+      {
+        "name": "axis",
+        "role": "attr",
+        "semantic_role": "scalar_attr"
+      }
+    ],
+    "primary_param": "params",
+    "op_family": "gather"
+  },
+  "rank_assignment": {
+    "primary_param": "params",
+    "test_ranks": [
+      1,
+      2,
+      3
+    ],
+    "confidence": 0.69,
+    "notes": [
+      "tf.gather accepts params of any rank >=1; testing ranks 1-3 captures scalar and multi-dimensional usage."
+    ]
+  },
+  "num_variants": 3,
+  "summary": {
+    "primary_param": "params",
+    "test_ranks": [
+      1,
+      2,
+      3
+    ],
+    "test_dtype_choices": [
+      "float32",
+      "float64",
+      "int32"
+    ],
+    "shape_spec_by_rank_keys": [
+      "1",
+      "2",
+      "3"
+    ],
+    "layout_variants_present": false,
+    "union_shape_vars": [
+      "I1",
+      "J1",
+      "J2",
+      "K1",
+      "P1",
+      "P2",
+      "P3"
+    ],
+    "remaining_todo_shape": [
+      "axis"
+    ],
+    "num_variants_received": 3
+  },
+  "warnings": [],
+  "validation_errors": [],
+  "raw_model_output_snippet": "{\n  \"rank_assignment\": {\n    \"primary_param\": \"params\",\n    \"test_ranks\": [\n      1,\n      2,\n      3\n    ],\n    \"confidence\": 0.69,\n    \"notes\": [\n      \"tf.gather accepts params of any rank >=1; testing ranks 1-3 captures scalar and multi-dimensional usage.\"\n    ]\n  },\n  \"test_dtype_choices\": [\n    \"float32\",\n    \"float64\",\n    \"int32\"\n  ],\n  \"layout_variants\": {},\n  \"variants\": [\n    {\n      \"rank\": 1,\n      \"layout\": null,\n      \"shape_vars\": {\n        \"P1\": [\n          1,\n          8\n        ],\n        \"I1\": [\n          1,\n          8\n        ]\n      },\n      \"shape_spec_all_params\": {\n        \"params\": [\n          \"P1\"\n        ],\n        \"indices\": [\n          \"I1\"\n        ],\n        \"axis\": []\n      },\n      \"constraints\": []\n    },\n    {\n      \"rank\": 2,\n      \"layout\": null,\n      \"shape_vars\": {\n        \"P1\": [\n          1,\n          8\n        ],\n        \"P2\": [\n          1,\n          8\n        ],\n        \"J1\": [\n          1,\n          8\n        ],\n        \"J2\": [\n          1,\n          8\n        ]\n      },\n      \"shape_spec_all_params\": {\n        \"params\": [\n          \"P1\",\n          \"P2\"\n        ],\n        \"indices\": [\n          \"J1\",\n          \"J2\"\n        ],\n        \"axis\": []\n      },\n      \"constraints\": []\n    },\n    {\n      \"rank\": 3,\n      \"layout\": null,\n      \"shape_vars\": {\n        \"P1\": [\n          1,\n          8\n        ],\n        \"P2\": [\n          1,\n          8\n        ],\n        \"P3\": [\n          1,\n          8\n        ],\n        \"K1\": [\n          1,\n          8\n        ]\n      },\n      \"shape_spec_all_params\": {\n        \"params\": [\n          \"P1\",\n          \"P2\",\n          \"P3\"\n        ],\n        \"indices\": [\n          \"K1\"\n        ],\n        \"axis\": []\n      },\n      \"constraints\": []\n    }\n  ],\n  \"shared_constraints\": [],\n  \"changes\": [\n    \"Assigned concrete shape specs for params, indices, and axis across ranks 1-3 with appropriate shape variables.\"\n  ],\n  \"warnings\": []\n}"
+}
