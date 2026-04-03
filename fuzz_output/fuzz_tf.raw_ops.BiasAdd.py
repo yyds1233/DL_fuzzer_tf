@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """
-Auto-generated atheris fuzz harness for TensorFlow raw_ops.
-API: tf.raw_ops.BiasAdd
-Op:  BiasAdd
-Generated test_ranks: [1, 2, 3, 4, 5]
+Auto-generated atheris fuzz harness for TensorFlow API.
+API:      tf.raw_ops.BiasAdd
+Op:       BiasAdd
+Category: raw_ops
+Ranks:    [1, 2, 3, 4, 5]
+Strategy: raw_ops_direct
 """
 import os
 import sys
@@ -18,7 +20,7 @@ import tensorflow as tf
 import numpy as np
 import math
 
-from utils.param_sampler import (
+from utils.tf_param_sampler_unified import (
     gen_config_for_api,
     mutate_cfg,
     make_constraint_func,
@@ -29,26 +31,21 @@ from utils.param_sampler import (
 # ============================================================
 
 SPEC = {'category': 'BiasAdd',
- 'shape_vars': {'C': [1, 64], 'N': [1, 8], 'L': [1, 32], 'H': [1, 16], 'W': [1, 16], 'D': [1, 16]},
- 'layout_variants': {'NHWC': {'applies_to_ranks': [4],
-                              'notes': 'Channel dimension is last; bias matches last dimension.'},
-                     'NCHW': {'applies_to_ranks': [4],
-                              'notes': 'Channel dimension is second (third-to-last overall for '
-                                       '4-D); bias matches that dimension.'}},
- 'constraints': ['value.ndim in (1, 2, 3, 4, 5)',
-                 'value.dtype == bias.dtype',
-                 'value.ndim == 4 or bias.shape[0] == value.shape[-1]',
-                 "data_format in ('NHWC', 'NCHW')"],
- 'op_family': 'bias_add',
- 'rank_hints': {'marker': '__RANK_FROM_DOC__',
-                'status': 'assigned',
-                'rank_candidates': ['__RANK_TODO__'],
-                'rank_any': True,
-                'rank_min': None,
-                'rank_max': None},
- 'test_ranks': [1, 2, 3, 4, 5],
+ 'constraints': ['value.ndim in (1, 2, 3, 4, 5)', 'value.dtype == bias.dtype'],
  'test_dtype_choices': ['float32', 'float64', 'int32', 'int64'],
  'api_name': 'tf.raw_ops.BiasAdd',
+ 'shape_vars': {'DIM0': [2, 6],
+                'DIM1': [1, 5],
+                'DIM2': [3, 7],
+                'DIM3': [4, 8],
+                'DIM4': [6, 6],
+                'BIAS_0': [1, 16],
+                'N': [1, 8],
+                'C': [1, 64],
+                'L': [1, 32],
+                'H': [1, 32],
+                'W': [1, 32],
+                'D': [1, 32]},
  'params': {'value': {'kind': 'tensor',
                       'origin': 'input',
                       'role': 'primary',
@@ -61,10 +58,7 @@ SPEC = {'category': 'BiasAdd',
                                              '4': ['N', 'H', 'W', 'C'],
                                              '5': ['N', 'D', 'H', 'W', 'C']},
                       'shape_spec_by_rank_and_layout': {'4': {'NHWC': ['N', 'H', 'W', 'C'],
-                                                              'NCHW': ['N', 'C', 'H', 'W']}},
-                      'constraints_by_rank': {'4': ["(data_format == 'NHWC' and bias.shape[0] == "
-                                                    "value.shape[-1]) or (data_format == 'NCHW' "
-                                                    'and bias.shape[0] == value.shape[1])']}},
+                                                              'NCHW': ['N', 'C', 'H', 'W']}}},
             'bias': {'kind': 'tensor',
                      'origin': 'input',
                      'role': 'aux',
@@ -77,12 +71,21 @@ SPEC = {'category': 'BiasAdd',
                             'semantic_role': 'layout_attr',
                             'values': ['NHWC', 'NCHW'],
                             'default': 'NHWC'}},
- 'primary_param': 'value'}
+ 'test_ranks': [1, 2, 3, 4, 5],
+ 'layout_variants': {'NHWC': {'applies_to_ranks': [4], 'notes': ''},
+                     'NCHW': {'applies_to_ranks': [4], 'notes': ''}},
+ 'rank_hints': {'marker': '__RANK_FROM_DOC__',
+                'status': 'assigned',
+                'rank_candidates': ['__RANK_TODO__'],
+                'rank_any': True,
+                'rank_min': None,
+                'rank_max': None},
+ 'primary_param': 'value',
+ 'api_category': 'raw_ops',
+ 'op_family': 'bias_add',
+ '_resolve': {'strategy': 'raw_ops_direct', 'is_raw_ops': True, 'raw_op_name': 'BiasAdd'}}
 
-CONSTRAINTS = ['value.ndim in (1, 2, 3, 4, 5)',
- 'value.dtype == bias.dtype',
- 'value.ndim == 4 or bias.shape[0] == value.shape[-1]',
- "data_format in ('NHWC', 'NCHW')"]
+CONSTRAINTS = ['value.ndim in (1, 2, 3, 4, 5)', 'value.dtype == bias.dtype']
 
 
 # ============================================================
@@ -154,12 +157,17 @@ def gen_valid_config(spec, fdp, max_tries=None):
 # ============================================================
 
 def _call_target_api(cfg):
-    """Call the tf.raw_ops.* API with sampled parameters."""
+    """
+    Call the TF API (raw_ops or high-level) with sampled parameters.
+
+    Resolves api_name via importlib — works for any tf.* path:
+      tf.raw_ops.Conv2D, tf.nn.conv2d, tf.math.reduce_sum, tf.reshape, ...
+    """
     api_name = SPEC.get("api_name", "")
     if not api_name:
         raise RuntimeError("SPEC missing api_name")
 
-    # Resolve the function
+    # Resolve the callable
     try:
         mod_name, func_name = api_name.rsplit(".", 1)
     except ValueError:
@@ -172,13 +180,36 @@ def _call_target_api(cfg):
     call_kwargs = {}
     params = SPEC.get("params", {})
     for pname in params:
-        if pname in cfg and pname != "name":
-            val = cfg[pname]
-            # Skip None for optional params (TF doesn't accept None for most)
-            kind = params[pname].get("kind", "")
-            if val is None and kind in ("tensor_optional", "string_optional"):
-                continue
-            call_kwargs[pname] = val
+        if pname not in cfg:
+            continue
+        if pname == "name":
+            continue
+
+        val = cfg[pname]
+        p_spec = params[pname]
+        kind = p_spec.get("kind", "")
+        semantic_role = p_spec.get("semantic_role", "")
+
+        # Skip None for optional params
+        if val is None and kind in ("tensor_optional", "string_optional"):
+            continue
+
+        # shape_control params: high-level APIs often want a Python list,
+        # not a tf.Tensor.  Convert if the value is a tensor.
+        if semantic_role == "shape_control" and hasattr(val, "numpy"):
+            val = val.numpy().tolist()
+            # If it's a list of one element, some APIs want a scalar
+            if isinstance(val, list) and len(val) == 1:
+                val = val  # keep as list — safer
+
+        # dtype_enum params: ensure it's a tf.DType
+        if kind == "dtype_enum" and isinstance(val, str):
+            try:
+                val = tf.dtypes.as_dtype(val)
+            except Exception:
+                val = tf.float32
+
+        call_kwargs[pname] = val
 
     return target(**call_kwargs)
 
@@ -224,10 +255,13 @@ def TestOneInput(data: bytes):
         tf.errors.InvalidArgumentError,
         tf.errors.UnimplementedError,
         tf.errors.InternalError,
+        tf.errors.ResourceExhaustedError,
         ValueError,
         TypeError,
         RuntimeError,
         AssertionError,
+        IndexError,
+        NotImplementedError,
     ):
         # Expected errors from invalid inputs — not real bugs
         return

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
 Auto-generated atheris fuzz harness for TensorFlow API.
-API:      tf.gather
-Op:       GatherV2
-Category: core
-Ranks:    [1, 2, 3]
+API:      tf.math.reduce_sum
+Op:       Sum
+Category: math
+Ranks:    [1, 2, 3, 4]
 Strategy: static_mapping
 """
 import os
@@ -30,58 +30,51 @@ from utils.tf_param_sampler_unified import (
 # Spec & constraints from YAML
 # ============================================================
 
-SPEC = {'category': 'GatherV2',
- 'constraints': ['params.ndim in (1, 2, 3)'],
- 'test_dtype_choices': ['int32', 'int64', 'int16'],
- 'api_name': 'tf.gather',
- 'shape_vars': {'TODO_SHAPE': [1, 32],
-                'DIM0': [1, 32],
+SPEC = {'category': 'Sum',
+ 'constraints': ['input_tensor.ndim in (1, 2, 3, 4)'],
+ 'test_dtype_choices': ['float32', 'float64', 'int32', 'int64'],
+ 'api_name': 'tf.math.reduce_sum',
+ 'shape_vars': {'DIM0': [1, 32],
                 'DIM1': [1, 32],
                 'DIM2': [1, 32],
-                'I': [1, 16],
-                'G1': [1, 16]},
- 'params': {'params': {'kind': 'tensor',
-                       'origin': 'input',
-                       'role': 'primary',
-                       'semantic_role': 'data_tensor',
-                       'dtype_from_attr': 'Tparams',
-                       'shape_spec': ['DIM0'],
-                       'shape_spec_by_rank': {'1': ['DIM0'],
-                                              '2': ['DIM0', 'DIM1'],
-                                              '3': ['DIM0', 'DIM1', 'DIM2']}},
-            'indices': {'kind': 'tensor',
-                        'origin': 'input',
-                        'role': 'aux',
-                        'semantic_role': 'index_input',
-                        'dtype_choices': ['int32', 'int64'],
-                        'dtype_from_attr': 'Tindices',
-                        'shape_spec': ['I']},
+                'DIM3': [1, 32],
+                'IDX_D1': [1, 16]},
+ 'params': {'input_tensor': {'kind': 'tensor',
+                             'origin': 'input',
+                             'role': 'primary',
+                             'semantic_role': 'data_tensor',
+                             'dtype_from_attr': 'T',
+                             'shape_spec': ['DIM0'],
+                             'shape_spec_by_rank': {'1': ['DIM0'],
+                                                    '2': ['DIM0', 'DIM1'],
+                                                    '3': ['DIM0', 'DIM1', 'DIM2'],
+                                                    '4': ['DIM0', 'DIM1', 'DIM2', 'DIM3']}},
             'axis': {'kind': 'tensor',
                      'origin': 'input',
-                     'role': 'attr',
-                     'semantic_role': 'scalar_attr',
-                     'dtype_from_attr': 'Taxis',
-                     'shape_spec': ['G1']},
-            'batch_dims': {'kind': 'int',
-                           'origin': 'attr',
-                           'role': 'attr',
-                           'semantic_role': 'scalar_attr',
-                           'default': 0,
-                           'range': [-1, 8]}},
- 'test_ranks': [1, 2, 3],
+                     'role': 'aux',
+                     'semantic_role': 'index_input',
+                     'dtype_choices': ['int32', 'int64'],
+                     'dtype_from_attr': 'Tidx',
+                     'shape_spec': ['IDX_D1']},
+            'keep_dims': {'kind': 'bool',
+                          'origin': 'attr',
+                          'role': 'attr',
+                          'semantic_role': 'scalar_attr',
+                          'default': False}},
+ 'test_ranks': [1, 2, 3, 4],
  'layout_variants': {},
  'rank_hints': {'marker': '__RANK_FROM_DOC__',
                 'status': 'assigned',
                 'rank_candidates': ['__RANK_TODO__'],
                 'rank_any': True,
-                'rank_min': 1,
+                'rank_min': None,
                 'rank_max': None},
- 'primary_param': 'params',
- 'api_category': 'core',
- 'op_family': 'gather',
- '_resolve': {'strategy': 'static_mapping', 'is_raw_ops': False, 'raw_op_name': 'GatherV2'}}
+ 'primary_param': 'input_tensor',
+ 'api_category': 'math',
+ 'op_family': 'reduce',
+ '_resolve': {'strategy': 'static_mapping', 'is_raw_ops': False, 'raw_op_name': 'Sum'}}
 
-CONSTRAINTS = ['params.ndim in (1, 2, 3)']
+CONSTRAINTS = ['input_tensor.ndim in (1, 2, 3, 4)']
 
 
 # ============================================================

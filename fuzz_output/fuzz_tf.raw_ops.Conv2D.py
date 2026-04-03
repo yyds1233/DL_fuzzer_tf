@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 Auto-generated atheris fuzz harness for TensorFlow API.
-API:      tf.gather
-Op:       GatherV2
-Category: core
-Ranks:    [1, 2, 3]
-Strategy: static_mapping
+API:      tf.raw_ops.Conv2D
+Op:       Conv2D
+Category: raw_ops
+Ranks:    [4]
+Strategy: raw_ops_direct
 """
 import os
 import sys
@@ -30,58 +30,83 @@ from utils.tf_param_sampler_unified import (
 # Spec & constraints from YAML
 # ============================================================
 
-SPEC = {'category': 'GatherV2',
- 'constraints': ['params.ndim in (1, 2, 3)'],
- 'test_dtype_choices': ['int32', 'int64', 'int16'],
- 'api_name': 'tf.gather',
+SPEC = {'category': 'Conv2D',
+ 'constraints': ['input.ndim == 4', 'input.dtype == filter.dtype'],
+ 'test_dtype_choices': ['float32', 'float64', 'int32', 'float16'],
+ 'api_name': 'tf.raw_ops.Conv2D',
  'shape_vars': {'TODO_SHAPE': [1, 32],
-                'DIM0': [1, 32],
-                'DIM1': [1, 32],
-                'DIM2': [1, 32],
-                'I': [1, 16],
-                'G1': [1, 16]},
- 'params': {'params': {'kind': 'tensor',
+                'N': [1, 8],
+                'H': [1, 32],
+                'W': [1, 32],
+                'C_in': [1, 64],
+                'C_out': [1, 64],
+                'kH': [1, 11],
+                'kW': [1, 11]},
+ 'params': {'input': {'kind': 'tensor',
+                      'origin': 'input',
+                      'role': 'primary',
+                      'semantic_role': 'data_tensor',
+                      'dtype_from_attr': 'T',
+                      'shape_spec': ['N', 'H', 'W', 'C_in'],
+                      'shape_spec_by_rank': {'4': ['N', 'H', 'W', 'C_in']},
+                      'shape_spec_by_rank_and_layout': {'4': {'NHWC': ['N', 'H', 'W', 'C_in'],
+                                                              'NCHW': ['N', 'C_in', 'H', 'W']}}},
+            'filter': {'kind': 'tensor',
                        'origin': 'input',
-                       'role': 'primary',
-                       'semantic_role': 'data_tensor',
-                       'dtype_from_attr': 'Tparams',
-                       'shape_spec': ['DIM0'],
-                       'shape_spec_by_rank': {'1': ['DIM0'],
-                                              '2': ['DIM0', 'DIM1'],
-                                              '3': ['DIM0', 'DIM1', 'DIM2']}},
-            'indices': {'kind': 'tensor',
-                        'origin': 'input',
-                        'role': 'aux',
-                        'semantic_role': 'index_input',
-                        'dtype_choices': ['int32', 'int64'],
-                        'dtype_from_attr': 'Tindices',
-                        'shape_spec': ['I']},
-            'axis': {'kind': 'tensor',
-                     'origin': 'input',
-                     'role': 'attr',
-                     'semantic_role': 'scalar_attr',
-                     'dtype_from_attr': 'Taxis',
-                     'shape_spec': ['G1']},
-            'batch_dims': {'kind': 'int',
-                           'origin': 'attr',
-                           'role': 'attr',
-                           'semantic_role': 'scalar_attr',
-                           'default': 0,
-                           'range': [-1, 8]}},
- 'test_ranks': [1, 2, 3],
- 'layout_variants': {},
+                       'role': 'aux',
+                       'semantic_role': 'weight_tensor',
+                       'dtype_from_attr': 'T',
+                       'shape_spec': ['kH', 'kW', 'C_in', 'C_out']},
+            'strides': {'kind': 'int_list',
+                        'origin': 'attr',
+                        'role': 'attr',
+                        'semantic_role': 'fixed_arity_list',
+                        'range': [1, 4],
+                        'len_range': [4, 4]},
+            'use_cudnn_on_gpu': {'kind': 'bool',
+                                 'origin': 'attr',
+                                 'role': 'attr',
+                                 'semantic_role': 'meta',
+                                 'default': True},
+            'padding': {'kind': 'enum',
+                        'origin': 'attr',
+                        'role': 'attr',
+                        'semantic_role': 'scalar_attr',
+                        'values': ['SAME', 'VALID', 'EXPLICIT']},
+            'explicit_paddings': {'kind': 'int_list',
+                                  'origin': 'attr',
+                                  'role': 'attr',
+                                  'semantic_role': 'fixed_arity_list',
+                                  'range': [0, 4],
+                                  'len_range': [8, 8]},
+            'data_format': {'kind': 'enum',
+                            'origin': 'attr',
+                            'role': 'attr',
+                            'semantic_role': 'layout_attr',
+                            'values': ['NHWC', 'NCHW'],
+                            'default': 'NHWC'},
+            'dilations': {'kind': 'int_list',
+                          'origin': 'attr',
+                          'role': 'attr',
+                          'semantic_role': 'fixed_arity_list',
+                          'default': [1, 1, 1, 1],
+                          'range': [1, 4],
+                          'len_range': [4, 4]}},
+ 'test_ranks': [4],
+ 'layout_variants': {'NHWC': {'applies_to_ranks': [4], 'notes': ''},
+                     'NCHW': {'applies_to_ranks': [4], 'notes': ''}},
  'rank_hints': {'marker': '__RANK_FROM_DOC__',
                 'status': 'assigned',
-                'rank_candidates': ['__RANK_TODO__'],
-                'rank_any': True,
-                'rank_min': 1,
-                'rank_max': None},
- 'primary_param': 'params',
- 'api_category': 'core',
- 'op_family': 'gather',
- '_resolve': {'strategy': 'static_mapping', 'is_raw_ops': False, 'raw_op_name': 'GatherV2'}}
+                'rank_candidates': [4],
+                'rank_any': False,
+                'rank_min': None,
+                'rank_max': 4},
+ 'primary_param': 'input',
+ 'api_category': 'raw_ops',
+ 'op_family': 'conv2d',
+ '_resolve': {'strategy': 'raw_ops_direct', 'is_raw_ops': True, 'raw_op_name': 'Conv2D'}}
 
-CONSTRAINTS = ['params.ndim in (1, 2, 3)']
+CONSTRAINTS = ['input.ndim == 4', 'input.dtype == filter.dtype']
 
 
 # ============================================================

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
 Auto-generated atheris fuzz harness for TensorFlow API.
-API:      tf.gather
-Op:       GatherV2
-Category: core
-Ranks:    [1, 2, 3]
-Strategy: static_mapping
+API:      tf.raw_ops.MatMul
+Op:       MatMul
+Category: raw_ops
+Ranks:    [2]
+Strategy: raw_ops_direct
 """
 import os
 import sys
@@ -30,58 +30,64 @@ from utils.tf_param_sampler_unified import (
 # Spec & constraints from YAML
 # ============================================================
 
-SPEC = {'category': 'GatherV2',
- 'constraints': ['params.ndim in (1, 2, 3)'],
- 'test_dtype_choices': ['int32', 'int64', 'int16'],
- 'api_name': 'tf.gather',
- 'shape_vars': {'TODO_SHAPE': [1, 32],
-                'DIM0': [1, 32],
-                'DIM1': [1, 32],
-                'DIM2': [1, 32],
-                'I': [1, 16],
-                'G1': [1, 16]},
- 'params': {'params': {'kind': 'tensor',
-                       'origin': 'input',
-                       'role': 'primary',
-                       'semantic_role': 'data_tensor',
-                       'dtype_from_attr': 'Tparams',
-                       'shape_spec': ['DIM0'],
-                       'shape_spec_by_rank': {'1': ['DIM0'],
-                                              '2': ['DIM0', 'DIM1'],
-                                              '3': ['DIM0', 'DIM1', 'DIM2']}},
-            'indices': {'kind': 'tensor',
-                        'origin': 'input',
-                        'role': 'aux',
-                        'semantic_role': 'index_input',
-                        'dtype_choices': ['int32', 'int64'],
-                        'dtype_from_attr': 'Tindices',
-                        'shape_spec': ['I']},
-            'axis': {'kind': 'tensor',
-                     'origin': 'input',
-                     'role': 'attr',
-                     'semantic_role': 'scalar_attr',
-                     'dtype_from_attr': 'Taxis',
-                     'shape_spec': ['G1']},
-            'batch_dims': {'kind': 'int',
-                           'origin': 'attr',
-                           'role': 'attr',
-                           'semantic_role': 'scalar_attr',
-                           'default': 0,
-                           'range': [-1, 8]}},
- 'test_ranks': [1, 2, 3],
+SPEC = {'category': 'MatMul',
+ 'constraints': ['a.ndim == 2', 'a.dtype == b.dtype'],
+ 'test_dtype_choices': ['float32', 'float64', 'int32', 'int64'],
+ 'api_name': 'tf.raw_ops.MatMul',
+ 'shape_vars': {'DIM0': [3, 3],
+                'DIM1': [2, 2],
+                'B_0': [2, 2],
+                'B_1': [4, 4],
+                'M': [1, 16],
+                'K': [1, 64],
+                'N': [1, 16]},
+ 'params': {'a': {'kind': 'tensor',
+                  'origin': 'input',
+                  'role': 'primary',
+                  'semantic_role': 'data_tensor',
+                  'dtype_from_attr': 'T',
+                  'shape_spec': ['M', 'K'],
+                  'shape_spec_by_rank': {'2': ['M', 'K']}},
+            'b': {'kind': 'tensor',
+                  'origin': 'input',
+                  'role': 'primary',
+                  'semantic_role': 'data_tensor',
+                  'dtype_from_attr': 'T',
+                  'shape_spec': ['K', 'N']},
+            'transpose_a': {'kind': 'bool',
+                            'origin': 'attr',
+                            'role': 'attr',
+                            'semantic_role': 'layout_attr',
+                            'default': False},
+            'transpose_b': {'kind': 'bool',
+                            'origin': 'attr',
+                            'role': 'attr',
+                            'semantic_role': 'layout_attr',
+                            'default': False},
+            'grad_a': {'kind': 'bool',
+                       'origin': 'attr',
+                       'role': 'attr',
+                       'semantic_role': 'scalar_attr',
+                       'default': False},
+            'grad_b': {'kind': 'bool',
+                       'origin': 'attr',
+                       'role': 'attr',
+                       'semantic_role': 'scalar_attr',
+                       'default': False}},
+ 'test_ranks': [2],
  'layout_variants': {},
  'rank_hints': {'marker': '__RANK_FROM_DOC__',
                 'status': 'assigned',
-                'rank_candidates': ['__RANK_TODO__'],
-                'rank_any': True,
-                'rank_min': 1,
-                'rank_max': None},
- 'primary_param': 'params',
- 'api_category': 'core',
- 'op_family': 'gather',
- '_resolve': {'strategy': 'static_mapping', 'is_raw_ops': False, 'raw_op_name': 'GatherV2'}}
+                'rank_candidates': [2],
+                'rank_any': False,
+                'rank_min': None,
+                'rank_max': 2},
+ 'primary_param': 'a',
+ 'api_category': 'raw_ops',
+ 'op_family': 'matmul',
+ '_resolve': {'strategy': 'raw_ops_direct', 'is_raw_ops': True, 'raw_op_name': 'MatMul'}}
 
-CONSTRAINTS = ['params.ndim in (1, 2, 3)']
+CONSTRAINTS = ['a.ndim == 2', 'a.dtype == b.dtype']
 
 
 # ============================================================

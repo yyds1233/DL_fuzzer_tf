@@ -74,10 +74,10 @@ import random
 import atheris
 
 # Must instrument before importing TF
-with atheris.instrument_imports():
-    import tensorflow as tf
-    import numpy as np
-    import math
+# with atheris.instrument_imports():
+import tensorflow as tf
+import numpy as np
+import math
 
 from utils.tf_param_sampler_unified import (
     gen_config_for_api,

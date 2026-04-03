@@ -117,8 +117,8 @@ class LLMClient:
 
     def __init__(
         self,
-        base_url: str = "https://api.openai.com/v1",
-        model: str = "gpt-4o",
+        base_url: str = "https://api.gpt.ge/v1",
+        model: str = "gpt-5-codex",
         api_key: str = "",
         temperature: float = 0.0,
         max_tokens: int = 4096,
@@ -679,11 +679,11 @@ def main() -> None:
                     help="where to write *.rank.json")
 
     # LLM configuration
-    ap.add_argument("--llm_base_url", default=None,
+    ap.add_argument("--llm_base_url", default="https://api.gpt.ge/v1/",
                     help="OpenAI-compatible API base URL (e.g., http://localhost:11434/v1)")
-    ap.add_argument("--llm_model", default="gpt-4o",
+    ap.add_argument("--llm_model", default="gpt-5-codex",
                     help="model name for the LLM API")
-    ap.add_argument("--llm_api_key", default=None,
+    ap.add_argument("--llm_api_key", default="sk-WXtqOuBZPY096KTcDdE866275274464d88943d068aA7Ff5d",
                     help="API key (or set LLM_API_KEY env var)")
     ap.add_argument("--llm_temperature", type=float, default=0.0)
     ap.add_argument("--llm_max_tokens", type=int, default=4096)

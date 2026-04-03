@@ -1,0 +1,5 @@
+{
+  "gather": "data_movement",
+  "nn.conv2d": "nn_compute",
+  "raw_ops.BiasAdd": "elementwise"
+}

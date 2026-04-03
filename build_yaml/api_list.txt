@@ -1,2 +1,7 @@
 tf.nn.conv2d
 tf.gather
+tf.raw_ops.BiasAdd
+tf.raw_ops.Conv2D
+tf.raw_ops.MatMul
+tf.math.reduce_sum
+tf.nn.relu

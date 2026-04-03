@@ -189,7 +189,7 @@ def main() -> None:
                     help="output dir for schema json files")
     ap.add_argument("--llm_base_url", default=None,
                     help="OpenAI-compatible API base URL for resolver fallback")
-    ap.add_argument("--llm_model", default="gpt-4o",
+    ap.add_argument("--llm_model", default="gpt-5-codex",
                     help="model name for LLM resolver")
     ap.add_argument("--llm_api_key", default=None,
                     help="API key for LLM")
