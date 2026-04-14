@@ -1,0 +1,16 @@
+tf.unstack
+Official URL: https://www.tensorflow.org/api_docs/python/tf/unstack
+Signature: tf.unstack(value, num=None, axis=0, name='unstack')
+
+Unstacks a tensor along one axis into a list of tensors.
+
+Shape
+Input:
+- value: shape (d0, d1, ..., d(n-1))
+
+Output:
+- list length = value.shape[axis]
+- each output has rank n - 1
+- examples:
+  - unstack (N, C, H, W) on axis 1 -> C tensors of shape (N, H, W)
+  - unstack (B, T, D) on axis 0 -> B tensors of shape (T, D)

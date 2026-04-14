@@ -1,0 +1,23 @@
+tf.reshape
+Official URL: https://www.tensorflow.org/api_docs/python/tf/reshape
+Signature: tf.reshape(tensor, shape, name=None)
+
+Reshapes a tensor without changing the order of elements.
+
+Shape
+Input:
+- tensor: shape (d0, d1, ..., dn)
+- shape: a 1-D tensor or Python shape tuple with shape (m)
+
+Output:
+- a tensor with the requested shape
+- common examples: (N, C, H, W) -> (N, H, W, C), (N, C, H, W) -> (N, C * H * W), (...) -> (-1)
+
+Constraints:
+- the total number of elements must remain constant
+- at most one dimension may be -1
+- rank of the output is len(shape)
+
+Notes:
+- useful when output rank is fixed and known statically
+- examples of fixed output tuples: (N, C, H, W), (N, D), (N,)

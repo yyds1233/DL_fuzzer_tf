@@ -1,0 +1,17 @@
+tf.nn.depthwise_conv2d
+Official URL: https://www.tensorflow.org/api_docs/python/tf/nn/depthwise_conv2d
+Signature: tf.nn.depthwise_conv2d(input, filter, strides, padding, data_format=None, dilations=None, name=None)
+
+Computes a 2-D depthwise convolution.
+
+Shape
+Input:
+- input: shape (N, H, W, C_in) for NHWC or (N, C_in, H, W) for NCHW
+- filter: shape (K_h, K_w, C_in, channel_multiplier)
+
+Output:
+- shape (N, H_out, W_out, C_in * channel_multiplier) for NHWC
+- shape (N, C_in * channel_multiplier, H_out, W_out) for NCHW
+
+Constraints:
+- filter channel dimension must match C_in

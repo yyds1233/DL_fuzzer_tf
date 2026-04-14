@@ -1,0 +1,17 @@
+tf.math.segment_sum
+Official URL: https://www.tensorflow.org/api_docs/python/tf/math/segment_sum
+Signature: tf.math.segment_sum(data, segment_ids, name=None)
+
+Computes the sum along segments.
+
+Shape
+Input:
+- data: shape (N, d1, d2, ..., dk)
+- segment_ids: shape (N,)
+
+Output:
+- shape (num_segments, d1, d2, ..., dk)
+
+Constraints:
+- segment_ids length must equal data.shape[0]
+- segment_ids are typically sorted and define contiguous segments

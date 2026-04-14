@@ -1,0 +1,100 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.tensor_scatter_nd_sub
+category: tensor_scatter_nd_sub
+api_category: core
+api_module: tf
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: true
+  rank_min: null
+  rank_max: null
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.tensor_scatter_nd_sub
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  tensor:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  indices:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  updates:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  name:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+constraints: []
+_param_rank_details:
+  tensor:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: true
+    description_summary: The original tensor from which sparse updates will be subtracted.
+  indices:
+    role: attr
+    semantic_role: index_input
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: false
+    description_summary: Specifies the indices of the tensor positions whose values
+      should be updated via subtraction.
+  updates:
+    role: aux
+    semantic_role: aux_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: false
+    description_summary: Contains the values to subtract at the specified indices,
+      shaped to align with tensor slices.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional name for the operation.

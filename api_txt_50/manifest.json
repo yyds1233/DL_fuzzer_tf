@@ -1,0 +1,252 @@
+[
+  {
+    "api": "tf.reshape",
+    "filename": "tf_reshape.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/reshape"
+  },
+  {
+    "api": "tf.transpose",
+    "filename": "tf_transpose.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/transpose"
+  },
+  {
+    "api": "tf.squeeze",
+    "filename": "tf_squeeze.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/squeeze"
+  },
+  {
+    "api": "tf.expand_dims",
+    "filename": "tf_expand_dims.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/expand_dims"
+  },
+  {
+    "api": "tf.concat",
+    "filename": "tf_concat.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/concat"
+  },
+  {
+    "api": "tf.stack",
+    "filename": "tf_stack.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/stack"
+  },
+  {
+    "api": "tf.split",
+    "filename": "tf_split.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/split"
+  },
+  {
+    "api": "tf.unstack",
+    "filename": "tf_unstack.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/unstack"
+  },
+  {
+    "api": "tf.tile",
+    "filename": "tf_tile.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/tile"
+  },
+  {
+    "api": "tf.repeat",
+    "filename": "tf_repeat.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/repeat"
+  },
+  {
+    "api": "tf.gather",
+    "filename": "tf_gather.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/gather"
+  },
+  {
+    "api": "tf.gather_nd",
+    "filename": "tf_gather_nd.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/gather_nd"
+  },
+  {
+    "api": "tf.scatter_nd",
+    "filename": "tf_scatter_nd.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/scatter_nd"
+  },
+  {
+    "api": "tf.tensor_scatter_nd_update",
+    "filename": "tf_tensor_scatter_nd_update.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_update"
+  },
+  {
+    "api": "tf.tensor_scatter_nd_add",
+    "filename": "tf_tensor_scatter_nd_add.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_add"
+  },
+  {
+    "api": "tf.tensor_scatter_nd_sub",
+    "filename": "tf_tensor_scatter_nd_sub.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_sub"
+  },
+  {
+    "api": "tf.boolean_mask",
+    "filename": "tf_boolean_mask.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/boolean_mask"
+  },
+  {
+    "api": "tf.where",
+    "filename": "tf_where.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/where"
+  },
+  {
+    "api": "tf.one_hot",
+    "filename": "tf_one_hot.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/one_hot"
+  },
+  {
+    "api": "tf.searchsorted",
+    "filename": "tf_searchsorted.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/searchsorted"
+  },
+  {
+    "api": "tf.sort",
+    "filename": "tf_sort.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/sort"
+  },
+  {
+    "api": "tf.argsort",
+    "filename": "tf_argsort.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/argsort"
+  },
+  {
+    "api": "tf.math.top_k",
+    "filename": "tf_math_top_k.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/top_k"
+  },
+  {
+    "api": "tf.math.segment_sum",
+    "filename": "tf_math_segment_sum.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/segment_sum"
+  },
+  {
+    "api": "tf.math.unsorted_segment_sum",
+    "filename": "tf_math_unsorted_segment_sum.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/unsorted_segment_sum"
+  },
+  {
+    "api": "tf.math.segment_mean",
+    "filename": "tf_math_segment_mean.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/segment_mean"
+  },
+  {
+    "api": "tf.math.unsorted_segment_mean",
+    "filename": "tf_math_unsorted_segment_mean.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/unsorted_segment_mean"
+  },
+  {
+    "api": "tf.math.reduce_sum",
+    "filename": "tf_math_reduce_sum.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/reduce_sum"
+  },
+  {
+    "api": "tf.math.reduce_mean",
+    "filename": "tf_math_reduce_mean.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/reduce_mean"
+  },
+  {
+    "api": "tf.math.reduce_max",
+    "filename": "tf_math_reduce_max.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/reduce_max"
+  },
+  {
+    "api": "tf.math.reduce_min",
+    "filename": "tf_math_reduce_min.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/reduce_min"
+  },
+  {
+    "api": "tf.math.reduce_prod",
+    "filename": "tf_math_reduce_prod.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/reduce_prod"
+  },
+  {
+    "api": "tf.math.reduce_logsumexp",
+    "filename": "tf_math_reduce_logsumexp.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/math/reduce_logsumexp"
+  },
+  {
+    "api": "tf.linalg.matmul",
+    "filename": "tf_linalg_matmul.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/linalg/matmul"
+  },
+  {
+    "api": "tf.linalg.matvec",
+    "filename": "tf_linalg_matvec.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/linalg/matvec"
+  },
+  {
+    "api": "tf.tensordot",
+    "filename": "tf_tensordot.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/tensordot"
+  },
+  {
+    "api": "tf.norm",
+    "filename": "tf_norm.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/norm"
+  },
+  {
+    "api": "tf.meshgrid",
+    "filename": "tf_meshgrid.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/meshgrid"
+  },
+  {
+    "api": "tf.nn.bias_add",
+    "filename": "tf_nn_bias_add.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/bias_add"
+  },
+  {
+    "api": "tf.nn.batch_normalization",
+    "filename": "tf_nn_batch_normalization.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/batch_normalization"
+  },
+  {
+    "api": "tf.nn.conv1d",
+    "filename": "tf_nn_conv1d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/conv1d"
+  },
+  {
+    "api": "tf.nn.conv2d",
+    "filename": "tf_nn_conv2d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/conv2d"
+  },
+  {
+    "api": "tf.nn.conv3d",
+    "filename": "tf_nn_conv3d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/conv3d"
+  },
+  {
+    "api": "tf.nn.depthwise_conv2d",
+    "filename": "tf_nn_depthwise_conv2d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/depthwise_conv2d"
+  },
+  {
+    "api": "tf.nn.separable_conv2d",
+    "filename": "tf_nn_separable_conv2d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/separable_conv2d"
+  },
+  {
+    "api": "tf.nn.max_pool2d",
+    "filename": "tf_nn_max_pool2d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/max_pool2d"
+  },
+  {
+    "api": "tf.nn.avg_pool2d",
+    "filename": "tf_nn_avg_pool2d.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/avg_pool2d"
+  },
+  {
+    "api": "tf.nn.softmax",
+    "filename": "tf_nn_softmax.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/softmax"
+  },
+  {
+    "api": "tf.nn.log_softmax",
+    "filename": "tf_nn_log_softmax.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/nn/log_softmax"
+  },
+  {
+    "api": "tf.image.resize",
+    "filename": "tf_image_resize.txt",
+    "official_url": "https://www.tensorflow.org/api_docs/python/tf/image/resize"
+  }
+]

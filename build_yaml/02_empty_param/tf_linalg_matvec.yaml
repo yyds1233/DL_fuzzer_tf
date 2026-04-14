@@ -1,0 +1,133 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.linalg.matvec
+category: matvec
+api_category: linalg
+api_module: tf.linalg
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: false
+  rank_min: 2
+  rank_max: null
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.linalg.matvec
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  a:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  b:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  transpose_a:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  adjoint_a:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  a_is_sparse:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  name:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+constraints: []
+_param_rank_details:
+  a:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: 2
+    rank_any: false
+    included_in_api_rank: true
+    description_summary: Matrix input with optional leading batch dimensions and last
+      two dimensions representing M×K.
+  b:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: 1
+    rank_any: false
+    included_in_api_rank: true
+    description_summary: Vector input that is multiplied by 'a', with leading batch
+      dimensions matching those of 'a' and final dimension K.
+  transpose_a:
+    role: attr
+    semantic_role: layout_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Boolean indicating whether to transpose the matrix 'a' before
+      multiplication.
+  adjoint_a:
+    role: attr
+    semantic_role: layout_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Boolean indicating whether to take the conjugate transpose
+      of 'a' before multiplication.
+  a_is_sparse:
+    role: attr
+    semantic_role: layout_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Boolean hint telling the op that 'a' is stored in a sparse
+      format for possible optimizations.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional name for the operation.

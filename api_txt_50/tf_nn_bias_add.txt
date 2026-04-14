@@ -1,0 +1,16 @@
+tf.nn.bias_add
+Official URL: https://www.tensorflow.org/api_docs/python/tf/nn/bias_add
+Signature: tf.nn.bias_add(value, bias, data_format=None, name=None)
+
+Adds a 1-D bias to a tensor.
+
+Shape
+Input:
+- value: commonly shape (N, H, W, C) or (N, C, H, W), also supports N...C and NC...
+- bias: shape (C,)
+
+Output:
+- same shape as value
+
+Constraints:
+- bias length must equal the channel dimension of value

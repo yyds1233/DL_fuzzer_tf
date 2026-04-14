@@ -1,0 +1,17 @@
+tf.tile
+Official URL: https://www.tensorflow.org/api_docs/python/tf/tile
+Signature: tf.tile(input, multiples, name=None)
+
+Constructs a tensor by repeating input along each dimension.
+
+Shape
+Input:
+- input: shape (d0, d1, ..., d(n-1))
+- multiples: shape (n)
+
+Output:
+- shape (d0 * m0, d1 * m1, ..., d(n-1) * m(n-1))
+- examples: (N, C) with multiples (2, 3) -> (2N, 3C)
+
+Constraints:
+- len(multiples) must equal rank(input)

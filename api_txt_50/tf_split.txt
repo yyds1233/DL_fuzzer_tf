@@ -1,0 +1,18 @@
+tf.split
+Official URL: https://www.tensorflow.org/api_docs/python/tf/split
+Signature: tf.split(value, num_or_size_splits, axis=0, num=None, name='split')
+
+Splits a tensor along one axis into multiple tensors.
+
+Shape
+Input:
+- value: shape (d0, d1, ..., d(n-1))
+
+Output:
+- a list of tensors, each with rank n
+- examples:
+  - split (N, C, H, W) into 2 parts on axis 1 -> two tensors of shape (N, C/2, H, W)
+  - split by sizes (c1, c2, c3) on axis 1 -> (N, c1, H, W), (N, c2, H, W), (N, c3, H, W)
+
+Constraints:
+- sizes along the split axis must sum to the input size on that axis

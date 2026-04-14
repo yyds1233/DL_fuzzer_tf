@@ -1,0 +1,9 @@
+api_name	reason	resolve_strategy	confidence	params_count	tensor_params_count	primary_param	tensor_params	yaml_file
+tf.linalg.matvec	no_tensor_params;missing_primary_param	unresolved	0.0	6	0	None		tf_linalg_matvec.yaml
+tf.math.reduce_logsumexp	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_math_reduce_logsumexp.yaml
+tf.repeat	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_repeat.yaml
+tf.sort	no_tensor_params;missing_primary_param	static_mapping	0.95	4	0	None		tf_sort.yaml
+tf.tensor_scatter_nd_sub	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_tensor_scatter_nd_sub.yaml
+tf.boolean_mask	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_boolean_mask.yaml
+tf.meshgrid	no_tensor_params;missing_primary_param	unresolved	0.0	2	0	None		tf_meshgrid.yaml
+tf.tensordot	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_tensordot.yaml

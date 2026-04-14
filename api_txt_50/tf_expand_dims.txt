@@ -1,0 +1,17 @@
+tf.expand_dims
+Official URL: https://www.tensorflow.org/api_docs/python/tf/expand_dims
+Signature: tf.expand_dims(input, axis, name=None)
+
+Inserts a dimension of size 1 at the given axis.
+
+Shape
+Input:
+- input: shape (d0, d1, ..., d(n-1))
+- axis: scalar integer
+
+Output:
+- shape with one extra dimension 1 inserted at axis
+- examples: (N, H, W) -> (N, H, W, 1), (C,) -> (1, C), (M, K) -> (M, 1, K)
+
+Constraints:
+- output rank is input rank + 1

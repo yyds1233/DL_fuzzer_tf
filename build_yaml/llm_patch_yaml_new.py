@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-tf_llm_patch_yaml.py  –  Stage C: LLM-assisted YAML completion
+llm_patch_yaml_new.py  –  Stage C: LLM-assisted YAML completion
 for TF raw_ops / high-level TF API YAML.
 
 DESIGN
@@ -54,7 +54,7 @@ except ImportError:
     OpenAI = None  # type: ignore
     BadRequestError = Exception  # type: ignore
 
-from tf_llm_prompts import TF_YAML_PATCH_SYSTEM_PROMPT
+from tf_llm_prompts import TF_YAML_PATCH_SYSTEM_PROMPT1
 
 
 # ════════════════════════════════════════════════════════════════
@@ -216,7 +216,22 @@ _RANK_FIXED_DEFAULTS: Dict[str, List[int]] = {
 _GENERIC_RANK_ANY = [1, 2, 3, 4]
 
 
+
 def discretize_ranks(yaml_obj: Dict[str, Any]) -> List[int]:
+    """
+    Build the default rank plan for TF Stage C.
+
+    Compared with the older TF version, this is slightly less aggressive:
+    - prefer existing test_ranks if already present in the input YAML
+    - prefer concrete rank_hints.rank_candidates if present
+    - otherwise fall back to family defaults / rank-any defaults
+    """
+    existing_test_ranks = yaml_obj.get("test_ranks")
+    if isinstance(existing_test_ranks, list):
+        concrete = sorted(set(r for r in existing_test_ranks if isinstance(r, int) and r >= 0))
+        if concrete:
+            return concrete
+
     rank_hints = yaml_obj.get("rank_hints") or {}
     op_family = yaml_obj.get("op_family") or ""
 
@@ -229,22 +244,26 @@ def discretize_ranks(yaml_obj: Dict[str, Any]) -> List[int]:
     rank_min = rank_hints.get("rank_min")
 
     if op_family in _RANK_FIXED_DEFAULTS:
-        return _RANK_FIXED_DEFAULTS[op_family]
+        base = list(_RANK_FIXED_DEFAULTS[op_family])
+        if isinstance(rank_min, int):
+            base = [r for r in base if r >= rank_min]
+        return base or list(_RANK_FIXED_DEFAULTS[op_family])
 
-    if rank_any or rank_hints.get("status") in ("missing", "unassigned"):
-        base = _RANK_ANY_DEFAULTS.get(op_family, _GENERIC_RANK_ANY)
-        if rank_min is not None:
+    if rank_any or rank_hints.get("status") in ("missing", "unassigned", "assigned"):
+        base = list(_RANK_ANY_DEFAULTS.get(op_family, _GENERIC_RANK_ANY))
+        if isinstance(rank_min, int):
             base = [r for r in base if r >= rank_min]
         if not base:
-            base = [rank_min] if rank_min else _GENERIC_RANK_ANY
+            return [rank_min] if isinstance(rank_min, int) and rank_min >= 0 else list(_GENERIC_RANK_ANY)
         return sorted(set(base))
 
     rank_max = rank_hints.get("rank_max")
     if isinstance(rank_max, int):
+        if isinstance(rank_min, int):
+            return [r for r in range(rank_min, rank_max + 1) if r >= 0] or [rank_max]
         return [rank_max]
 
-    return _GENERIC_RANK_ANY
-
+    return list(_GENERIC_RANK_ANY)
 
 def identify_layouts(yaml_obj: Dict[str, Any]) -> Dict[str, List[int]]:
     params = yaml_obj.get("params") or {}
@@ -575,11 +594,19 @@ def _coerce_shape_list(raw_spec: Any) -> Optional[List[Any]]:
     return None
 
 
+
 def _normalize_shape_items_no_commit(
     vals: List[Any],
     pname: str,
     param_meta: Dict[str, Any],
 ) -> Optional[Tuple[List[str], Dict[str, List[int]]]]:
+    """
+    Strict symbolic normalization.
+
+    Unlike the older TF version, do NOT silently convert concrete numeric shape
+    literals like [2, 3] into generated vars. That behavior hides bad LLM output.
+    Stage C expects symbolic variables only, similar to the stricter PyTorch path.
+    """
     is_primary = pname == param_meta.get("__primary_param__")
     sem_role = param_meta.get("semantic_role", "")
 
@@ -590,35 +617,22 @@ def _normalize_shape_items_no_commit(
     pending_defs: Dict[str, List[int]] = {}
 
     for i, item in enumerate(vals, start=1):
-        if isinstance(item, str):
-            tok = canonicalize_shape_token(item)
-            if tok is None:
-                iv = _coerce_int(item)
-                if iv is None or iv < 1:
-                    return None
-                vname = _generated_var_name(pname, sem_role, i, is_primary)
-                pending_defs[vname] = [iv, iv]
-                out.append(vname)
-                continue
+        if not isinstance(item, str):
+            return None
 
-            if tok == "__ELLIPSIS__":
-                return None
+        tok = canonicalize_shape_token(item)
+        if tok is None:
+            return None
+        if tok == "__ELLIPSIS__":
+            return None
 
-            pending_defs.setdefault(tok, _default_var_range(tok))
-            out.append(tok)
-            continue
+        if not _plain_var_name(tok):
+            return None
 
-        iv = _coerce_int(item)
-        if iv is not None and iv >= 1:
-            vname = _generated_var_name(pname, sem_role, i, is_primary)
-            pending_defs[vname] = [iv, iv]
-            out.append(vname)
-            continue
-
-        return None
+        pending_defs.setdefault(tok, _default_var_range(tok))
+        out.append(tok)
 
     return out, pending_defs
-
 
 def normalize_shape_spec_value(
     raw_spec: Any,
@@ -721,6 +735,7 @@ def normalize_ranked_shape_entries(
     return out
 
 
+
 def expand_ellipsis_shape_spec(
     raw_spec: Any,
     pname: str,
@@ -729,12 +744,11 @@ def expand_ellipsis_shape_spec(
     test_ranks: List[int],
 ) -> Dict[str, List[str]]:
     """
-    Support:
-      shape_spec: [R0, R1, ...]
-    Expands by test_ranks:
-      rank 1 -> [R0]
-      rank 2 -> [R0, R1]
-      rank 3 -> [R0, R1, R2]
+    Support symbolic variadic forms such as:
+      ["...", M, K]
+      [N, C, "..."]
+
+    Expansion is restricted to the provided finite test_ranks.
     """
     out: Dict[str, List[str]] = {}
     vals = _coerce_shape_list(raw_spec)
@@ -743,67 +757,68 @@ def expand_ellipsis_shape_spec(
 
     canonical: List[str] = []
     for item in vals:
-        if isinstance(item, str):
-            tok = canonicalize_shape_token(item)
-            if tok is None:
-                return out
-            canonical.append(tok)
-        else:
+        if not isinstance(item, str):
             return out
+        tok = canonicalize_shape_token(item)
+        if tok is None:
+            return out
+        canonical.append(tok)
 
-    if "__ELLIPSIS__" not in canonical:
+    if canonical.count("__ELLIPSIS__") != 1:
+        return out
+
+    ranks = sorted(set(r for r in test_ranks if isinstance(r, int) and r >= 0))
+    if not ranks:
         return out
 
     ell_idx = canonical.index("__ELLIPSIS__")
-    prefix = canonical[:ell_idx]
-    suffix = canonical[ell_idx + 1:]
-    if suffix:
-        return out
-    if not prefix:
-        return out
+    prefix_raw = canonical[:ell_idx]
+    suffix_raw = canonical[ell_idx + 1:]
 
-    prefix_norm = _normalize_shape_items_no_commit(prefix, pname, param_meta)
-    if prefix_norm is None:
+    prefix_norm = _normalize_shape_items_no_commit(prefix_raw, pname, param_meta)
+    suffix_norm = _normalize_shape_items_no_commit(suffix_raw, pname, param_meta)
+    if prefix_norm is None or suffix_norm is None:
         return out
 
     prefix_tokens, prefix_defs = prefix_norm
+    suffix_tokens, suffix_defs = suffix_norm
+    pending_defs = dict(prefix_defs)
+    pending_defs.update(suffix_defs)
 
-    numbered = [re.match(r"^(.*?)(\d+)$", t) for t in prefix_tokens]
-    if all(numbered):
-        stems = {m.group(1) for m in numbered if m is not None}
-        nums = [int(m.group(2)) for m in numbered if m is not None]
+    def middle_tokens(extra: int) -> List[str]:
+        if extra <= 0:
+            return []
 
-        if len(stems) == 1 and nums == list(range(nums[0], nums[0] + len(nums))):
-            stem = next(iter(stems))
-            start = nums[0]
+        if ell_idx == 0:
+            toks = [f"B{i+1}" for i in range(extra)]
+        elif ell_idx == len(canonical) - 1:
+            if extra == 1:
+                toks = ["L"]
+            elif extra == 2:
+                toks = ["H", "W"]
+            elif extra == 3:
+                toks = ["D", "H", "W"]
+            else:
+                toks = [f"X{i+1}" for i in range(extra)]
+        else:
+            toks = [f"X{i+1}" for i in range(extra)]
 
-            all_pending = dict(prefix_defs)
-            for r in sorted(set(test_ranks)):
-                if r < 0:
-                    continue
-                spec = []
-                for j in range(r):
-                    tok = f"{stem}{start + j}"
-                    spec.append(tok)
-                    all_pending.setdefault(tok, _default_var_range(tok))
-                out[str(r)] = spec
+        for tok in toks:
+            pending_defs.setdefault(tok, _default_var_range(tok))
+        return toks
 
-            for k, rng in all_pending.items():
-                _ensure_shape_var(out_shape_vars, k, rng)
-            return out
+    for r in ranks:
+        extra = r - len(prefix_tokens) - len(suffix_tokens)
+        if extra < 0:
+            continue
+        spec = list(prefix_tokens) + middle_tokens(extra) + list(suffix_tokens)
+        if len(spec) == r and all(_plain_var_name(x) for x in spec):
+            out[str(r)] = spec
 
-    # Conservative fallback:
-    # If all desired ranks are within the prefix length, use slices.
-    max_rank = max(test_ranks) if test_ranks else 0
-    if max_rank <= len(prefix_tokens):
-        for k, rng in prefix_defs.items():
-            _ensure_shape_var(out_shape_vars, k, rng)
-        for r in sorted(set(test_ranks)):
-            out[str(r)] = list(prefix_tokens[:r])
-        return out
+    for k, rng in pending_defs.items():
+        _ensure_shape_var(out_shape_vars, k, rng)
 
-    return {}
-
+    return dict(sorted(out.items(), key=lambda kv: int(kv[0])))
 
 def normalize_layout_variants(raw_layouts: Any, rank_plan: Dict[str, Any]) -> Dict[str, Any]:
     plan_layouts = rank_plan.get("layouts") or {}
@@ -850,13 +865,97 @@ def choose_test_dtypes(raw_tdc: Any, base_yaml: Dict[str, Any], rank_plan: Dict[
     return picked[:4] if picked else fallback
 
 
+
 def choose_test_ranks(raw_ranks: Any, rank_plan: Dict[str, Any]) -> List[int]:
     fallback = list(rank_plan.get("test_ranks") or [1, 2, 3, 4])
     if not isinstance(raw_ranks, list):
         return fallback
-    out = sorted(set(r for r in (_coerce_int(x) for x in raw_ranks) if isinstance(r, int) and r >= 0))
+
+    allowed = set(fallback)
+    out = sorted(set(
+        r for r in (_coerce_int(x) for x in raw_ranks)
+        if isinstance(r, int) and r >= 0 and (not allowed or r in allowed)
+    ))
     return out or fallback
 
+
+def _sorted_rank_keys(d: Dict[str, Any]) -> List[str]:
+    return sorted(list(d.keys()), key=lambda x: int(x))
+
+
+def _candidate_list_like_variants(raw_spec: Any) -> bool:
+    if not isinstance(raw_spec, list) or not raw_spec:
+        return False
+    if all(isinstance(x, str) for x in raw_spec):
+        return False
+    return any(
+        isinstance(x, list)
+        or (isinstance(x, str) and x.strip().startswith("["))
+        for x in raw_spec
+    )
+
+
+def normalize_shape_spec_variants(
+    raw_spec: Any,
+    pname: str,
+    param_meta: Dict[str, Any],
+    out_shape_vars: Dict[str, List[int]],
+    test_ranks: List[int],
+) -> Dict[str, List[str]]:
+    """
+    Normalize mixed multi-rank candidates such as:
+      [[K], [M, K], [B1, M, K]]
+      [[K], ["...", M, K]]
+      ["[K]", "[..., M, K]"]
+
+    Returns rank -> spec.
+    """
+    out: Dict[str, List[str]] = {}
+    if not _candidate_list_like_variants(raw_spec):
+        return out
+
+    for item in raw_spec:
+        ns = normalize_shape_spec_value(item, pname, param_meta, out_shape_vars)
+        if ns is not None:
+            out[str(len(ns))] = ns
+            continue
+
+        ell = expand_ellipsis_shape_spec(item, pname, param_meta, out_shape_vars, test_ranks)
+        if ell:
+            out.update(ell)
+            continue
+
+        return {}
+
+    return dict(sorted(out.items(), key=lambda kv: int(kv[0])))
+
+
+def _merge_used_shape_vars_from_completion(
+    completion: Dict[str, Any],
+) -> Set[str]:
+    used: Set[str] = set()
+    for _pname, pinfo in (completion.get("params") or {}).items():
+        if not isinstance(pinfo, dict):
+            continue
+
+        for tok in pinfo.get("shape_spec") or []:
+            if isinstance(tok, str):
+                used.add(tok)
+
+        for spec in (pinfo.get("shape_spec_by_rank") or {}).values():
+            if isinstance(spec, list):
+                for tok in spec:
+                    if isinstance(tok, str):
+                        used.add(tok)
+
+        for layout_map in (pinfo.get("shape_spec_by_rank_and_layout") or {}).values():
+            if isinstance(layout_map, dict):
+                for spec in layout_map.values():
+                    if isinstance(spec, list):
+                        for tok in spec:
+                            if isinstance(tok, str):
+                                used.add(tok)
+    return used
 
 def _merge_param_completion(dst: Dict[str, Any], src: Dict[str, Any]) -> None:
     for key in ("shape_spec", "shape_spec_by_rank", "shape_spec_by_rank_and_layout"):
@@ -879,6 +978,7 @@ def _merge_param_completion(dst: Dict[str, Any], src: Dict[str, Any]) -> None:
                         s[rk][layout_name] = spec
 
 
+
 def extract_from_yaml_params_section(
     llm_obj: Dict[str, Any],
     base_yaml: Dict[str, Any],
@@ -894,6 +994,8 @@ def extract_from_yaml_params_section(
     test_ranks = completion.get("test_ranks") or rank_plan.get("test_ranks") or []
     out_shape_vars = completion["shape_vars"]
 
+    any_extracted = False
+
     for pname, base_spec in base_params.items():
         if not _is_tensor_param(base_spec):
             continue
@@ -907,7 +1009,7 @@ def extract_from_yaml_params_section(
 
         extracted: Dict[str, Any] = {}
 
-        # 1) direct shape_spec
+        # 1) direct single shape_spec
         ns = normalize_shape_spec_value(llm_pspec.get("shape_spec"), pname, param_meta, out_shape_vars)
         if ns is not None:
             extracted["shape_spec"] = ns
@@ -927,7 +1029,7 @@ def extract_from_yaml_params_section(
         if sbrl:
             extracted["shape_spec_by_rank_and_layout"] = sbrl
 
-        # 4) ranked-entry shape_spec list
+        # 4) ranked-entry object list inside shape_spec
         if not extracted.get("shape_spec_by_rank"):
             ranked_sbr = normalize_ranked_shape_entries(
                 llm_pspec.get("shape_spec"),
@@ -937,15 +1039,8 @@ def extract_from_yaml_params_section(
             )
             if ranked_sbr:
                 extracted["shape_spec_by_rank"] = ranked_sbr
-                # for scalar aux params: rank 0 -> []
-                if pname != primary_param:
-                    if "0" in ranked_sbr and "shape_spec" not in extracted:
-                        extracted["shape_spec"] = ranked_sbr["0"]
-                    else:
-                        min_key = str(min(int(k) for k in ranked_sbr.keys()))
-                        extracted["shape_spec"] = ranked_sbr[min_key]
 
-        # 5) ellipsis rank-any shape_spec
+        # 5) single variadic spec inside shape_spec
         if not extracted.get("shape_spec_by_rank"):
             ellipsis_sbr = expand_ellipsis_shape_spec(
                 llm_pspec.get("shape_spec"),
@@ -956,20 +1051,39 @@ def extract_from_yaml_params_section(
             )
             if ellipsis_sbr:
                 extracted["shape_spec_by_rank"] = ellipsis_sbr
-                if pname != primary_param:
-                    min_key = str(min(int(k) for k in ellipsis_sbr.keys()))
-                    extracted["shape_spec"] = ellipsis_sbr[min_key]
 
-        # if we got shape_spec_by_rank for primary, choose min-rank default shape_spec
-        if pname == primary_param and extracted.get("shape_spec_by_rank"):
-            min_key = str(min(int(k) for k in extracted["shape_spec_by_rank"].keys()))
-            extracted["shape_spec"] = extracted["shape_spec_by_rank"][min_key]
+        # 6) mixed multi-rank candidates inside shape_spec
+        if not extracted.get("shape_spec_by_rank"):
+            mixed_sbr = normalize_shape_spec_variants(
+                llm_pspec.get("shape_spec"),
+                pname,
+                param_meta,
+                out_shape_vars,
+                test_ranks,
+            )
+            if mixed_sbr:
+                extracted["shape_spec_by_rank"] = mixed_sbr
+
+        # choose default shape_spec from rank tables if needed
+        if extracted.get("shape_spec_by_rank"):
+            min_key = _sorted_rank_keys(extracted["shape_spec_by_rank"])[0]
+            extracted["shape_spec"] = list(extracted["shape_spec_by_rank"][min_key])
+
+        elif extracted.get("shape_spec_by_rank_and_layout") and "shape_spec" not in extracted:
+            # choose one concrete default from layout tables for convenience
+            sbrl2 = extracted["shape_spec_by_rank_and_layout"]
+            min_key = _sorted_rank_keys(sbrl2)[0]
+            layout_map = sbrl2[min_key]
+            if isinstance(layout_map, dict) and layout_map:
+                first_layout = sorted(layout_map.keys())[0]
+                extracted["shape_spec"] = list(layout_map[first_layout])
 
         if extracted:
             _merge_param_completion(completion["params"][pname], extracted)
+            any_extracted = True
 
-    _record_source_mode(completion, "params_section")
-
+    if any_extracted:
+        _record_source_mode(completion, "params_section")
 
 def extract_from_variant_style(
     llm_obj: Dict[str, Any],
@@ -1029,363 +1143,57 @@ def extract_from_variant_style(
 
     _record_source_mode(completion, "variant_style")
 
+
 def apply_family_specific_shape_rules(
     completion: Dict[str, Any],
     base_yaml: Dict[str, Any],
     rank_plan: Dict[str, Any],
 ) -> bool:
     """
-    Apply high-confidence family-specific shape rules.
-    Returns True if any rule was applied.
+    Apply only small, high-confidence aux/control fixes.
+
+    Unlike the older TF path, do NOT synthesize the primary tensor's full
+    shape_spec_by_rank here. That should come from LLM extraction or fallback,
+    not from family-specific templating during the normal path.
     """
     op_family = base_yaml.get("op_family")
     params = completion.get("params") or {}
-    shape_vars = completion.get("shape_vars") or {}
-    test_ranks = completion.get("test_ranks") or rank_plan.get("test_ranks") or []
-
     changed = False
 
-    def sv(name: str, lo: int, hi: int) -> None:
-        _ensure_shape_var(shape_vars, name, [lo, hi])
-
-    def primary_name() -> Optional[str]:
-        return base_yaml.get("primary_param")
-
-    def set_primary_sbr_from_dims(pname: str, rank_to_dims: Dict[str, List[str]]) -> None:
+    def set_if_missing(pname: str, spec: List[str]) -> None:
         nonlocal changed
-        if pname not in params or not rank_to_dims:
-            return
-        params[pname]["shape_spec_by_rank"] = rank_to_dims
-        min_rank_key = str(min(int(k) for k in rank_to_dims.keys()))
-        params[pname]["shape_spec"] = list(rank_to_dims[min_rank_key])
-        changed = True
-
-    # ---------- matmul ----------
-    if op_family == "matmul" and "a" in params and "b" in params:
-        sv("M", 1, 16)
-        sv("K", 1, 64)
-        sv("N", 1, 16)
-
-        params["a"]["shape_spec"] = ["M", "K"]
-        params["a"]["shape_spec_by_rank"] = {"2": ["M", "K"]}
-
-        params["b"]["shape_spec"] = ["K", "N"]
-        changed = True
-
-    # ---------- conv1d ----------
-    elif op_family == "conv1d" and "input" in params:
-        sv("N", 1, 8)
-        sv("W", 1, 32)
-        sv("C_in", 1, 64)
-        sv("C_out", 1, 64)
-        sv("kW", 1, 11)
-
-        params["input"]["shape_spec"] = ["N", "W", "C_in"]
-        params["input"]["shape_spec_by_rank"] = {"3": ["N", "W", "C_in"]}
-        params["input"]["shape_spec_by_rank_and_layout"] = {
-            "3": {
-                "NWC": ["N", "W", "C_in"],
-                "NCW": ["N", "C_in", "W"],
-            }
-        }
-
-        filt_name = "filters" if "filters" in params else "filter" if "filter" in params else None
-        if filt_name:
-            params[filt_name]["shape_spec"] = ["kW", "C_in", "C_out"]
-        changed = True
-
-    # ---------- conv2d ----------
-    elif op_family == "conv2d" and "input" in params:
-        sv("N", 1, 8)
-        sv("H", 1, 32)
-        sv("W", 1, 32)
-        sv("C_in", 1, 64)
-        sv("C_out", 1, 64)
-        sv("kH", 1, 11)
-        sv("kW", 1, 11)
-
-        params["input"]["shape_spec"] = ["N", "H", "W", "C_in"]
-        params["input"]["shape_spec_by_rank"] = {"4": ["N", "H", "W", "C_in"]}
-        params["input"]["shape_spec_by_rank_and_layout"] = {
-            "4": {
-                "NHWC": ["N", "H", "W", "C_in"],
-                "NCHW": ["N", "C_in", "H", "W"],
-            }
-        }
-
-        filt_name = "filters" if "filters" in params else "filter" if "filter" in params else None
-        if filt_name:
-            params[filt_name]["shape_spec"] = ["kH", "kW", "C_in", "C_out"]
-        changed = True
-
-    # ---------- conv3d ----------
-    elif op_family == "conv3d" and "input" in params:
-        sv("N", 1, 8)
-        sv("D", 1, 16)
-        sv("H", 1, 32)
-        sv("W", 1, 32)
-        sv("C_in", 1, 64)
-        sv("C_out", 1, 64)
-        sv("kD", 1, 7)
-        sv("kH", 1, 7)
-        sv("kW", 1, 7)
-
-        params["input"]["shape_spec"] = ["N", "D", "H", "W", "C_in"]
-        params["input"]["shape_spec_by_rank"] = {"5": ["N", "D", "H", "W", "C_in"]}
-        params["input"]["shape_spec_by_rank_and_layout"] = {
-            "5": {
-                "NDHWC": ["N", "D", "H", "W", "C_in"],
-                "NCDHW": ["N", "C_in", "D", "H", "W"],
-            }
-        }
-
-        filt_name = "filters" if "filters" in params else "filter" if "filter" in params else None
-        if filt_name:
-            params[filt_name]["shape_spec"] = ["kD", "kH", "kW", "C_in", "C_out"]
-        changed = True
-
-    # ---------- depthwise_conv2d ----------
-    elif op_family == "depthwise_conv2d" and "input" in params:
-        sv("N", 1, 8)
-        sv("H", 1, 32)
-        sv("W", 1, 32)
-        sv("C_in", 1, 64)
-        sv("M", 1, 8)   # channel_multiplier
-        sv("kH", 1, 11)
-        sv("kW", 1, 11)
-
-        params["input"]["shape_spec"] = ["N", "H", "W", "C_in"]
-        params["input"]["shape_spec_by_rank"] = {"4": ["N", "H", "W", "C_in"]}
-        params["input"]["shape_spec_by_rank_and_layout"] = {
-            "4": {
-                "NHWC": ["N", "H", "W", "C_in"],
-                "NCHW": ["N", "C_in", "H", "W"],
-            }
-        }
-
-        filt_name = "filter" if "filter" in params else "filters" if "filters" in params else None
-        if filt_name:
-            params[filt_name]["shape_spec"] = ["kH", "kW", "C_in", "M"]
-        changed = True
-
-    # ---------- bias_add ----------
-    elif op_family == "bias_add" and "value" in params and "bias" in params:
-        sv("N", 1, 8)
-        sv("C", 1, 64)
-        sv("L", 1, 32)
-        sv("H", 1, 32)
-        sv("W", 1, 32)
-        sv("D", 1, 16)
-
-        value = params["value"]
-        bias = params["bias"]
-
-        sbr: Dict[str, List[str]] = {}
-        for r in test_ranks:
-            if r == 1:
-                sbr["1"] = ["C"]
-            elif r == 2:
-                sbr["2"] = ["N", "C"]
-            elif r == 3:
-                sbr["3"] = ["N", "L", "C"]
-            elif r == 4:
-                sbr["4"] = ["N", "H", "W", "C"]
-            elif r == 5:
-                sbr["5"] = ["N", "D", "H", "W", "C"]
-
-        if sbr:
-            value["shape_spec_by_rank"] = sbr
-            min_rank_key = str(min(int(k) for k in sbr.keys()))
-            value["shape_spec"] = list(sbr[min_rank_key])
+        if pname in params and isinstance(params[pname], dict) and "shape_spec" not in params[pname]:
+            params[pname]["shape_spec"] = list(spec)
             changed = True
 
-        value["shape_spec_by_rank_and_layout"] = {
-            "4": {
-                "NHWC": ["N", "H", "W", "C"],
-                "NCHW": ["N", "C", "H", "W"],
-            }
-        }
-        bias["shape_spec"] = ["C"]
-        changed = True
+    if op_family == "reduce":
+        set_if_missing("axis", [])
+        set_if_missing("reduction_indices", [])
 
-    # ---------- pool2d ----------
-    elif op_family == "pool2d" and "input" in params:
-        sv("N", 1, 8)
-        sv("H", 1, 32)
-        sv("W", 1, 32)
-        sv("C", 1, 64)
-
-        params["input"]["shape_spec"] = ["N", "H", "W", "C"]
-        params["input"]["shape_spec_by_rank"] = {"4": ["N", "H", "W", "C"]}
-        params["input"]["shape_spec_by_rank_and_layout"] = {
-            "4": {
-                "NHWC": ["N", "H", "W", "C"],
-                "NCHW": ["N", "C", "H", "W"],
-            }
-        }
-        changed = True
-
-    # ---------- pool3d ----------
-    elif op_family == "pool3d" and "input" in params:
-        sv("N", 1, 8)
-        sv("D", 1, 16)
-        sv("H", 1, 32)
-        sv("W", 1, 32)
-        sv("C", 1, 64)
-
-        params["input"]["shape_spec"] = ["N", "D", "H", "W", "C"]
-        params["input"]["shape_spec_by_rank"] = {"5": ["N", "D", "H", "W", "C"]}
-        params["input"]["shape_spec_by_rank_and_layout"] = {
-            "5": {
-                "NDHWC": ["N", "D", "H", "W", "C"],
-                "NCDHW": ["N", "C", "D", "H", "W"],
-            }
-        }
-        changed = True
-
-    # ---------- reduce ----------
-    elif op_family == "reduce":
-        pname = "input_tensor" if "input_tensor" in params else "input" if "input" in params else primary_name()
-        if pname and pname in params:
-            sbr = {}
-            for r in test_ranks:
-                dims = []
-                for i in range(r):
-                    name = f"DIM{i}"
-                    sv(name, 1, 32)
-                    dims.append(name)
-                sbr[str(r)] = dims
-            set_primary_sbr_from_dims(pname, sbr)
-
-            if "axis" in params:
-                params["axis"]["shape_spec"] = []
-                changed = True
-
-    # ---------- gather ----------
-    elif op_family == "gather" and "params" in params:
-        sbr = {}
-        for r in test_ranks:
-            dims = []
-            for i in range(r):
-                name = f"DIM{i}"
-                sv(name, 1, 32)
-                dims.append(name)
-            sbr[str(r)] = dims
-        set_primary_sbr_from_dims("params", sbr)
-
-        if "indices" in params:
-            sv("I", 1, 16)
-            params["indices"]["shape_spec"] = ["I"]   # conservative default
-            changed = True
-
-        if "axis" in params:
-            params["axis"]["shape_spec"] = []         # scalar int tensor
-            changed = True
-
-    # ---------- concat ----------
     elif op_family == "concat":
-        values_name = "values" if "values" in params else None
-        if values_name:
-            min_rank = min(test_ranks) if test_ranks else 2
-            dims = []
-            for i in range(min_rank):
-                name = f"DIM{i}"
-                sv(name, 1, 32)
-                dims.append(name)
-            params[values_name]["shape_spec"] = dims
-            changed = True
+        set_if_missing("axis", [])
 
-        if "axis" in params:
-            params["axis"]["shape_spec"] = []
-            changed = True
-
-    # ---------- split ----------
-    elif op_family == "split" and "value" in params:
-        sbr = {}
-        for r in test_ranks:
-            dims = []
-            for i in range(r):
-                name = f"DIM{i}"
-                sv(name, 1, 32)
-                dims.append(name)
-            sbr[str(r)] = dims
-        set_primary_sbr_from_dims("value", sbr)
-
-        if "axis" in params:
-            params["axis"]["shape_spec"] = []
-            changed = True
-
-    # ---------- transpose ----------
     elif op_family == "transpose":
-        pname = "a" if "a" in params else primary_name()
-        if pname and pname in params:
-            sbr = {}
-            for r in test_ranks:
-                dims = []
-                for i in range(r):
-                    name = f"DIM{i}"
-                    sv(name, 1, 32)
-                    dims.append(name)
-                sbr[str(r)] = dims
-            set_primary_sbr_from_dims(pname, sbr)
-
-        if "perm" in params:
-            sv("R", 1, max(test_ranks) if test_ranks else 4)
+        if "perm" in params and isinstance(params["perm"], dict) and "shape_spec" not in params["perm"]:
+            _ensure_shape_var(completion["shape_vars"], "R", [1, max(rank_plan.get("test_ranks") or [4])])
             params["perm"]["shape_spec"] = ["R"]
             changed = True
 
-    # ---------- reshape ----------
     elif op_family == "reshape":
-        pname = "tensor" if "tensor" in params else "input" if "input" in params else primary_name()
-        if pname and pname in params:
-            sbr = {}
-            for r in test_ranks:
-                dims = []
-                for i in range(r):
-                    name = f"DIM{i}"
-                    sv(name, 1, 32)
-                    dims.append(name)
-                sbr[str(r)] = dims
-            set_primary_sbr_from_dims(pname, sbr)
-
-        if "shape" in params:
-            sv("R", 1, max(test_ranks) if test_ranks else 4)
-            params["shape"]["shape_spec"] = ["R"]    # 1-D int tensor
+        if "shape" in params and isinstance(params["shape"], dict) and "shape_spec" not in params["shape"]:
+            _ensure_shape_var(completion["shape_vars"], "R", [1, max(rank_plan.get("test_ranks") or [4])])
+            params["shape"]["shape_spec"] = ["R"]
             changed = True
 
-    # ---------- softmax / activation ----------
-    elif op_family in {"softmax", "activation_hl"}:
-        pname = primary_name()
-        if pname and pname in params:
-            sbr = {}
-            for r in test_ranks:
-                dims = []
-                for i in range(r):
-                    name = f"DIM{i}"
-                    sv(name, 1, 32)
-                    dims.append(name)
-                sbr[str(r)] = dims
-            set_primary_sbr_from_dims(pname, sbr)
-
-        if "axis" in params:
-            params["axis"]["shape_spec"] = []
+    elif op_family == "gather":
+        if "indices" in params and isinstance(params["indices"], dict) and "shape_spec" not in params["indices"]:
+            _ensure_shape_var(completion["shape_vars"], "I", [1, 16])
+            params["indices"]["shape_spec"] = ["I"]
             changed = True
+        set_if_missing("axis", [])
 
-    # ---------- one_hot ----------
-    elif op_family == "one_hot" and "indices" in params:
-        sbr = {}
-        for r in test_ranks:
-            dims = []
-            for i in range(r):
-                name = f"DIM{i}"
-                sv(name, 1, 32)
-                dims.append(name)
-            sbr[str(r)] = dims
-        set_primary_sbr_from_dims("indices", sbr)
-
-        if "depth" in params:
-            params["depth"]["shape_spec"] = []       # scalar int
-            changed = True
+    elif op_family == "one_hot":
+        set_if_missing("depth", [])
 
     return changed
 
@@ -1430,128 +1238,79 @@ def derive_primary_sbr_from_existing_shape_spec(
 
     return False
 
+
 def finalize_completion_structure(
     completion: Dict[str, Any],
     base_yaml: Dict[str, Any],
     rank_plan: Dict[str, Any],
 ) -> None:
+    """
+    Conservative post-processing after validation succeeds or for best-effort
+    merge on the final failed attempt.
+
+    Key differences from the older TF version:
+    - do not synthesize generic primary shape_spec_by_rank in the normal path
+    - do not auto-fill every aux tensor with generic placeholders here
+    - only derive convenience fields from already-extracted structure
+    - only add shape_vars for variables already referenced by extracted specs
+    """
     base_params = base_yaml.get("params") or {}
     primary_param = base_yaml.get("primary_param")
     out_shape_vars = completion["shape_vars"]
-    test_ranks = completion.get("test_ranks") or rank_plan.get("test_ranks") or []
 
-    # 1) Apply family-specific rules first
     apply_family_specific_shape_rules(
         completion=completion,
         base_yaml=base_yaml,
         rank_plan=rank_plan,
     )
 
-    # 2) Primary param alignment / normalization
-    if primary_param and primary_param in completion["params"]:
-        p = completion["params"][primary_param]
-        sbr = p.get("shape_spec_by_rank") or {}
-        sbrl = p.get("shape_spec_by_rank_and_layout") or {}
+    for pname, pinfo in (completion.get("params") or {}).items():
+        if not isinstance(pinfo, dict):
+            continue
 
-        # If only rank+layout table exists, derive plain sbr from default layout when possible
-        if not sbr and sbrl:
+        # If only layout-specific rank tables exist, derive a plain rank table.
+        sbr = pinfo.get("shape_spec_by_rank") or {}
+        sbrl = pinfo.get("shape_spec_by_rank_and_layout") or {}
+        if not sbr and isinstance(sbrl, dict) and sbrl:
+            derived_sbr: Dict[str, List[str]] = {}
             df_param = base_params.get("data_format") or {}
             default_layout = df_param.get("default") if isinstance(df_param, dict) else None
-            for rk, layout_map in sbrl.items():
-                if not isinstance(layout_map, dict):
+
+            for rk in _sorted_rank_keys(sbrl):
+                layout_map = sbrl.get(rk)
+                if not isinstance(layout_map, dict) or not layout_map:
                     continue
                 if default_layout and default_layout in layout_map:
-                    sbr[rk] = layout_map[default_layout]
+                    derived_sbr[rk] = list(layout_map[default_layout])
                 else:
-                    for _lname, spec in layout_map.items():
-                        sbr[rk] = spec
-                        break
-            if sbr:
-                p["shape_spec_by_rank"] = sbr
+                    first_layout = sorted(layout_map.keys())[0]
+                    derived_sbr[rk] = list(layout_map[first_layout])
 
-        # If there is already a concrete primary shape_spec, derive sbr from it before generic fallback
-        derived = derive_primary_sbr_from_existing_shape_spec(
-            completion=completion,
-            base_yaml=base_yaml,
-            rank_plan=rank_plan,
-        )
-        if derived:
-            sbr = p.get("shape_spec_by_rank") or {}
+            if derived_sbr:
+                pinfo["shape_spec_by_rank"] = derived_sbr
+                sbr = derived_sbr
 
-        # Generic fallback only if still missing
-        if not p.get("shape_spec_by_rank"):
-            synthesized: Dict[str, List[str]] = {}
-            for r in test_ranks:
-                rank_spec = []
-                for i in range(r):
-                    vname = f"DIM{i}"
-                    _ensure_shape_var(out_shape_vars, vname)
-                    rank_spec.append(vname)
-                synthesized[str(r)] = rank_spec
-            if synthesized:
-                p["shape_spec_by_rank"] = synthesized
-                _merge_warning(completion, "primary shape_spec_by_rank synthesized generically")
+        # Prefer a deterministic default shape_spec when a rank table exists.
+        if isinstance(sbr, dict) and sbr:
+            min_key = _sorted_rank_keys(sbr)[0]
+            pinfo["shape_spec"] = list(sbr[min_key])
+        elif "shape_spec" not in pinfo and isinstance(sbrl, dict) and sbrl:
+            min_key = _sorted_rank_keys(sbrl)[0]
+            layout_map = sbrl[min_key]
+            if isinstance(layout_map, dict) and layout_map:
+                first_layout = sorted(layout_map.keys())[0]
+                pinfo["shape_spec"] = list(layout_map[first_layout])
 
-        # IMPORTANT: always align primary shape_spec with the minimum-rank entry of shape_spec_by_rank
-        sbr = p.get("shape_spec_by_rank") or {}
-        if sbr:
-            min_rank_key = str(min(int(k) for k in sbr.keys()))
-            p["shape_spec"] = list(sbr[min_rank_key])
+    # As a conservative fixed-rank convenience, derive primary rank table from
+    # an existing validated shape_spec only when the rank plan is single-rank.
+    derive_primary_sbr_from_existing_shape_spec(completion, base_yaml, rank_plan)
 
-    # 3) Aux params fallback
-    for pname, base_spec in base_params.items():
-        if not _is_tensor_param(base_spec):
-            continue
-        dst = completion["params"][pname]
-        if "shape_spec" in dst:
-            continue
-
-        sem_role = base_spec.get("semantic_role", "")
-        if pname == primary_param:
-            continue
-
-        if sem_role == "index_input":
-            _ensure_shape_var(out_shape_vars, "I")
-            dst["shape_spec"] = ["I"]
-            _merge_warning(completion, f"{pname}: shape_spec synthesized as generic index_input")
-
-        elif sem_role == "shape_control":
-            dst["shape_spec"] = []
-            _merge_warning(completion, f"{pname}: shape_spec synthesized as scalar shape_control")
-
-        elif sem_role == "scalar_attr":
-            dst["shape_spec"] = []
-            _merge_warning(completion, f"{pname}: shape_spec synthesized as scalar attr")
-
-        elif base_spec.get("role") == "aux":
-            _ensure_shape_var(out_shape_vars, "AUX0")
-            dst["shape_spec"] = ["AUX0"]
-            _merge_warning(completion, f"{pname}: shape_spec synthesized as generic aux tensor")
-
-        else:
-            _ensure_shape_var(out_shape_vars, "GEN0")
-            dst["shape_spec"] = ["GEN0"]
-            _merge_warning(completion, f"{pname}: shape_spec synthesized generically")
-
-    # 4) Ensure every referenced symbolic token exists in shape_vars
-    for pname, pinfo in completion["params"].items():
-        for tok in pinfo.get("shape_spec") or []:
-            if isinstance(tok, str):
-                _ensure_shape_var(out_shape_vars, tok)
-
-        for _rk, spec in (pinfo.get("shape_spec_by_rank") or {}).items():
-            for tok in spec:
-                if isinstance(tok, str):
-                    _ensure_shape_var(out_shape_vars, tok)
-
-        for _rk, layout_map in (pinfo.get("shape_spec_by_rank_and_layout") or {}).items():
-            for _layout, spec in layout_map.items():
-                for tok in spec:
-                    if isinstance(tok, str):
-                        _ensure_shape_var(out_shape_vars, tok)
+    # Only ensure vars already referenced by extracted specs.
+    for tok in sorted(_merge_used_shape_vars_from_completion(completion)):
+        _ensure_shape_var(out_shape_vars, tok)
 
 
-def extract_whitelisted_completion(
+def extract_whitelisted_completion_no_finalize(
     llm_obj: Dict[str, Any],
     base_yaml: Dict[str, Any],
     rank_plan: Dict[str, Any],
@@ -1575,13 +1334,18 @@ def extract_whitelisted_completion(
 
     extract_from_yaml_params_section(llm_obj, base_yaml, completion, rank_plan)
     extract_from_variant_style(llm_obj, base_yaml, completion)
-    finalize_completion_structure(completion, base_yaml, rank_plan)
     return completion
 
 
-# ════════════════════════════════════════════════════════════════
-# 7) validation on normalized completion
-# ════════════════════════════════════════════════════════════════
+def extract_whitelisted_completion(
+    llm_obj: Dict[str, Any],
+    base_yaml: Dict[str, Any],
+    rank_plan: Dict[str, Any],
+) -> Dict[str, Any]:
+    completion = extract_whitelisted_completion_no_finalize(llm_obj, base_yaml, rank_plan)
+    finalize_completion_structure(completion, base_yaml, rank_plan)
+    return completion
+
 
 def validate_completion(
     completion: Dict[str, Any],
@@ -1599,9 +1363,12 @@ def validate_completion(
         errs.append("base YAML missing valid primary_param")
         return errs
 
+    allowed_test_ranks = set(rank_plan.get("test_ranks") or [])
     test_ranks = completion.get("test_ranks") or rank_plan.get("test_ranks") or []
     if not isinstance(test_ranks, list) or not test_ranks or not all(isinstance(x, int) and x >= 0 for x in test_ranks):
         errs.append("test_ranks must be non-empty list[int>=0]")
+    elif allowed_test_ranks and any(r not in allowed_test_ranks for r in test_ranks):
+        errs.append(f"test_ranks must be subset of rank_plan.test_ranks={sorted(allowed_test_ranks)}")
 
     shape_vars = completion.get("shape_vars") or {}
     if not isinstance(shape_vars, dict):
@@ -1624,6 +1391,16 @@ def validate_completion(
         errs.append("completion.params must be dict")
         return errs
 
+    def validate_shape_list(owner: str, spec: Any, expected_rank: Optional[int] = None) -> None:
+        if not isinstance(spec, list) or not all(isinstance(x, str) for x in spec):
+            errs.append(f"{owner} must be list[str]")
+            return
+        if expected_rank is not None and len(spec) != expected_rank:
+            errs.append(f"{owner} length={len(spec)} != rank={expected_rank}")
+        for tok in spec:
+            if tok not in shape_vars:
+                errs.append(f"{owner} references undefined var: {tok}")
+
     for pname, base_spec in base_params.items():
         if not _is_tensor_param(base_spec):
             continue
@@ -1645,53 +1422,57 @@ def validate_completion(
             continue
 
         if ss is not None:
-            if not isinstance(ss, list) or not all(isinstance(x, str) for x in ss):
-                errs.append(f"{pname}.shape_spec must be list[str]")
-            else:
-                for tok in ss:
-                    if tok not in shape_vars:
-                        errs.append(f"{pname}.shape_spec references undefined var: {tok}")
+            validate_shape_list(f"{pname}.shape_spec", ss)
 
-        if pname == primary_param:
-            if not isinstance(sbr, dict) or not sbr:
-                errs.append(f"{primary_param}.shape_spec_by_rank missing or empty")
-            else:
-                for r in test_ranks:
-                    rk = str(r)
-                    if rk not in sbr:
-                        errs.append(f"{primary_param}.shape_spec_by_rank missing rank {rk}")
-                        continue
-                    spec = sbr[rk]
-                    if not isinstance(spec, list) or not all(isinstance(x, str) for x in spec):
-                        errs.append(f"{primary_param}.shape_spec_by_rank[{rk}] must be list[str]")
-                        continue
-                    if len(spec) != r:
-                        errs.append(
-                            f"{primary_param}.shape_spec_by_rank[{rk}] length={len(spec)} != rank={r}"
-                        )
-                    for tok in spec:
-                        if tok not in shape_vars:
-                            errs.append(f"{primary_param}.shape_spec_by_rank[{rk}] uses undefined var: {tok}")
+        if isinstance(sbr, dict):
+            for rk, spec in sbr.items():
+                rki = _coerce_int(rk)
+                if rki is None or rki < 0:
+                    errs.append(f"{pname}.shape_spec_by_rank has invalid rank key: {rk!r}")
+                    continue
+                validate_shape_list(f"{pname}.shape_spec_by_rank[{rk}]", spec, rki)
 
         if isinstance(sbrl, dict):
             for rk, layout_map in sbrl.items():
+                rki = _coerce_int(rk)
+                if rki is None or rki < 0:
+                    errs.append(f"{pname}.shape_spec_by_rank_and_layout has invalid rank key: {rk!r}")
+                    continue
                 if not isinstance(layout_map, dict):
                     errs.append(f"{pname}.shape_spec_by_rank_and_layout[{rk}] must be dict")
                     continue
                 for layout_name, spec in layout_map.items():
-                    if not isinstance(spec, list) or not all(isinstance(x, str) for x in spec):
-                        errs.append(f"{pname}.shape_spec_by_rank_and_layout[{rk}][{layout_name}] must be list[str]")
-                        continue
-                    for tok in spec:
-                        if tok not in shape_vars:
-                            errs.append(f"{pname}.shape_spec_by_rank_and_layout[{rk}][{layout_name}] undefined var: {tok}")
+                    validate_shape_list(f"{pname}.shape_spec_by_rank_and_layout[{rk}][{layout_name}]", spec, rki)
+
+        if pname == primary_param:
+            primary_ranks_covered: Set[int] = set()
+            if isinstance(sbr, dict):
+                primary_ranks_covered.update(
+                    int(rk) for rk in sbr.keys() if isinstance(_coerce_int(rk), int)
+                )
+            if isinstance(sbrl, dict):
+                primary_ranks_covered.update(
+                    int(rk) for rk in sbrl.keys() if isinstance(_coerce_int(rk), int)
+                )
+
+            if len(test_ranks) >= 2:
+                missing = [r for r in test_ranks if r not in primary_ranks_covered]
+                if missing:
+                    errs.append(f"{primary_param} missing primary rank coverage for: {missing}")
+            elif len(test_ranks) == 1:
+                only_rank = test_ranks[0]
+                ok = False
+                if only_rank in primary_ranks_covered:
+                    ok = True
+                elif isinstance(ss, list) and len(ss) == only_rank:
+                    ok = True
+                if not ok:
+                    errs.append(
+                        f"{primary_param} must provide shape_spec or rank-specific shape for rank {only_rank}"
+                    )
 
     return errs
 
-
-# ════════════════════════════════════════════════════════════════
-# 8) merge normalized completion back into original YAML
-# ════════════════════════════════════════════════════════════════
 
 def build_merged_yaml_from_completion(
     base_yaml: Dict[str, Any],
@@ -1718,8 +1499,6 @@ def build_merged_yaml_from_completion(
     out["shape_vars"] = merged_sv
 
     cparams = completion.get("params") or {}
-    primary_param = out.get("primary_param")
-
     for pname, pinfo in cparams.items():
         if pname not in params or not isinstance(params[pname], dict) or not isinstance(pinfo, dict):
             continue
@@ -1728,21 +1507,21 @@ def build_merged_yaml_from_completion(
         if "shape_spec" in pinfo:
             dst["shape_spec"] = list(pinfo["shape_spec"])
 
-        if pname == primary_param and pinfo.get("shape_spec_by_rank"):
+        if pinfo.get("shape_spec_by_rank"):
             dst["shape_spec_by_rank"] = {
                 str(rk): list(spec)
                 for rk, spec in pinfo["shape_spec_by_rank"].items()
             }
 
-        if pname == primary_param and pinfo.get("shape_spec_by_rank_and_layout"):
+        if pinfo.get("shape_spec_by_rank_and_layout"):
             dst["shape_spec_by_rank_and_layout"] = {
                 str(rk): {str(layout): list(spec) for layout, spec in layout_map.items()}
                 for rk, layout_map in pinfo["shape_spec_by_rank_and_layout"].items()
             }
 
-        if pname == primary_param and "shape_spec" not in pinfo and "shape_spec_by_rank" in pinfo:
+        if "shape_spec" not in pinfo and pinfo.get("shape_spec_by_rank"):
             try:
-                min_rank_key = str(min(int(k) for k in pinfo["shape_spec_by_rank"].keys()))
+                min_rank_key = _sorted_rank_keys(pinfo["shape_spec_by_rank"])[0]
                 dst["shape_spec"] = list(pinfo["shape_spec_by_rank"][min_rank_key])
             except Exception:
                 pass
@@ -1759,7 +1538,7 @@ def build_merged_yaml_from_completion(
             remaining_missing.append(pname)
 
     summary = {
-        "primary_param": primary_param,
+        "primary_param": out.get("primary_param"),
         "test_ranks": out.get("test_ranks"),
         "test_dtype_choices": out.get("test_dtype_choices"),
         "layout_variants_present": bool(out.get("layout_variants")),
@@ -1768,11 +1547,6 @@ def build_merged_yaml_from_completion(
         "source_modes_used": completion.get("source_modes_used") or [],
     }
     return out, summary
-
-
-# ════════════════════════════════════════════════════════════════
-# 9) LLM call
-# ════════════════════════════════════════════════════════════════
 
 def call_llm_for_completion(
     client: OpenAI,
@@ -1845,6 +1619,7 @@ def _build_fallback_completion(
 # 11) main
 # ════════════════════════════════════════════════════════════════
 
+
 def main():
     ap = argparse.ArgumentParser(
         description="Stage C: LLM-assisted YAML completion for TF API YAML."
@@ -1887,7 +1662,7 @@ def main():
         f"variants_to_generate={len(rank_plan['variant_plan'])}"
     )
 
-    system_prompt = TF_YAML_PATCH_SYSTEM_PROMPT
+    system_prompt = TF_YAML_PATCH_SYSTEM_PROMPT1
     rank_plan_text = json.dumps(rank_plan, indent=2, ensure_ascii=False)
 
     base_user_prompt = (
@@ -1900,7 +1675,17 @@ def main():
         "Return ONLY ONE COMPLETE YAML document.\n"
         "Do not return JSON.\n"
         "Do not omit existing sections.\n"
-        "Fill shape-related fields using YAML param names from params.\n"
+        "Use YAML param names from params exactly.\n"
+        "Fill only Stage-C shape-related fields:\n"
+        "- test_ranks\n"
+        "- test_dtype_choices\n"
+        "- layout_variants\n"
+        "- shape_vars\n"
+        "- params.*.shape_spec\n"
+        "- params.*.shape_spec_by_rank\n"
+        "- params.*.shape_spec_by_rank_and_layout\n"
+        "Do not add semantic constraints.\n"
+        "Never use concrete numeric shapes like [2, 3]. Use symbolic vars only.\n"
     )
 
     last_errors: List[str] = []
@@ -1939,10 +1724,11 @@ def main():
             final_completion = _build_fallback_completion(yaml_obj, rank_plan)
             break
 
-        completion = extract_whitelisted_completion(parsed_llm_yaml, yaml_obj, rank_plan)
+        completion = extract_whitelisted_completion_no_finalize(parsed_llm_yaml, yaml_obj, rank_plan)
         last_errors = validate_completion(completion, yaml_obj, rank_plan)
 
         if not last_errors:
+            finalize_completion_structure(completion, yaml_obj, rank_plan)
             final_completion = completion
             break
 
@@ -1956,6 +1742,7 @@ def main():
                 + "\n"
             )
         else:
+            finalize_completion_structure(completion, yaml_obj, rank_plan)
             final_completion = completion
 
     if final_completion is None:
@@ -2000,3 +1787,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

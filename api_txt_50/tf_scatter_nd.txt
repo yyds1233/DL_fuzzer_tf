@@ -1,0 +1,18 @@
+tf.scatter_nd
+Official URL: https://www.tensorflow.org/api_docs/python/tf/scatter_nd
+Signature: tf.scatter_nd(indices, updates, shape, name=None)
+
+Scatters updates into a new tensor of the given shape.
+
+Shape
+Input:
+- indices: shape (i0, i1, ..., i(m-1), k)
+- updates: shape indices.shape[:-1] + shape[k:]
+- shape: target output shape (s0, s1, ..., s(r-1))
+
+Output:
+- tensor of shape (s0, s1, ..., s(r-1))
+
+Examples:
+- indices (N, 2), updates (N,), shape (H, W) -> output (H, W)
+- indices (N, 1), updates (N, D), shape (M, D) -> output (M, D)

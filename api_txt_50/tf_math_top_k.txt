@@ -1,0 +1,20 @@
+tf.math.top_k
+Official URL: https://www.tensorflow.org/api_docs/python/tf/math/top_k
+Signature: tf.math.top_k(input, k=1, sorted=True, index_type=tf.int32, name=None)
+
+Finds the top k entries along the last dimension.
+
+Shape
+Input:
+- input: shape (..., D)
+
+Output:
+- values: shape (..., k)
+- indices: shape (..., k)
+
+Examples:
+- input (N, C) -> values (N, k), indices (N, k)
+- input (B, T, D) -> values (B, T, k), indices (B, T, k)
+
+Constraints:
+- k must be <= D

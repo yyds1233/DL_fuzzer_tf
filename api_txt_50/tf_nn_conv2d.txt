@@ -1,0 +1,17 @@
+tf.nn.conv2d
+Official URL: https://www.tensorflow.org/api_docs/python/tf/nn/conv2d
+Signature: tf.nn.conv2d(input, filters, strides, padding, data_format='NHWC', dilations=None, name=None)
+
+Computes a 2-D convolution.
+
+Shape
+Input:
+- input: shape (N, H, W, C_in) for NHWC or (N, C_in, H, W) for NCHW
+- filters: shape (K_h, K_w, C_in, C_out)
+
+Output:
+- shape (N, H_out, W_out, C_out) for NHWC or (N, C_out, H_out, W_out) for NCHW
+
+Constraints:
+- filter input channels C_in must match the channel dimension of input
+- H_out and W_out depend on strides, padding, dilations, and kernel size

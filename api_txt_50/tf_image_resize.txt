@@ -1,0 +1,18 @@
+tf.image.resize
+Official URL: https://www.tensorflow.org/api_docs/python/tf/image/resize
+Signature: tf.image.resize(images, size, method='bilinear', preserve_aspect_ratio=False, antialias=False, name=None)
+
+Resizes images to the given spatial size.
+
+Shape
+Input:
+- images: shape (H, W, C) or (N, H, W, C)
+- size: shape (2,), typically (target_height, target_width)
+
+Output:
+- if input rank is 3: shape (target_height, target_width, C)
+- if input rank is 4: shape (N, target_height, target_width, C)
+
+Constraints:
+- channel dimension C is preserved
+- rank is preserved

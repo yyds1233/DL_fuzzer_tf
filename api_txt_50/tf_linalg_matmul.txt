@@ -1,0 +1,18 @@
+tf.linalg.matmul
+Official URL: https://www.tensorflow.org/api_docs/python/tf/linalg/matmul
+Signature: tf.linalg.matmul(a, b, transpose_a=False, transpose_b=False, adjoint_a=False, adjoint_b=False, a_is_sparse=False, b_is_sparse=False, output_type=None, grad_a=False, grad_b=False, name=None)
+
+Multiplies matrix a by matrix b.
+
+Shape
+Input:
+- a: shape (..., M, K)
+- b: shape (..., K, N)
+
+Output:
+- shape (..., M, N)
+
+Examples:
+- (M, K) x (K, N) -> (M, N)
+- (B, M, K) x (B, K, N) -> (B, M, N)
+- batch dimensions before the last two dimensions may broadcast

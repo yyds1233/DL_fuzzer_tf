@@ -1,0 +1,19 @@
+tf.gather
+Official URL: https://www.tensorflow.org/api_docs/python/tf/gather
+Signature: tf.gather(params, indices, axis=0, batch_dims=0, name=None)
+
+Gathers slices from params along an axis.
+
+Shape
+Input:
+- params: shape (d0, d1, ..., d(n-1))
+- indices: shape (i0, i1, ..., i(m-1))
+
+Output:
+- without batch_dims: shape params.shape[:axis] + indices.shape + params.shape[axis+1:]
+- examples:
+  - params (V, D), indices (N,) -> (N, D)
+  - params (B, T, D), indices (B, K), axis=1, batch_dims=1 -> (B, K, D)
+
+Constraints:
+- indices values must be valid positions on the selected axis

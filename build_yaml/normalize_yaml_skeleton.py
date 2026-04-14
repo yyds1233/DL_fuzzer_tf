@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-normalize_tf_yaml_skeleton.py  –  Stage B (normalize): post-process YAML
+normalize_yaml_skeleton.py  –  Stage B (normalize): post-process YAML
 skeletons to fix up attr defaults, ranges, enum values, and ensure
 structural consistency.
 

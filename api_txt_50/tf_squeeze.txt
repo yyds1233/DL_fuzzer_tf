@@ -1,0 +1,17 @@
+tf.squeeze
+Official URL: https://www.tensorflow.org/api_docs/python/tf/squeeze
+Signature: tf.squeeze(input, axis=None, name=None)
+
+Removes dimensions of size 1 from a tensor.
+
+Shape
+Input:
+- input: shape (d0, d1, ..., d(n-1))
+
+Output:
+- same shape with selected size-1 dimensions removed
+- examples: (N, 1, H, W) -> (N, H, W), (1, C, 1) -> (C)
+
+Constraints:
+- if axis is specified, each selected axis must have size 1
+- output rank is input rank minus the number of removed axes

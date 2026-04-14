@@ -1,0 +1,18 @@
+tf.meshgrid
+Official URL: https://www.tensorflow.org/api_docs/python/tf/meshgrid
+Signature: tf.meshgrid(*args, indexing='xy', name=None)
+
+Broadcasts 1-D coordinate vectors to coordinate grids.
+
+Shape
+Input:
+- x: shape (Nx,)
+- y: shape (Ny,)
+- z: shape (Nz,)
+
+Output:
+- with two vectors, outputs two tensors of shape (Ny, Nx) for indexing='xy' or (Nx, Ny) for indexing='ij'
+- with three vectors, outputs three tensors of shape (Nx, Ny, Nz) for indexing='ij'
+
+Notes:
+- output rank equals number of input coordinate vectors

@@ -1,0 +1,16 @@
+tf.linalg.matvec
+Official URL: https://www.tensorflow.org/api_docs/python/tf/linalg/matvec
+Signature: tf.linalg.matvec(a, b, transpose_a=False, adjoint_a=False, a_is_sparse=False, name=None)
+
+Multiplies a matrix by a vector.
+
+Shape
+Input:
+- a: shape (..., M, K)
+- b: shape (..., K)
+
+Output:
+- shape (..., M)
+
+Constraints:
+- leading batch dimensions should be broadcast-compatible

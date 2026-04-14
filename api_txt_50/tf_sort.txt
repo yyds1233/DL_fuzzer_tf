@@ -1,0 +1,16 @@
+tf.sort
+Official URL: https://www.tensorflow.org/api_docs/python/tf/sort
+Signature: tf.sort(values, axis=-1, direction='ASCENDING', name=None)
+
+Sorts a tensor along an axis.
+
+Shape
+Input:
+- values: shape (d0, d1, ..., d(n-1))
+
+Output:
+- same shape as input: (d0, d1, ..., d(n-1))
+
+Notes:
+- rank is preserved
+- only values are reordered along the selected axis

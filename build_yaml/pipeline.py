@@ -246,11 +246,11 @@ def run_pipeline(args: argparse.Namespace) -> None:
 
                 if doc_path:
                     cmd = [
-                        python, "tf_llm_patch_yaml.py",
+                        python, "llm_patch_yaml_new.py",
                         "--doc_txt", str(doc_path),
                         "--yaml_in", str(yp),
                         "--yaml_out_dir", str(shaped_dir),
-                        "--model", args.openai_model or "gpt-4o",
+                        "--model", args.openai_model or "gpt-5-codex",
                     ]
                     run_cmd(cmd, f"Stage C: Shape {api_name}", env=openai_env)
                 else:

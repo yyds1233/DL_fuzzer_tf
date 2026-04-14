@@ -1,0 +1,79 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.meshgrid
+category: meshgrid
+api_category: core
+api_module: tf
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - 1
+  rank_any: false
+  rank_min: null
+  rank_max: 1
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.meshgrid
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  indexing:
+    origin: attr
+    kind: enum
+    values:
+    - xy
+    default: xy
+    semantic_role: scalar_attr
+    role: attr
+  name:
+    origin: kwarg
+    kind: string_optional
+    default: null
+    semantic_role: meta
+    role: attr
+constraints: []
+_param_rank_details:
+  '*args':
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks:
+    - 1
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: true
+    description_summary: One or more 1-D coordinate vectors that are broadcast to
+      form the grid.
+  indexing:
+    role: attr
+    semantic_role: layout_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Controls whether the output grids use 'xy' or 'ij' indexing
+      order.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional name for the operation.

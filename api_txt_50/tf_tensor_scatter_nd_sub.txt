@@ -1,0 +1,14 @@
+tf.tensor_scatter_nd_sub
+Official URL: https://www.tensorflow.org/api_docs/python/tf/tensor_scatter_nd_sub
+Signature: tf.tensor_scatter_nd_sub(tensor, indices, updates, name=None)
+
+Subtracts sparse updates from an existing tensor and returns the result.
+
+Shape
+Input:
+- tensor: shape (s0, s1, ..., s(r-1))
+- indices: shape (i0, i1, ..., i(m-1), k)
+- updates: shape indices.shape[:-1] + tensor.shape[k:]
+
+Output:
+- shape identical to tensor: (s0, s1, ..., s(r-1))

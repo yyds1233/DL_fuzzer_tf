@@ -1,0 +1,16 @@
+tf.nn.avg_pool2d
+Official URL: https://www.tensorflow.org/api_docs/python/tf/nn/avg_pool2d
+Signature: tf.nn.avg_pool2d(input, ksize, strides, padding, data_format='NHWC', name=None)
+
+Applies 2-D average pooling.
+
+Shape
+Input:
+- input: shape (N, H, W, C) for NHWC or (N, C, H, W) for NCHW
+
+Output:
+- shape (N, H_out, W_out, C) for NHWC
+- shape (N, C, H_out, W_out) for NCHW
+
+Constraints:
+- H_out and W_out depend on ksize, strides, and padding
