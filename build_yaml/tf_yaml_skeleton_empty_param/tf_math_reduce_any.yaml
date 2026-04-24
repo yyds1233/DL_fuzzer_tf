@@ -1,0 +1,132 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.math.reduce_any
+category: reduce_any
+api_category: math
+api_module: tf.math
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: true
+  rank_min: null
+  rank_max: null
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.math.reduce_any
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  input_tensor:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  axis:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  keepdims:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  name:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  reduction_indices:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  keep_dims:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+constraints: []
+_param_rank_details:
+  input_tensor:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: true
+    description_summary: Boolean tensor whose elements are reduced via logical OR
+      across specified dimensions.
+  axis:
+    role: attr
+    semantic_role: index_input
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Specifies which dimensions of the input tensor to reduce;
+      defaults to all dimensions when None.
+  keepdims:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: If true, retains reduced axes as dimensions of length 1 in
+      the output tensor.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional name for the reduction operation.
+  reduction_indices:
+    role: attr
+    semantic_role: index_input
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Deprecated alias for axis specifying the dimensions to reduce.
+  keep_dims:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Deprecated alias for keepdims indicating whether to keep
+      reduced dimensions of size 1.

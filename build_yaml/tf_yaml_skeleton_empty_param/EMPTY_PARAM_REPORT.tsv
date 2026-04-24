@@ -1,0 +1,12 @@
+api_name	reason	resolve_strategy	confidence	params_count	tensor_params_count	primary_param	tensor_params	yaml_file
+tf.math.divide_no_nan	no_tensor_params;missing_primary_param	unresolved	0.0	3	0	None		tf_math_divide_no_nan.yaml
+tf.broadcast_dynamic_shape	no_tensor_params;missing_primary_param	unresolved	0.0	2	0	None		tf_broadcast_dynamic_shape.yaml
+tf.math.reduce_any	no_tensor_params;missing_primary_param	unresolved	0.0	6	0	None		tf_math_reduce_any.yaml
+tf.math.scalar_mul	no_tensor_params;missing_primary_param	unresolved	0.0	3	0	None		tf_math_scalar_mul.yaml
+tf.linspace	no_tensor_params;missing_primary_param	unresolved	0.0	5	0	None		tf_linspace.yaml
+tf.math.truediv	no_tensor_params;missing_primary_param	unresolved	0.0	3	0	None		tf_math_truediv.yaml
+tf.meshgrid	empty_params;no_tensor_params;missing_primary_param	unresolved	0.0	0	0	None		tf_meshgrid.yaml
+tf.math.unsorted_segment_sqrt_n	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_math_unsorted_segment_sqrt_n.yaml
+tf.ones	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_ones.yaml
+tf.zeros	no_tensor_params;missing_primary_param	unresolved	0.0	4	0	None		tf_zeros.yaml
+tf.signal.linear_to_mel_weight_matrix	no_tensor_params;missing_primary_param	unresolved	0.0	7	0	None		tf_signal_linear_to_mel_weight_matrix.yaml

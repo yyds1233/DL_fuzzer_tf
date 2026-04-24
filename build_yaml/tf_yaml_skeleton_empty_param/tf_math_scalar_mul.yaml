@@ -1,0 +1,86 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.math.scalar_mul
+category: scalar_mul
+api_category: math
+api_module: tf.math
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: true
+  rank_min: null
+  rank_max: null
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.math.scalar_mul
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  scalar:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  x:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  name:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+constraints: []
+_param_rank_details:
+  scalar:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks:
+    - 0
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: A 0-D tensor providing the scalar value by which the input
+      will be multiplied.
+  x:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: true
+    description_summary: The tensor or IndexedSlices object whose elements are scaled
+      by the provided scalar.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional name for the operation.

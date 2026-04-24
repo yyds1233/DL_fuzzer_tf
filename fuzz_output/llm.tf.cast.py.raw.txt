@@ -1,0 +1,244 @@
+```python
+import atheris
+import sys
+import math
+
+with atheris.instrument_imports():
+    import tensorflow as tf
+
+
+DTYPES = [
+    tf.uint8,
+    tf.uint16,
+    tf.uint32,
+    tf.uint64,
+    tf.int8,
+    tf.int16,
+    tf.int32,
+    tf.int64,
+    tf.float16,
+    tf.float32,
+    tf.float64,
+    tf.bfloat16,
+    tf.complex64,
+    tf.complex128,
+]
+
+
+def _consume_shape(fdp):
+    rank = fdp.ConsumeIntInRange(1, 4)
+    shape = []
+    for _ in range(rank):
+        shape.append(fdp.ConsumeIntInRange(1, 8))
+    return shape
+
+
+def _num_elements(shape):
+    total = 1
+    for dim in shape:
+        total *= dim
+    return total
+
+
+def _consume_float(fdp):
+    choice = fdp.ConsumeIntInRange(0, 9)
+    if choice == 0:
+        return 0.0
+    if choice == 1:
+        return -0.0
+    if choice == 2:
+        return 1.0
+    if choice == 3:
+        return -1.0
+    if choice == 4:
+        return float("inf")
+    if choice == 5:
+        return float("-inf")
+    if choice == 6:
+        return float("nan")
+    if choice == 7:
+        return float(fdp.ConsumeIntInRange(-1024, 1024))
+    if choice == 8:
+        return fdp.ConsumeFloat()
+    return math.ldexp(
+        float(fdp.ConsumeIntInRange(-1024, 1024)),
+        fdp.ConsumeIntInRange(-10, 10),
+    )
+
+
+def _consume_scalar_for_dtype(fdp, dtype):
+    if dtype in (tf.uint8, tf.uint16, tf.uint32, tf.uint64):
+        bit_width = {
+            tf.uint8: 8,
+            tf.uint16: 16,
+            tf.uint32: 32,
+            tf.uint64: 64,
+        }[dtype]
+        if bit_width <= 32 or fdp.ConsumeBool():
+            return fdp.ConsumeIntInRange(0, min((1 << bit_width) - 1, (1 << 31) - 1))
+        return fdp.ConsumeUInt(64)
+
+    if dtype in (tf.int8, tf.int16, tf.int32, tf.int64):
+        bit_width = {
+            tf.int8: 8,
+            tf.int16: 16,
+            tf.int32: 32,
+            tf.int64: 64,
+        }[dtype]
+        if bit_width <= 32 or fdp.ConsumeBool():
+            lo = max(-(1 << (bit_width - 1)), -(1 << 31))
+            hi = min((1 << (bit_width - 1)) - 1, (1 << 31) - 1)
+            return fdp.ConsumeIntInRange(lo, hi)
+        raw = fdp.ConsumeUInt(64)
+        if raw >= (1 << 63):
+            raw -= (1 << 64)
+        return raw
+
+    if dtype in (tf.float16, tf.float32, tf.float64, tf.bfloat16):
+        return _consume_float(fdp)
+
+    if dtype in (tf.complex64, tf.complex128):
+        return complex(_consume_float(fdp), _consume_float(fdp))
+
+    return 0
+
+
+def _build_dense_tensor(fdp, dtype):
+    shape = _consume_shape(fdp)
+    count = _num_elements(shape)
+    values = [_consume_scalar_for_dtype(fdp, dtype) for _ in range(count)]
+    tensor = tf.constant(values, dtype=dtype)
+    return tf.reshape(tensor, shape)
+
+
+def _build_sparse_tensor(fdp, dtype):
+    dense_shape = _consume_shape(fdp)
+    max_nnz = min(8, _num_elements(dense_shape))
+    nnz = fdp.ConsumeIntInRange(0, max_nnz)
+
+    indices = []
+    seen = set()
+    attempts = 0
+    while len(indices) < nnz and attempts < max(1, nnz * 4):
+        attempts += 1
+        idx = tuple(fdp.ConsumeIntInRange(0, dim - 1) for dim in dense_shape)
+        if idx in seen:
+            continue
+        seen.add(idx)
+        indices.append(list(idx))
+
+    values = [_consume_scalar_for_dtype(fdp, dtype) for _ in range(len(indices))]
+    return tf.SparseTensor(
+        indices=indices,
+        values=tf.constant(values, dtype=dtype),
+        dense_shape=dense_shape,
+    )
+
+
+def _build_indexed_slices(fdp, dtype):
+    inner_rank = fdp.ConsumeIntInRange(0, 3)
+    outer_dim = fdp.ConsumeIntInRange(1, 8)
+    value_shape = [fdp.ConsumeIntInRange(1, 8) for _ in range(inner_rank)]
+    n_slices = fdp.ConsumeIntInRange(0, 8)
+
+    indices = [fdp.ConsumeIntInRange(0, outer_dim - 1) for _ in range(n_slices)]
+    values_shape = [n_slices] + value_shape
+    count = _num_elements(values_shape)
+    values = [_consume_scalar_for_dtype(fdp, dtype) for _ in range(count)]
+    values_tensor = tf.reshape(tf.constant(values, dtype=dtype), values_shape)
+
+    dense_shape = None
+    if fdp.ConsumeBool():
+        dense_shape = [outer_dim] + value_shape
+
+    index_dtype = tf.int32 if fdp.ConsumeBool() else tf.int64
+    return tf.IndexedSlices(
+        values=values_tensor,
+        indices=tf.constant(indices, dtype=index_dtype),
+        dense_shape=dense_shape,
+    )
+
+
+def _extract_tensor_for_raw_cast(x):
+    if isinstance(x, tf.SparseTensor):
+        return x.values
+    if isinstance(x, tf.IndexedSlices):
+        return x.values
+    return tf.convert_to_tensor(x)
+
+
+@atheris.instrument_func
+def TestOneInput(data: bytes):
+    fdp = atheris.FuzzedDataProvider(data)
+    try:
+        src_dtype = DTYPES[fdp.ConsumeIntInRange(0, len(DTYPES) - 1)]
+        dst_dtype = DTYPES[fdp.ConsumeIntInRange(0, len(DTYPES) - 1)]
+
+        container_kind = fdp.ConsumeIntInRange(0, 2)
+        if container_kind == 0:
+            x = _build_dense_tensor(fdp, src_dtype)
+        elif container_kind == 1:
+            x = _build_sparse_tensor(fdp, src_dtype)
+        else:
+            x = _build_indexed_slices(fdp, src_dtype)
+
+        name = None
+        if fdp.ConsumeBool():
+            name = fdp.ConsumeUnicodeNoSurrogates(32)
+
+        y = tf.cast(x, dtype=dst_dtype, name=name)
+
+        if isinstance(y, tf.Tensor):
+            _ = y.shape
+            _ = y.dtype
+            _ = tf.identity(y)
+        elif isinstance(y, tf.SparseTensor):
+            _ = y.values.dtype
+            _ = y.dense_shape
+            _ = tf.identity(y.values)
+        elif isinstance(y, tf.IndexedSlices):
+            _ = y.values.dtype
+            _ = tf.identity(y.values)
+
+        if fdp.ConsumeBool():
+            raw_x = _extract_tensor_for_raw_cast(x)
+            _ = tf.raw_ops.Cast(
+                x=raw_x,
+                DstT=dst_dtype,
+                Truncate=fdp.ConsumeBool(),
+            )
+
+        if fdp.ConsumeBool():
+            alias_y = tf.dtypes.cast(x, dst_dtype)
+            if isinstance(alias_y, tf.Tensor):
+                _ = alias_y.shape
+            elif isinstance(alias_y, tf.SparseTensor):
+                _ = alias_y.values.shape
+            elif isinstance(alias_y, tf.IndexedSlices):
+                _ = alias_y.values.shape
+
+    except (
+        tf.errors.InvalidArgumentError,
+        tf.errors.UnimplementedError,
+        tf.errors.InternalError,
+        tf.errors.ResourceExhaustedError,
+        ValueError,
+        TypeError,
+        RuntimeError,
+        AssertionError,
+        IndexError,
+        NotImplementedError,
+    ):
+        return
+    except Exception:
+        return
+
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput)
+    atheris.Fuzz()
+
+
+if __name__ == "__main__":
+    main()
+```

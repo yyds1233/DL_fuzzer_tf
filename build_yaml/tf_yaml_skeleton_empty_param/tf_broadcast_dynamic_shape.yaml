@@ -1,0 +1,72 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.broadcast_dynamic_shape
+category: broadcast_dynamic_shape
+api_category: core
+api_module: tf
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - 1
+  rank_any: false
+  rank_min: null
+  rank_max: 1
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.broadcast_dynamic_shape
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  shape_x:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  shape_y:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+constraints: []
+_param_rank_details:
+  shape_x:
+    role: attr
+    semantic_role: shape_control
+    fixed_ranks:
+    - 1
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Rank‑1 integer tensor giving the symbolic shape of the first
+      operand to be broadcast.
+  shape_y:
+    role: attr
+    semantic_role: shape_control
+    fixed_ranks:
+    - 1
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Rank‑1 integer tensor giving the symbolic shape of the second
+      operand to be broadcast.

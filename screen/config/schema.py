@@ -30,11 +30,23 @@ class StepResult:
     proxy_reward: float
     fast_reward: float
     delta_files_epoch: int
-
     audited_harnesses: int
     slow_harness: Optional[int]
+
     # kept for backward-compatible state shape; profile slow attribution is disabled
     slow_profile_credit: Optional[float] = None
+
+    # --- high-level log event mix signal ---
+    event_total: int = 0
+    new_count: int = 0
+    reduce_count: int = 0
+    pulse_count: int = 0
+    reduce_pulse_ratio: float = 0.0
+    forced_deprioritized: bool = False
+
+    # --- consecutive zero slow-audit signal ---
+    zero_slow_streak: int = 0
+    forced_deprioritized_by_zero_slow: bool = False
 
 
 @dataclass
@@ -55,11 +67,13 @@ class BanditParams:
 class AuditParams:
     # Local per-harness trigger.
     audit_every: int = 10
+
     # Optional second trigger: audit as soon as this harness accumulates enough new files.
     audit_min_delta_files: int = 0
+
     full_corpus_audit: bool = False
     audit_max_inputs: int = 0
-    slow_metric: str = "BRH"  # BRH/LH/FNH  (LLVM coverage metrics)
+    slow_metric: str = "BRH"  # BRH/LH/FNH (LLVM coverage metrics)
 
     # Deprecated: kept only for config compatibility; no longer used.
     audit_profile_topk: int = 5
@@ -70,12 +84,16 @@ class AuditParams:
     cov_venv_activate: Path = Path("/root/tf_cov/bin/activate")
     cov_audit_script: Path = Path("cov_global_union_audit.py")
     global_dir: Path = Path("global_union")
-    # TensorFlow primary coverage object (e.g. libtensorflow_cc.so built with -fprofile-instr-generate)
+
+    # TensorFlow primary coverage object
     primary_object: str = ""
+
     # Additional TensorFlow coverage objects
     extra_object: List[str] = field(default_factory=list)
+
     ignore_filename_regex: Optional[str] = None
     cov_replay_extra: str = ""
+
     # Timeout (seconds) for a single replay+merge audit pass
     replay_timeout: int = 600
 
@@ -91,7 +109,7 @@ class RuntimeParams:
     manifest_dir: Path = Path("manifests")
 
     # TensorFlow-specific default environment variables.
-    # Profile parameters can override these at runtime.
+    # When disable_profiles=True, these are used as-is with no profile overlay.
     tf_env: Dict[str, str] = field(default_factory=lambda: {
         "OMP_NUM_THREADS": "1",
         "TF_NUM_INTEROP_THREADS": "1",
@@ -99,6 +117,8 @@ class RuntimeParams:
         "TF_CPP_MIN_LOG_LEVEL": "2",
         "TF_ENABLE_ONEDNN_OPTS": "0",
     })
+
+    disable_profiles: bool = False
 
 
 @dataclass

@@ -12,7 +12,7 @@ from screen.bandit.rewards import compute_fast_reward, compute_proxy_reward
 from screen.config.io import load_harness_candidates
 from screen.config.schema import DriverConfig, StepResult
 from screen.metrics.compute import compute_deltas, normalize_exec_s
-from screen.metrics.parse_libfuzzer import parse_fuzzer_log
+from screen.metrics.parse_libfuzzer import parse_fuzzer_log, parse_fuzzer_event_mix
 from screen.runner.audit_runner import run_cov_audit_in_cov_env
 from screen.runner.fuzz_runner import run_one_epoch
 
@@ -248,7 +248,8 @@ def orchestrate(cfg: DriverConfig) -> None:
     if not candidates:
         raise SystemExit("no harness candidates loaded")
 
-    fuzz_flags = [x for x in rt.fuzz_flags.split(" ") if x.strip()]
+    import shlex
+    fuzz_flags = shlex.split(rt.fuzz_flags)
 
     manifest_root = rt.manifest_dir
     if not manifest_root.is_absolute():
@@ -264,28 +265,35 @@ def orchestrate(cfg: DriverConfig) -> None:
     harness_path_by_id: Dict[str, Path] = {c.harness_id: c.harness_path for c in candidates}
     group_by_hid: Dict[str, str] = {c.harness_id: c.group_id for c in candidates}
 
-    prior = GroupPriorManager(
-        state_dir=(root / "state" / "group_prior"),
-        elite_size=cfg.prior.elite_size,
-        ewma_alpha=cfg.prior.ewma_alpha,
-    )
-    pool = ProfilePoolManager(
-        state_dir=(root / "state" / "pools"),
-        k=cfg.pool.k,
-        refresh_every=cfg.pool.refresh_every,
-        keep_frac=cfg.pool.keep_frac,
-        replace_frac=cfg.pool.replace_frac,
-        inject_each_refresh=cfg.pool.inject_each_refresh,
-        min_pulls_to_kill=cfg.pool.min_pulls_to_kill,
-        seed=bd.seed,
-    )
+    # Force the first batch to run every harness exactly once before bandit selection starts.
+    warmup_queue: List[str] = list(harness_ids)
 
-    for c in candidates:
-        hid = c.harness_id
-        gid = c.group_id
-        if c.profiles:
-            pool.maybe_init_pool(hid=hid, group_id="OTHERS", t=1, group_prior=prior)
-        pool.maybe_init_pool(hid=hid, group_id=gid, t=1, group_prior=prior)
+    prior = None
+    pool = None
+    if not rt.disable_profiles:
+        prior = GroupPriorManager(
+            state_dir=(root / "state" / "group_prior"),
+            elite_size=cfg.prior.elite_size,
+            ewma_alpha=cfg.prior.ewma_alpha,
+        )
+        pool = ProfilePoolManager(
+            state_dir=(root / "state" / "pools"),
+            k=cfg.pool.k,
+            refresh_every=cfg.pool.refresh_every,
+            keep_frac=cfg.pool.keep_frac,
+            replace_frac=cfg.pool.replace_frac,
+            inject_each_refresh=cfg.pool.inject_each_refresh,
+            min_pulls_to_kill=cfg.pool.min_pulls_to_kill,
+            seed=bd.seed,
+        )
+
+    if not rt.disable_profiles:
+        for c in candidates:
+            hid = c.harness_id
+            gid = c.group_id
+            if c.profiles:
+                pool.maybe_init_pool(hid=hid, group_id="OTHERS", t=1, group_prior=prior)
+            pool.maybe_init_pool(hid=hid, group_id=gid, t=1, group_prior=prior)
 
     harness_bandit = make_bandit(
         c_fast=bd.c_fast,
@@ -300,22 +308,26 @@ def orchestrate(cfg: DriverConfig) -> None:
     )
 
     profile_bandits: Dict[str, Any] = {}
-    for hid in harness_ids:
-        profile_bandits[hid] = make_bandit(
-            c_fast=bd.c_fast,
-            c_slow=bd.c_slow,
-            epsilon=bd.epsilon_profile,
-            elim_margin=bd.elim_margin,
-            elim_patience=bd.elim_patience,
-            elim_min_pulls=bd.elim_min_pulls,
-            alpha_min=bd.alpha_min,
-            cooldown_steps=bd.cooldown_steps,
-            seed=bd.seed + (hash(hid) & 0xFFFF),
-        )
+    if not rt.disable_profiles:
+        for hid in harness_ids:
+            profile_bandits[hid] = make_bandit(
+                c_fast=bd.c_fast,
+                c_slow=bd.c_slow,
+                epsilon=bd.epsilon_profile,
+                elim_margin=bd.elim_margin,
+                elim_patience=bd.elim_patience,
+                elim_min_pulls=bd.elim_min_pulls,
+                alpha_min=bd.alpha_min,
+                cooldown_steps=bd.cooldown_steps,
+                seed=bd.seed + (hash(hid) & 0xFFFF),
+            )
 
     # per-harness local slow audit state
     audit_runs_since_base: Dict[str, int] = {hid: 0 for hid in harness_ids}
     audit_delta_files_since_base: Dict[str, int] = {hid: 0 for hid in harness_ids}
+
+    # consecutive local slow-audit zero streak per harness
+    zero_slow_audit_streak: Dict[str, int] = {hid: 0 for hid in harness_ids}
 
     results: List[StepResult] = []
     t = 1
@@ -324,29 +336,41 @@ def orchestrate(cfg: DriverConfig) -> None:
             if rt.steps > 0 and t > rt.steps:
                 break
 
-            for ahid in harness_ids:
-                pool.maybe_refresh(hid=ahid, group_id=group_by_hid[ahid], t=t, group_prior=prior)
+            if not rt.disable_profiles:
+                for ahid in harness_ids:
+                    pool.maybe_refresh(hid=ahid, group_id=group_by_hid[ahid], t=t, group_prior=prior)
 
-            hid = harness_bandit.select(harness_ids)
+            if warmup_queue:
+                hid = warmup_queue.pop(0)
+                # Advance selector step counter so cooldown / timestamps stay consistent.
+                harness_bandit.t += 1
+            else:
+                hid = harness_bandit.select(harness_ids)
+
             harness_path = harness_path_by_id[hid]
 
-            prof_arms = pool.get_active_profiles(hid)
-            if not prof_arms:
-                pool.maybe_init_pool(hid=hid, group_id=group_by_hid[hid], t=t, group_prior=prior)
+            if rt.disable_profiles:
+                pid = "no_profile"
+                pb = None
+                profile_env: Dict[str, str] = dict(rt.tf_env)
+            else:
                 prof_arms = pool.get_active_profiles(hid)
+                if not prof_arms:
+                    pool.maybe_init_pool(hid=hid, group_id=group_by_hid[hid], t=t, group_prior=prior)
+                    prof_arms = pool.get_active_profiles(hid)
 
-            prof_ids = [p.profile_id for p in prof_arms]
-            pb = profile_bandits[hid]
-            for pid0 in prof_ids:
-                pb.ensure(pid0)  # type: ignore[attr-defined]
-            pid = pb.select(prof_ids)
-            arm = next(p for p in prof_arms if p.profile_id == pid)
+                prof_ids = [p.profile_id for p in prof_arms]
+                pb = profile_bandits[hid]
+                for pid0 in prof_ids:
+                    pb.ensure(pid0)  # type: ignore[attr-defined]
+                pid = pb.select(prof_ids)
+                arm = next(p for p in prof_arms if p.profile_id == pid)
 
-            # --- TensorFlow-only environment construction ---
-            # Start from TF default env, then overlay profile parameters.
-            profile_env: Dict[str, str] = dict(rt.tf_env)
-            for k, v in arm.profile.items():
-                profile_env[k] = str(v)
+                # --- TensorFlow-only environment construction ---
+                # Start from TF default env, then overlay profile parameters.
+                profile_env = dict(rt.tf_env)
+                for k, v in arm.profile.items():
+                    profile_env[k] = str(v)
 
             corpus_dir = root / "corpus" / hid
             run_dir = root / "runs" / hid / pid / f"t{t:04d}"
@@ -381,12 +405,32 @@ def orchestrate(cfg: DriverConfig) -> None:
             exec_s = normalize_exec_s(p["exec_s_last"])
             delta_ft, delta_cov = compute_deltas(p["cov_first"], p["cov_last"], p["ft_first"], p["ft_last"])
 
+            event_mix = parse_fuzzer_event_mix(log_path)
+            event_total = int(event_mix["event_total"])
+            new_count = int(event_mix["new_count"])
+            reduce_count = int(event_mix["reduce_count"])
+            pulse_count = int(event_mix["pulse_count"])
+            reduce_pulse_ratio = float(event_mix["reduce_pulse_ratio"])
+
             proxy_reward = float(compute_proxy_reward(delta_ft, delta_cov, exec_s, mix=rt.mix))
             fast_reward = float(compute_fast_reward(proxy_reward, delta_files_epoch))
 
-            pb.update_fast(pid, fast_reward)
+            # High-level harness deprioritization:
+            # If the current fuzz log is dominated by REDUCE + pulse among numeric event lines,
+            # treat the harness as temporarily saturated and push it into a cooldown.
+            forced_deprioritized = False
+            #设置比例
+            if event_total >= 0 and reduce_pulse_ratio >= 0.70:
+                hs = harness_bandit.ensure(hid)
+                hs.bad_streak = 0
+                hs.inactive_until = max(hs.inactive_until, harness_bandit.t + 5)
+                forced_deprioritized = True
+
+            if not rt.disable_profiles:
+                pb.update_fast(pid, fast_reward)
+                pool.on_fast(hid, pid, fast_reward)
+
             harness_bandit.update_fast(hid, fast_reward)
-            pool.on_fast(hid, pid, fast_reward)
 
             audit_runs_since_base[hid] += 1
             audit_delta_files_since_base[hid] += delta_files_epoch
@@ -395,6 +439,8 @@ def orchestrate(cfg: DriverConfig) -> None:
             slow_harness_selected: Optional[int] = None
             slow_profile_credit_selected: Optional[float] = None
             prior_admitted_selected = 0
+            forced_deprioritized_by_zero_slow = False
+            zero_slow_streak_now = zero_slow_audit_streak.get(hid, 0)
 
             do_audit = _should_run_local_audit(
                 audit_every=int(au.audit_every),
@@ -450,15 +496,34 @@ def orchestrate(cfg: DriverConfig) -> None:
 
                     harness_bandit.update_slow(hid, float(slow_h))
                     slow_harness_selected = slow_h
-                    prior_admitted_selected = _write_prior_from_fast_gate(
-                        cfg=cfg,
-                        prior=prior,
-                        pool=pool,
-                        hid=hid,
-                        group_id=group_by_hid[hid],
-                        slow_h=slow_h,
-                        t=t,
-                    )
+
+                    # consecutive zero-slow-audit rule
+                    if slow_h <= 0:
+                        zero_slow_audit_streak[hid] = zero_slow_audit_streak.get(hid, 0) + 1
+                    else:
+                        zero_slow_audit_streak[hid] = 0
+
+                    zero_slow_streak_now = zero_slow_audit_streak[hid]
+
+                    # If two consecutive slow audits yield zero increment, pause this harness for 5 selection rounds.
+                    if zero_slow_streak_now >= 2:
+                        hs = harness_bandit.ensure(hid)
+                        hs.bad_streak = 0
+                        hs.inactive_until = max(hs.inactive_until, harness_bandit.t + 5)
+                        forced_deprioritized_by_zero_slow = True
+
+                    if not rt.disable_profiles:
+                        prior_admitted_selected = _write_prior_from_fast_gate(
+                            cfg=cfg,
+                            prior=prior,
+                            pool=pool,
+                            hid=hid,
+                            group_id=group_by_hid[hid],
+                            slow_h=slow_h,
+                            t=t,
+                        )
+                    else:
+                        prior_admitted_selected = 0
 
                     advance_audit_base_to_current(
                         audit_base_manifest_path=audit_base_manifest,
@@ -467,9 +532,11 @@ def orchestrate(cfg: DriverConfig) -> None:
                     _reset_local_audit_state(audit_runs_since_base, audit_delta_files_since_base, hid)
 
                     harness_bandit.maybe_soft_eliminate(harness_ids)
-                    for ahid in harness_ids:
-                        cur_ids = [p.profile_id for p in pool.get_active_profiles(ahid)]
-                        profile_bandits[ahid].maybe_soft_eliminate(cur_ids)
+
+                    if not rt.disable_profiles:
+                        for ahid in harness_ids:
+                            cur_ids = [p.profile_id for p in pool.get_active_profiles(ahid)]
+                            profile_bandits[ahid].maybe_soft_eliminate(cur_ids)
 
             sr = StepResult(
                 t=t,
@@ -484,37 +551,60 @@ def orchestrate(cfg: DriverConfig) -> None:
                 audited_harnesses=audited_harnesses,
                 slow_harness=slow_harness_selected,
                 slow_profile_credit=slow_profile_credit_selected,
+
+                event_total=event_total,
+                new_count=new_count,
+                reduce_count=reduce_count,
+                pulse_count=pulse_count,
+                reduce_pulse_ratio=reduce_pulse_ratio,
+                forced_deprioritized=forced_deprioritized,
+
+                zero_slow_streak=zero_slow_streak_now,
+                forced_deprioritized_by_zero_slow=forced_deprioritized_by_zero_slow,
             )
             results.append(sr)
 
             hu, hl = harness_bandit.ucb_lcb(hid)
-            pu, pl = pb.ucb_lcb(pid)
+            if rt.disable_profiles:
+                pu, pl = 0.0, 0.0
+            else:
+                pu, pl = pb.ucb_lcb(pid)
 
             print(
                 f"[t={t:04d}] harness={hid} profile={pid} "
                 f"Δft={delta_ft} Δcov={delta_cov} exec/s={exec_s:.1f} "
                 f"proxy={proxy_reward:.3f} fast={fast_reward:.3f} delta_files={delta_files_epoch} "
                 + (
-                    f"| audit_h={audited_harnesses} slow_{au.slow_metric}(H)=({slow_harness_selected}) prior_admit={prior_admitted_selected} "
+                    f"| deprioritized=1 rp_ratio={reduce_pulse_ratio:.3f} "
+                    if forced_deprioritized
+                    else f"| rp_ratio={reduce_pulse_ratio:.3f} "
+                )
+                + (
+                    f"| audit_h={audited_harnesses} slow_{au.slow_metric}(H)=({slow_harness_selected}) "
+                    f"zero_slow_streak={zero_slow_streak_now} "
+                    + ("cut_by_zero_slow=1 " if forced_deprioritized_by_zero_slow else "")
+                    + f"prior_admit={prior_admitted_selected} "
                     if do_audit
                     else ""
                 )
                 + f"| H(UCB/LCB)=({hu:.3f}/{hl:.3f}) active={harness_bandit.is_active(hid)} "
-                f"P(UCB/LCB)=({pu:.3f}/{pl:.3f}) active={pb.is_active(pid)}"
+                f"P(UCB/LCB)=({pu:.3f}/{pl:.3f}) active={True if rt.disable_profiles else pb.is_active(pid)}"
             )
 
-            # --- Flush pool state (dirty-write optimization) ---
-            pool.flush_all()
+            if not rt.disable_profiles:
+                pool.flush_all()
 
             out_state = {
                 "config": cfg.to_jsonable(),
                 "harness_bandit": harness_bandit.to_jsonable(),
                 "profile_bandits": {x: profile_bandits[x].to_jsonable() for x in profile_bandits},
                 "groups": group_by_hid,
+                "warmup_remaining": list(warmup_queue),
                 "audit_state": {
                     ahid: {
                         "runs_since_base": audit_runs_since_base[ahid],
                         "delta_files_since_base": audit_delta_files_since_base[ahid],
+                        "zero_slow_audit_streak": zero_slow_audit_streak[ahid],
                     }
                     for ahid in harness_ids
                 },
@@ -530,7 +620,8 @@ def orchestrate(cfg: DriverConfig) -> None:
 
     except KeyboardInterrupt:
         print("\n[!] interrupted by user (Ctrl+C)")
-        pool.flush_all()
+        if not rt.disable_profiles:
+            pool.flush_all()
 
     final = root / "state" / "bandit_all_results.json"
     final.write_text(json.dumps([asdict(x) for x in results], indent=2), encoding="utf-8")

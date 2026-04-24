@@ -41,7 +41,7 @@ def build_parser() -> argparse.ArgumentParser:
     ap.add_argument("--steps", type=int, default=200, help=">0: run N steps; 0: run forever")
     ap.add_argument(
         "--fuzz_flags",
-        default="-ignore_timeouts=1 -rss_limit_mb=4096 -use_value_profile=1 -entropic=1",
+        default="-ignore_timeouts=1 -rss_limit_mb=8192 -malloc_limit_mb=8192 -use_value_profile=1 -entropic=1",
     )
     ap.add_argument("--mix", type=float, default=0.7)
 
@@ -130,6 +130,15 @@ def build_parser() -> argparse.ArgumentParser:
 
     # manifests
     ap.add_argument("--manifest_dir", default="manifests")
+    # ap.add_argument(
+    #     "--tf_enable_onednn_opts", type=str, default="0",
+    #     help="TF_ENABLE_ONEDNN_OPTS (default: 0)",
+    # )
+    ap.add_argument(
+        "--disable_profiles",
+        action="store_true",
+        help="Disable profile pool/bandit/env overrides; run each harness using only tf_env.",
+    )
 
     # audit
     ap.add_argument(
@@ -223,6 +232,7 @@ def main() -> None:
         mix=args.mix,
         manifest_dir=Path(args.manifest_dir),
         tf_env=tf_env,
+        disable_profiles=bool(args.disable_profiles),
     )
 
     bandit = BanditParams(

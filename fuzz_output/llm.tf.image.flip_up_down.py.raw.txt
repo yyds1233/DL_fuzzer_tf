@@ -1,0 +1,181 @@
+```python
+import atheris
+
+with atheris.instrument_imports():
+    import sys
+    import tensorflow as tf
+
+
+_ALLOWED_DTYPES = [
+    tf.uint8,
+    tf.int8,
+    tf.uint16,
+    tf.int16,
+    tf.int32,
+    tf.uint32,
+    tf.int64,
+    tf.uint64,
+    tf.bool,
+    tf.bfloat16,
+    tf.float16,
+    tf.float32,
+    tf.float64,
+    tf.complex64,
+    tf.complex128,
+    tf.string,
+]
+
+_ALLOWED_AXIS_DTYPES = [tf.int32, tf.int64]
+
+
+def _consume_small_dim(fdp):
+    choices = [0, 1, 2, 3, 4, 5, 7, 8, 16, 32]
+    return choices[fdp.ConsumeIntInRange(0, len(choices) - 1)]
+
+
+def _consume_shape(fdp, rank):
+    return [_consume_small_dim(fdp) for _ in range(rank)]
+
+
+def _consume_string(fdp):
+    size = fdp.ConsumeIntInRange(0, 32)
+    b = fdp.ConsumeBytes(size)
+    try:
+        return b.decode("utf-8", errors="ignore")
+    except Exception:
+        return ""
+
+
+def _consume_scalar_value(fdp, dtype):
+    if dtype == tf.bool:
+        return fdp.ConsumeBool()
+    if dtype == tf.string:
+        return _consume_string(fdp)
+    if dtype in (tf.uint8, tf.uint16, tf.uint32, tf.uint64):
+        return fdp.ConsumeIntInRange(0, 255)
+    if dtype in (tf.int8, tf.int16, tf.int32, tf.int64):
+        return fdp.ConsumeIntInRange(-255, 255)
+    if dtype in (tf.bfloat16, tf.float16, tf.float32, tf.float64):
+        special = fdp.ConsumeIntInRange(0, 9)
+        if special == 0:
+            return 0.0
+        if special == 1:
+            return -0.0
+        if special == 2:
+            return 1.0
+        if special == 3:
+            return -1.0
+        if special == 4:
+            return float("inf")
+        if special == 5:
+            return float("-inf")
+        if special == 6:
+            return float("nan")
+        return fdp.ConsumeFloat()
+    if dtype in (tf.complex64, tf.complex128):
+        mode = fdp.ConsumeIntInRange(0, 5)
+        if mode == 0:
+            return complex(0.0, 0.0)
+        if mode == 1:
+            return complex(1.0, -1.0)
+        if mode == 2:
+            return complex(float("inf"), 0.0)
+        if mode == 3:
+            return complex(0.0, float("nan"))
+        return complex(fdp.ConsumeFloat(), fdp.ConsumeFloat())
+    return 0
+
+
+def _num_elements(shape):
+    total = 1
+    for d in shape:
+        total *= int(d)
+    return total
+
+
+def _build_tensor(fdp, dtype, rank):
+    shape = _consume_shape(fdp, rank)
+    numel = _num_elements(shape)
+
+    if numel == 0:
+        return tf.constant([], dtype=dtype, shape=shape)
+
+    values = [_consume_scalar_value(fdp, dtype) for _ in range(numel)]
+
+    mode = fdp.ConsumeIntInRange(0, 2)
+    if mode == 0:
+        return tf.constant(values, dtype=dtype, shape=shape)
+    if mode == 1:
+        tensor = tf.convert_to_tensor(values, dtype=dtype)
+        return tf.reshape(tensor, shape)
+    tensor = tf.constant(values, dtype=dtype)
+    tensor = tf.ensure_shape(tensor, [numel])
+    return tf.reshape(tensor, shape)
+
+
+def _build_axis_tensor(rank, axis_dtype, use_valid_axis):
+    if use_valid_axis:
+        axis_value = [0] if rank == 3 else [1]
+    else:
+        invalid_candidates = [
+            [],
+            [2],
+            [3],
+            [-1],
+            [0, 1],
+            [1, 2],
+            [10],
+        ]
+        axis_value = invalid_candidates[(rank + (0 if axis_dtype == tf.int32 else 1)) % len(invalid_candidates)]
+    return tf.constant(axis_value, dtype=axis_dtype)
+
+
+@atheris.instrument_func
+def TestOneInput(data: bytes):
+    fdp = atheris.FuzzedDataProvider(data)
+    try:
+        rank = 3 if fdp.ConsumeBool() else 4
+        dtype = _ALLOWED_DTYPES[fdp.ConsumeIntInRange(0, len(_ALLOWED_DTYPES) - 1)]
+        image = _build_tensor(fdp, dtype, rank)
+
+        result = tf.image.flip_up_down(image)
+
+        if fdp.ConsumeBool():
+            _ = tf.shape(result)
+        if fdp.ConsumeBool():
+            _ = tf.identity(result)
+        if fdp.ConsumeBool():
+            _ = tf.ensure_shape(result, image.shape)
+
+        axis_dtype = _ALLOWED_AXIS_DTYPES[fdp.ConsumeIntInRange(0, len(_ALLOWED_AXIS_DTYPES) - 1)]
+        axis = _build_axis_tensor(rank, axis_dtype, fdp.ConsumeBool())
+        if fdp.ConsumeBool():
+            _ = tf.raw_ops.ReverseV2(tensor=image, axis=axis)
+        if fdp.ConsumeBool():
+            _ = tf.raw_ops.ReverseV2(tensor=result, axis=axis)
+
+    except (
+        tf.errors.InvalidArgumentError,
+        tf.errors.UnimplementedError,
+        tf.errors.InternalError,
+        tf.errors.ResourceExhaustedError,
+        ValueError,
+        TypeError,
+        RuntimeError,
+        AssertionError,
+        IndexError,
+        NotImplementedError,
+    ):
+        return
+    except Exception:
+        return
+
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput)
+    atheris.Fuzz()
+
+
+if __name__ == "__main__":
+    main()
+```

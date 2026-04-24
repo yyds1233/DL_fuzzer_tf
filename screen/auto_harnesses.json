@@ -1,15 +1,50 @@
 [{
-"harness_id": "gather",
-"harness_path": "/root/fuzz_output/fuzz_tf.gather.py",
+"harness_id": "cast",
+"harness_path": "/root/fuzz_output/llm.tf.cast.py",
+"profiles": []
+},
+{
+"harness_id": "image.flip_up_down",
+"harness_path": "/root/fuzz_output/llm.tf.image.flip_up_down.py",
+"profiles": []
+},
+{
+"harness_id": "math.logical_or",
+"harness_path": "/root/fuzz_output/llm.tf.math.logical_or.py",
+"profiles": []
+},
+{
+"harness_id": "math.reduce_min",
+"harness_path": "/root/fuzz_output/llm.tf.math.reduce_min.py",
+"profiles": []
+},
+{
+"harness_id": "math.square",
+"harness_path": "/root/fuzz_output/llm.tf.math.square.py",
+"profiles": []
+},
+{
+"harness_id": "nn.avg_pool2d",
+"harness_path": "/root/fuzz_output/llm.tf.nn.avg_pool2d.py",
 "profiles": []
 },
 {
 "harness_id": "nn.conv2d",
-"harness_path": "/root/fuzz_output/fuzz_tf.nn.conv2d.py",
+"harness_path": "/root/fuzz_output/llm.tf.nn.conv2d.py",
 "profiles": []
 },
 {
-"harness_id": "raw_ops.BiasAdd",
-"harness_path": "/root/fuzz_output/fuzz_tf.raw_ops.BiasAdd.py",
+"harness_id": "signal.fft",
+"harness_path": "/root/fuzz_output/llm.tf.signal.fft.py",
+"profiles": []
+},
+{
+"harness_id": "transpose",
+"harness_path": "/root/fuzz_output/llm.tf.transpose.py",
+"profiles": []
+},
+{
+"harness_id": "linalg.matmul",
+"harness_path": "/root/fuzz_output/llm.tf.linalg.matmul.py",
 "profiles": []
 }]

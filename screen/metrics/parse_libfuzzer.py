@@ -1,4 +1,3 @@
-# screen/metrics/parse_libfuzzer.py
 from __future__ import annotations
 
 import re
@@ -11,9 +10,18 @@ COV_RE = re.compile(r"\bcov:\s*([0-9]+)")
 FT_RE = re.compile(r"\bft:\s*([0-9]+)")
 EXECS_RE = re.compile(r"\bexec/s:\s*([0-9]+(?:\.[0-9]+)?)([kKmM]?)")
 
-# Only capture cov/ft after INITED (skip seed replay/pulse)
-INITED_COV_FT_RE = re.compile(r"^\s*#\d+\s+INITED\b.*\bcov:\s*(\d+)\s+ft:\s*(\d+)\b", re.M)
-AFTER_INITED_COV_FT_RE = re.compile(r"^\s*#\d+\s+\w+\b.*\bcov:\s*(\d+)\s+ft:\s*(\d+)\b", re.M)
+# Path 1: only capture cov/ft after INITED (skip seed replay / early pulse)
+INITED_COV_FT_RE = re.compile(
+    r"^\s*#\d+\s+INITED\b.*\bcov:\s*(\d+)\s+ft:\s*(\d+)\b",
+    re.M,
+)
+AFTER_INITED_COV_FT_RE = re.compile(
+    r"^\s*#\d+\s+\w+\b.*\bcov:\s*(\d+)\s+ft:\s*(\d+)\b",
+    re.M,
+)
+
+# For event-mix stats: only numeric status lines.
+EVENT_CODE_RE = re.compile(r"^\s*#\d+\s+([A-Za-z]+)\b", re.M)
 
 # --- Atheris fallback patterns ---
 # Atheris may emit lines like: total_coverage=12345, features=6789
@@ -31,16 +39,43 @@ def _parse_num_with_suffix(x: str, suffix: str) -> float:
 
 
 def parse_fuzzer_log(log_path: Path) -> Dict[str, Optional[float]]:
+    """
+    Parse a libFuzzer/Atheris log and return:
+      - cov_first, cov_last
+      - ft_first, ft_last
+      - exec_s_last
+
+    Path 1:
+      If INITED exists, only use cov/ft from INITED onward.
+      first = first status pair after INITED (typically INITED itself)
+      last  = last status pair after INITED
+
+    Path 2:
+      If INITED does not exist, use the first/last cov:/ft: seen in the whole log.
+
+    Path 3:
+      If standard cov:/ft: patterns are absent, fall back to
+      total_coverage=/features= style Atheris output.
+
+    Missing values are normalized to:
+      cov_first = 0
+      cov_last  = 0
+      ft_first  = 0
+      ft_last   = 0
+      exec_s_last = None
+    """
     text = log_path.read_text(errors="ignore")
 
-    # --- exec/s: always try standard libFuzzer ---
-    exec_s = None
-    hits = EXECS_RE.findall(text)
-    if hits:
-        x, suf = hits[-1]
-        exec_s = _parse_num_with_suffix(x, suf)
+    # Parse last observed exec/s from standard libFuzzer status lines.
+    exec_pairs = EXECS_RE.findall(text)
+    exec_s_last: Optional[float] = None
+    if exec_pairs:
+        x, suf = exec_pairs[-1]
+        exec_s_last = _parse_num_with_suffix(x, suf)
 
-    # --- Path 1: Standard libFuzzer with INITED marker ---
+    # ---------------------------
+    # Path 1: Prefer INITED tail
+    # ---------------------------
     m = INITED_COV_FT_RE.search(text)
     if m:
         tail = text[m.start():]
@@ -49,45 +84,86 @@ def parse_fuzzer_log(log_path: Path) -> Dict[str, Optional[float]]:
             cov_first, ft_first = pairs[0]
             cov_last, ft_last = pairs[-1]
         else:
+            # Extremely defensive fallback: if INITED matched but tail pairs didn't,
+            # use the INITED cov/ft directly as both first and last.
             cov_first = cov_last = int(m.group(1))
             ft_first = ft_last = int(m.group(2))
+
         return {
             "cov_first": cov_first,
             "cov_last": cov_last,
             "ft_first": ft_first,
             "ft_last": ft_last,
-            "exec_s_last": exec_s,
+            "exec_s_last": exec_s_last,
         }
 
-    # --- Path 2: Global standard cov/ft (no INITED marker) ---
+    # ---------------------------
+    # Path 2: Whole-log standard fallback
+    # ---------------------------
     covs = [int(x) for x in COV_RE.findall(text)]
     fts = [int(x) for x in FT_RE.findall(text)]
-    if covs or fts:
+    if covs and fts:
         return {
-            "cov_first": covs[0] if covs else None,
-            "cov_last": covs[-1] if covs else None,
-            "ft_first": fts[0] if fts else None,
-            "ft_last": fts[-1] if fts else None,
-            "exec_s_last": exec_s,
+            "cov_first": int(covs[0]),
+            "cov_last": int(covs[-1]),
+            "ft_first": int(fts[0]),
+            "ft_last": int(fts[-1]),
+            "exec_s_last": exec_s_last,
         }
 
-    # --- Path 3: Atheris fallback ---
-    atheris_covs = [int(x) for x in ATHERIS_COV_RE.findall(text)]
-    atheris_fts = [int(x) for x in ATHERIS_FEAT_RE.findall(text)]
-    if atheris_covs or atheris_fts:
+    # ---------------------------
+    # Path 3: Atheris total_coverage/features fallback
+    # ---------------------------
+    a_covs = [int(x) for x in ATHERIS_COV_RE.findall(text)]
+    a_fts = [int(x) for x in ATHERIS_FEAT_RE.findall(text)]
+    if a_covs and a_fts:
         return {
-            "cov_first": atheris_covs[0] if atheris_covs else None,
-            "cov_last": atheris_covs[-1] if atheris_covs else None,
-            "ft_first": atheris_fts[0] if atheris_fts else None,
-            "ft_last": atheris_fts[-1] if atheris_fts else None,
-            "exec_s_last": exec_s,
+            "cov_first": int(a_covs[0]),
+            "cov_last": int(a_covs[-1]),
+            "ft_first": int(a_fts[0]),
+            "ft_last": int(a_fts[-1]),
+            "exec_s_last": exec_s_last,
         }
 
-    # --- No coverage data found ---
+    # Final empty fallback
     return {
-        "cov_first": None,
-        "cov_last": None,
-        "ft_first": None,
-        "ft_last": None,
-        "exec_s_last": exec_s,
+        "cov_first": 0,
+        "cov_last": 0,
+        "ft_first": 0,
+        "ft_last": 0,
+        "exec_s_last": exec_s_last,
+    }
+
+
+def parse_fuzzer_event_mix(log_path: Path) -> Dict[str, float]:
+    """
+    Count only numeric event lines that begin with '#<digits>' and summarize
+    NEW / REDUCE / pulse proportions.
+
+    Non-status lines (e.g. TensorFlow WARNING: ...) are intentionally ignored.
+    """
+    text = log_path.read_text(errors="ignore")
+
+    events = EVENT_CODE_RE.findall(text)
+    total = len(events)
+
+    if total == 0:
+        return {
+            "event_total": 0,
+            "new_count": 0,
+            "reduce_count": 0,
+            "pulse_count": 0,
+            "reduce_pulse_ratio": 0.0,
+        }
+
+    new_count = sum(1 for e in events if e == "NEW")
+    reduce_count = sum(1 for e in events if e == "REDUCE")
+    pulse_count = sum(1 for e in events if e == "pulse")
+
+    return {
+        "event_total": total,
+        "new_count": new_count,
+        "reduce_count": reduce_count,
+        "pulse_count": pulse_count,
+        "reduce_pulse_ratio": float(reduce_count + pulse_count) / float(total),
     }

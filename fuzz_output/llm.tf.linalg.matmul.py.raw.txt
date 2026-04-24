@@ -1,0 +1,214 @@
+```python
+import atheris
+
+with atheris.instrument_imports():
+    import sys
+    import tensorflow as tf
+
+
+DTYPES = [
+    tf.bfloat16,
+    tf.float16,
+    tf.float32,
+    tf.float64,
+    tf.int32,
+    tf.int64,
+    tf.complex64,
+    tf.complex128,
+]
+
+
+def _consume_dim(fdp):
+    choices = [0, 1, 2, 3, 4, 5, 8]
+    return choices[fdp.ConsumeIntInRange(0, len(choices) - 1)]
+
+
+def _consume_rank(fdp):
+    return fdp.ConsumeIntInRange(2, 4)
+
+
+def _consume_dtype(fdp):
+    return DTYPES[fdp.ConsumeIntInRange(0, len(DTYPES) - 1)]
+
+
+def _num_elements(shape):
+    n = 1
+    for d in shape:
+        n *= d
+    return n
+
+
+def _make_batch_shape(fdp, rank):
+    return [_consume_dim(fdp) for _ in range(rank - 2)]
+
+
+def _effective_matrix_dims(rows, cols, transposed):
+    if transposed:
+        return cols, rows
+    return rows, cols
+
+
+def _compatible_shapes(fdp, transpose_a, transpose_b):
+    rank = _consume_rank(fdp)
+    batch_shape = _make_batch_shape(fdp, rank)
+
+    a_r = _consume_dim(fdp)
+    a_c = _consume_dim(fdp)
+    b_r = _consume_dim(fdp)
+    b_c = _consume_dim(fdp)
+
+    a_eff_r, a_eff_c = _effective_matrix_dims(a_r, a_c, transpose_a)
+    b_eff_r, b_eff_c = _effective_matrix_dims(b_r, b_c, transpose_b)
+
+    if a_eff_c != b_eff_r:
+        if fdp.ConsumeBool():
+            shared = a_eff_c
+        else:
+            shared = b_eff_r
+
+        if transpose_a:
+            a_r = shared
+        else:
+            a_c = shared
+
+        if transpose_b:
+            b_c = shared
+        else:
+            b_r = shared
+
+    return batch_shape + [a_r, a_c], batch_shape + [b_r, b_c]
+
+
+def _make_values(fdp, count, dtype):
+    if dtype in (tf.bfloat16, tf.float16, tf.float32, tf.float64):
+        vals = []
+        for _ in range(count):
+            selector = fdp.ConsumeIntInRange(0, 9)
+            if selector == 0:
+                vals.append(0.0)
+            elif selector == 1:
+                vals.append(1.0)
+            elif selector == 2:
+                vals.append(-1.0)
+            elif selector == 3:
+                vals.append(3.14159265)
+            else:
+                vals.append(fdp.ConsumeFloatInRange(-10.0, 10.0))
+        return vals
+
+    if dtype in (tf.int32, tf.int64):
+        vals = []
+        for _ in range(count):
+            selector = fdp.ConsumeIntInRange(0, 7)
+            if selector == 0:
+                vals.append(0)
+            elif selector == 1:
+                vals.append(1)
+            elif selector == 2:
+                vals.append(-1)
+            elif selector == 3:
+                vals.append(2)
+            else:
+                vals.append(fdp.ConsumeIntInRange(-32, 32))
+        return vals
+
+    if dtype in (tf.complex64, tf.complex128):
+        vals = []
+        for _ in range(count):
+            real = fdp.ConsumeFloatInRange(-5.0, 5.0)
+            imag = fdp.ConsumeFloatInRange(-5.0, 5.0)
+            vals.append(complex(real, imag))
+        return vals
+
+    raise ValueError("Unsupported dtype")
+
+
+def _make_tensor(fdp, shape, dtype):
+    count = _num_elements(shape)
+    values = _make_values(fdp, count, dtype)
+    return tf.constant(values, shape=shape, dtype=dtype)
+
+
+@atheris.instrument_func
+def TestOneInput(data: bytes):
+    fdp = atheris.FuzzedDataProvider(data)
+    try:
+        dtype = _consume_dtype(fdp)
+
+        transpose_a = fdp.ConsumeBool()
+        transpose_b = fdp.ConsumeBool()
+
+        adjoint_a = False
+        adjoint_b = False
+        if dtype in (tf.complex64, tf.complex128):
+            if fdp.ConsumeBool():
+                adjoint_a = fdp.ConsumeBool()
+            if fdp.ConsumeBool():
+                adjoint_b = fdp.ConsumeBool()
+            if adjoint_a:
+                transpose_a = False
+            if adjoint_b:
+                transpose_b = False
+
+        a_shape, b_shape = _compatible_shapes(
+            fdp,
+            transpose_a or adjoint_a,
+            transpose_b or adjoint_b,
+        )
+
+        a = _make_tensor(fdp, a_shape, dtype)
+        b = _make_tensor(fdp, b_shape, dtype)
+
+        a_is_sparse = False
+        b_is_sparse = False
+        if len(a_shape) == 2 and len(b_shape) == 2 and dtype in (tf.bfloat16, tf.float32):
+            a_is_sparse = fdp.ConsumeBool()
+            b_is_sparse = fdp.ConsumeBool()
+
+        grad_a = fdp.ConsumeBool()
+        grad_b = fdp.ConsumeBool()
+
+        result = tf.linalg.matmul(
+            a=a,
+            b=b,
+            transpose_a=transpose_a,
+            transpose_b=transpose_b,
+            adjoint_a=adjoint_a,
+            adjoint_b=adjoint_b,
+            a_is_sparse=a_is_sparse,
+            b_is_sparse=b_is_sparse,
+            output_type=None,
+            grad_a=grad_a,
+            grad_b=grad_b,
+            name=None,
+        )
+
+        _ = tf.shape(result)
+        _ = result.dtype
+        _ = result.numpy()
+
+    except (
+        tf.errors.InvalidArgumentError,
+        tf.errors.UnimplementedError,
+        tf.errors.InternalError,
+        tf.errors.ResourceExhaustedError,
+        ValueError,
+        TypeError,
+        RuntimeError,
+        AssertionError,
+        IndexError,
+        NotImplementedError,
+    ):
+        return
+    except Exception:
+        return
+
+
+def main():
+    atheris.Setup(sys.argv, TestOneInput)
+    atheris.Fuzz()
+
+
+if __name__ == "__main__":
+    main()
+```

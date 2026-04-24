@@ -1332,7 +1332,7 @@ def main() -> None:
     )
     ap.add_argument("--schema_json", required=True)
     ap.add_argument("--out_dir", default="./tf_yaml_skeleton")
-    ap.add_argument("--empty_param_dir", default="./02_empty_param")
+    ap.add_argument("--empty_param_dir", default="./tf_yaml_skeleton_empty_param")
     ap.add_argument("--rank_index_dir", default=None)
     ap.add_argument("--doc_dir", default=None)
     ap.add_argument("--llm_base_url", default=None)

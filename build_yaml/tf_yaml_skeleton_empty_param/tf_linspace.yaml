@@ -1,0 +1,118 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.linspace
+category: linspace
+api_category: core
+api_module: tf
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: assigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: true
+  rank_min: null
+  rank_max: null
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.linspace
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  start:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  stop:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  num:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  name:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+  axis:
+    origin: attr
+    kind: enum
+    values:
+    - __ENUM_TODO__
+    semantic_role: scalar_attr
+    role: attr
+constraints: []
+_param_rank_details:
+  start:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: true
+    description_summary: Specifies the first value in the generated range and may
+      be any N-D tensor.
+  stop:
+    role: primary
+    semantic_role: data_tensor
+    fixed_ranks: []
+    rank_min: null
+    rank_any: true
+    included_in_api_rank: true
+    description_summary: Specifies the last value in the generated range and must
+      match the shape and type of start.
+  num:
+    role: attr
+    semantic_role: shape_control
+    fixed_ranks:
+    - 0
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Scalar integer indicating how many evenly spaced values to
+      generate.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional name for the created operation.
+  axis:
+    role: attr
+    semantic_role: layout_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Specifies the axis along which the values are generated when
+      start/stop are N-D tensors.

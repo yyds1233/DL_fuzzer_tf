@@ -1,5 +1,12 @@
 {
-  "gather": "data_movement",
-  "nn.conv2d": "nn_compute",
-  "raw_ops.BiasAdd": "elementwise"
+  "cast": "type_cast",
+  "image.flip_up_down": "image_transform",
+  "math.logical_or": "logic_reduce",
+  "math.reduce_min": "logic_reduce",
+  "math.square": "elementwise_math",
+  "nn.avg_pool2d": "nn_pool_conv",
+  "nn.conv2d": "nn_pool_conv",
+  "signal.fft": "signal_frequency",
+  "transpose": "tensor_transform",
+  "linalg.matmul": "linear_algebra"
 }

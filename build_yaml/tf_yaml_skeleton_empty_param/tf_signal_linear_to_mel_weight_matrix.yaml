@@ -1,0 +1,158 @@
+generator:
+  stage: B-json-to-yaml-skeleton-unified-tf
+  version: 2026-04-09-tf-v6
+api_name: tf.signal.linear_to_mel_weight_matrix
+category: linear_to_mel_weight_matrix
+api_category: signal
+api_module: tf.signal
+primary_param: null
+rank_hints:
+  marker: __RANK_FROM_DOC__
+  status: unassigned
+  rank_candidates:
+  - __RANK_TODO__
+  rank_any: false
+  rank_min: null
+  rank_max: null
+tf:
+  op_name: null
+  raw_api_name: null
+  high_level_api_name: tf.signal.linear_to_mel_weight_matrix
+  schema_str: null
+  is_stateful: null
+  allows_uninitialized_input: null
+  input_meta: []
+  attr_meta: []
+  output_meta: []
+  param_mapping: {}
+  inverse_mapping: {}
+resolve_info:
+  strategy: unresolved
+  confidence: 0.0
+  is_raw_ops: false
+  raw_op_name: null
+  raw_op_names: []
+shape_vars: {}
+params:
+  num_mel_bins:
+    origin: attr
+    kind: int
+    range:
+    - -1
+    - 8
+    default: 20
+    semantic_role: scalar_attr
+    role: attr
+  num_spectrogram_bins:
+    origin: attr
+    kind: int
+    range:
+    - -1
+    - 8
+    default: 129
+    semantic_role: scalar_attr
+    role: attr
+  sample_rate:
+    origin: attr
+    kind: float
+    range:
+    - -1.0
+    - 1.0
+    default: 8000.0
+    semantic_role: scalar_attr
+    role: attr
+  lower_edge_hertz:
+    origin: attr
+    kind: float
+    range:
+    - -1.0
+    - 1.0
+    default: 125.0
+    semantic_role: scalar_attr
+    role: attr
+  upper_edge_hertz:
+    origin: attr
+    kind: float
+    range:
+    - -1.0
+    - 1.0
+    default: 3800.0
+    semantic_role: scalar_attr
+    role: attr
+  dtype:
+    origin: attr
+    kind: dtype_enum
+    values:
+    - __ENUM_TODO__
+    default: tf.float32
+    semantic_role: dtype_attr
+    role: attr
+  name:
+    origin: kwarg
+    kind: string_optional
+    default: null
+    semantic_role: meta
+    role: attr
+constraints: []
+_param_rank_details:
+  num_mel_bins:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Python integer specifying the number of mel frequency bands
+      to construct.
+  num_spectrogram_bins:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Integer value giving how many linear-scale spectrogram bins
+      were in the original data, setting the first dimension of the matrix.
+  sample_rate:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Scalar giving the audio sample rate in Hertz used to compute
+      the source spectrogram.
+  lower_edge_hertz:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Scalar float specifying the lowest frequency included in
+      the mel spectrum.
+  upper_edge_hertz:
+    role: attr
+    semantic_role: scalar_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Scalar float specifying the highest frequency edge for the
+      mel spectrum.
+  dtype:
+    role: attr
+    semantic_role: dtype_attr
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Result tensor data type, which must be floating point.
+  name:
+    role: attr
+    semantic_role: meta
+    fixed_ranks: []
+    rank_min: null
+    rank_any: false
+    included_in_api_rank: false
+    description_summary: Optional operation name for scoping.
