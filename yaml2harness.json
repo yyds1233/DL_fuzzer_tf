@@ -1,0 +1,1812 @@
+[
+  {
+    "api": "tf.math.log1p",
+    "yaml": "/root/yaml/tf.math.log1p.yaml",
+    "txt": "/root/tf_api_txt/tf_math_log1p.txt"
+  },
+  {
+    "api": "tf.nn.ctc_greedy_decoder",
+    "yaml": "/root/yaml/tf.nn.ctc_greedy_decoder.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_ctc_greedy_decoder.txt"
+  },
+  {
+    "api": "tf.nn.collapse_repeated",
+    "yaml": "/root/yaml/tf.nn.collapse_repeated.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_collapse_repeated.txt"
+  },
+  {
+    "api": "tf.linalg.det",
+    "yaml": "/root/yaml/tf.linalg.det.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_det.txt"
+  },
+  {
+    "api": "tf.linalg.set_diag",
+    "yaml": "/root/yaml/tf.linalg.set_diag.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_set_diag.txt"
+  },
+  {
+    "api": "tf.image.random_brightness",
+    "yaml": "/root/yaml/tf.image.random_brightness.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_brightness.txt"
+  },
+  {
+    "api": "tf.image.combined_non_max_suppression",
+    "yaml": "/root/yaml/tf.image.combined_non_max_suppression.yaml",
+    "txt": "/root/tf_api_txt/tf_image_combined_non_max_suppression.txt"
+  },
+  {
+    "api": "tf.math.reciprocal",
+    "yaml": "/root/yaml/tf.math.reciprocal.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reciprocal.txt"
+  },
+  {
+    "api": "tf.math.bessel_i0",
+    "yaml": "/root/yaml/tf.math.bessel_i0.yaml",
+    "txt": "/root/tf_api_txt/tf_math_bessel_i0.txt"
+  },
+  {
+    "api": "tf.math.bessel_i1e",
+    "yaml": "/root/yaml/tf.math.bessel_i1e.yaml",
+    "txt": "/root/tf_api_txt/tf_math_bessel_i1e.txt"
+  },
+  {
+    "api": "tf.linalg.matrix_rank",
+    "yaml": "/root/yaml/tf.linalg.matrix_rank.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_matrix_rank.txt"
+  },
+  {
+    "api": "tf.math.floormod",
+    "yaml": "/root/yaml/tf.math.floormod.yaml",
+    "txt": "/root/tf_api_txt/tf_math_floormod.txt"
+  },
+  {
+    "api": "tf.image.random_flip_up_down",
+    "yaml": "/root/yaml/tf.image.random_flip_up_down.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_flip_up_down.txt"
+  },
+  {
+    "api": "tf.math.conj",
+    "yaml": "/root/yaml/tf.math.conj.yaml",
+    "txt": "/root/tf_api_txt/tf_math_conj.txt"
+  },
+  {
+    "api": "tf.sparse.retain",
+    "yaml": "/root/yaml/tf.sparse.retain.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_retain.txt"
+  },
+  {
+    "api": "tf.math.less_equal",
+    "yaml": "/root/yaml/tf.math.less_equal.yaml",
+    "txt": "/root/tf_api_txt/tf_math_less_equal.txt"
+  },
+  {
+    "api": "tf.linalg.diag",
+    "yaml": "/root/yaml/tf.linalg.diag.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_diag.txt"
+  },
+  {
+    "api": "tf.nn.fractional_avg_pool",
+    "yaml": "/root/yaml/tf.nn.fractional_avg_pool.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_fractional_avg_pool.txt"
+  },
+  {
+    "api": "tf.batch_to_space",
+    "yaml": "/root/yaml/tf.batch_to_space.yaml",
+    "txt": "/root/tf_api_txt/tf_batch_to_space.txt"
+  },
+  {
+    "api": "tf.nn.bias_add",
+    "yaml": "/root/yaml/tf.nn.bias_add.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_bias_add.txt"
+  },
+  {
+    "api": "tf.math.argmin",
+    "yaml": "/root/yaml/tf.math.argmin.yaml",
+    "txt": "/root/tf_api_txt/tf_math_argmin.txt"
+  },
+  {
+    "api": "tf.quantization.fake_quant_with_min_max_args_gradient",
+    "yaml": "/root/yaml/tf.quantization.fake_quant_with_min_max_args_gradient.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_fake_quant_with_min_max_args_gradient.txt"
+  },
+  {
+    "api": "tf.math.angle",
+    "yaml": "/root/yaml/tf.math.angle.yaml",
+    "txt": "/root/tf_api_txt/tf_math_angle.txt"
+  },
+  {
+    "api": "tf.math.betainc",
+    "yaml": "/root/yaml/tf.math.betainc.yaml",
+    "txt": "/root/tf_api_txt/tf_math_betainc.txt"
+  },
+  {
+    "api": "tf.image.random_saturation",
+    "yaml": "/root/yaml/tf.image.random_saturation.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_saturation.txt"
+  },
+  {
+    "api": "tf.random.poisson",
+    "yaml": "/root/yaml/tf.random.poisson.yaml",
+    "txt": "/root/tf_api_txt/tf_random_poisson.txt"
+  },
+  {
+    "api": "tf.identity",
+    "yaml": "/root/yaml/tf.identity.yaml",
+    "txt": "/root/tf_api_txt/tf_identity.txt"
+  },
+  {
+    "api": "tf.math.rsqrt",
+    "yaml": "/root/yaml/tf.math.rsqrt.yaml",
+    "txt": "/root/tf_api_txt/tf_math_rsqrt.txt"
+  },
+  {
+    "api": "tf.signal.hann_window",
+    "yaml": "/root/yaml/tf.signal.hann_window.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_hann_window.txt"
+  },
+  {
+    "api": "tf.math.lgamma",
+    "yaml": "/root/yaml/tf.math.lgamma.yaml",
+    "txt": "/root/tf_api_txt/tf_math_lgamma.txt"
+  },
+  {
+    "api": "tf.nn.max_pool3d",
+    "yaml": "/root/yaml/tf.nn.max_pool3d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_max_pool3d.txt"
+  },
+  {
+    "api": "tf.signal.ifft",
+    "yaml": "/root/yaml/tf.signal.ifft.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_ifft.txt"
+  },
+  {
+    "api": "tf.math.imag",
+    "yaml": "/root/yaml/tf.math.imag.yaml",
+    "txt": "/root/tf_api_txt/tf_math_imag.txt"
+  },
+  {
+    "api": "tf.nn.weighted_moments",
+    "yaml": "/root/yaml/tf.nn.weighted_moments.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_weighted_moments.txt"
+  },
+  {
+    "api": "tf.image.non_max_suppression_with_scores",
+    "yaml": "/root/yaml/tf.image.non_max_suppression_with_scores.yaml",
+    "txt": "/root/tf_api_txt/tf_image_non_max_suppression_with_scores.txt"
+  },
+  {
+    "api": "tf.nn.relu6",
+    "yaml": "/root/yaml/tf.nn.relu6.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_relu6.txt"
+  },
+  {
+    "api": "tf.image.crop_and_resize",
+    "yaml": "/root/yaml/tf.image.crop_and_resize.yaml",
+    "txt": "/root/tf_api_txt/tf_image_crop_and_resize.txt"
+  },
+  {
+    "api": "tf.math.cos",
+    "yaml": "/root/yaml/tf.math.cos.yaml",
+    "txt": "/root/tf_api_txt/tf_math_cos.txt"
+  },
+  {
+    "api": "tf.clip_by_value",
+    "yaml": "/root/yaml/tf.clip_by_value.yaml",
+    "txt": "/root/tf_api_txt/tf_clip_by_value.txt"
+  },
+  {
+    "api": "tf.math.segment_mean",
+    "yaml": "/root/yaml/tf.math.segment_mean.yaml",
+    "txt": "/root/tf_api_txt/tf_math_segment_mean.txt"
+  },
+  {
+    "api": "tf.linalg.sqrtm",
+    "yaml": "/root/yaml/tf.linalg.sqrtm.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_sqrtm.txt"
+  },
+  {
+    "api": "tf.zeros_like",
+    "yaml": "/root/yaml/tf.zeros_like.yaml",
+    "txt": "/root/tf_api_txt/tf_zeros_like.txt"
+  },
+  {
+    "api": "tf.math.cumprod",
+    "yaml": "/root/yaml/tf.math.cumprod.yaml",
+    "txt": "/root/tf_api_txt/tf_math_cumprod.txt"
+  },
+  {
+    "api": "tf.linalg.expm",
+    "yaml": "/root/yaml/tf.linalg.expm.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_expm.txt"
+  },
+  {
+    "api": "tf.random.categorical",
+    "yaml": "/root/yaml/tf.random.categorical.yaml",
+    "txt": "/root/tf_api_txt/tf_random_categorical.txt"
+  },
+  {
+    "api": "tf.math.real",
+    "yaml": "/root/yaml/tf.math.real.yaml",
+    "txt": "/root/tf_api_txt/tf_math_real.txt"
+  },
+  {
+    "api": "tf.sparse.fill_empty_rows",
+    "yaml": "/root/yaml/tf.sparse.fill_empty_rows.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_fill_empty_rows.txt"
+  },
+  {
+    "api": "tf.math.sinh",
+    "yaml": "/root/yaml/tf.math.sinh.yaml",
+    "txt": "/root/tf_api_txt/tf_math_sinh.txt"
+  },
+  {
+    "api": "tf.math.greater_equal",
+    "yaml": "/root/yaml/tf.math.greater_equal.yaml",
+    "txt": "/root/tf_api_txt/tf_math_greater_equal.txt"
+  },
+  {
+    "api": "tf.random.stateless_normal",
+    "yaml": "/root/yaml/tf.random.stateless_normal.yaml",
+    "txt": "/root/tf_api_txt/tf_random_stateless_normal.txt"
+  },
+  {
+    "api": "tf.math.erf",
+    "yaml": "/root/yaml/tf.math.erf.yaml",
+    "txt": "/root/tf_api_txt/tf_math_erf.txt"
+  },
+  {
+    "api": "tf.unique",
+    "yaml": "/root/yaml/tf.unique.yaml",
+    "txt": "/root/tf_api_txt/tf_unique.txt"
+  },
+  {
+    "api": "tf.image.random_contrast",
+    "yaml": "/root/yaml/tf.image.random_contrast.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_contrast.txt"
+  },
+  {
+    "api": "tf.linalg.matmul",
+    "yaml": "/root/yaml/tf.linalg.matmul.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_matmul.txt"
+  },
+  {
+    "api": "tf.linalg.eigvalsh",
+    "yaml": "/root/yaml/tf.linalg.eigvalsh.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_eigvalsh.txt"
+  },
+  {
+    "api": "tf.bitwise.bitwise_or",
+    "yaml": "/root/yaml/tf.bitwise.bitwise_or.yaml",
+    "txt": "/root/tf_api_txt/tf_bitwise_bitwise_or.txt"
+  },
+  {
+    "api": "tf.nn.conv2d",
+    "yaml": "/root/yaml/tf.nn.conv2d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv2d.txt"
+  },
+  {
+    "api": "tf.math.exp",
+    "yaml": "/root/yaml/tf.math.exp.yaml",
+    "txt": "/root/tf_api_txt/tf_math_exp.txt"
+  },
+  {
+    "api": "tf.eye",
+    "yaml": "/root/yaml/tf.eye.yaml",
+    "txt": "/root/tf_api_txt/tf_eye.txt"
+  },
+  {
+    "api": "tf.image.rgb_to_grayscale",
+    "yaml": "/root/yaml/tf.image.rgb_to_grayscale.yaml",
+    "txt": "/root/tf_api_txt/tf_image_rgb_to_grayscale.txt"
+  },
+  {
+    "api": "tf.math.floor",
+    "yaml": "/root/yaml/tf.math.floor.yaml",
+    "txt": "/root/tf_api_txt/tf_math_floor.txt"
+  },
+  {
+    "api": "tf.quantization.quantize",
+    "yaml": "/root/yaml/tf.quantization.quantize.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_quantize.txt"
+  },
+  {
+    "api": "tf.math.round",
+    "yaml": "/root/yaml/tf.math.round.yaml",
+    "txt": "/root/tf_api_txt/tf_math_round.txt"
+  },
+  {
+    "api": "tf.math.is_non_decreasing",
+    "yaml": "/root/yaml/tf.math.is_non_decreasing.yaml",
+    "txt": "/root/tf_api_txt/tf_math_is_non_decreasing.txt"
+  },
+  {
+    "api": "tf.math.igammac",
+    "yaml": "/root/yaml/tf.math.igammac.yaml",
+    "txt": "/root/tf_api_txt/tf_math_igammac.txt"
+  },
+  {
+    "api": "tf.expand_dims",
+    "yaml": "/root/yaml/tf.expand_dims.yaml",
+    "txt": "/root/tf_api_txt/tf_expand_dims.txt"
+  },
+  {
+    "api": "tf.unravel_index",
+    "yaml": "/root/yaml/tf.unravel_index.yaml",
+    "txt": "/root/tf_api_txt/tf_unravel_index.txt"
+  },
+  {
+    "api": "tf.gather_nd",
+    "yaml": "/root/yaml/tf.gather_nd.yaml",
+    "txt": "/root/tf_api_txt/tf_gather_nd.txt"
+  },
+  {
+    "api": "tf.linalg.cross",
+    "yaml": "/root/yaml/tf.linalg.cross.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_cross.txt"
+  },
+  {
+    "api": "tf.math.log_sigmoid",
+    "yaml": "/root/yaml/tf.math.log_sigmoid.yaml",
+    "txt": "/root/tf_api_txt/tf_math_log_sigmoid.txt"
+  },
+  {
+    "api": "tf.math.cosh",
+    "yaml": "/root/yaml/tf.math.cosh.yaml",
+    "txt": "/root/tf_api_txt/tf_math_cosh.txt"
+  },
+  {
+    "api": "tf.one_hot",
+    "yaml": "/root/yaml/tf.one_hot.yaml",
+    "txt": "/root/tf_api_txt/tf_one_hot.txt"
+  },
+  {
+    "api": "tf.unique_with_counts",
+    "yaml": "/root/yaml/tf.unique_with_counts.yaml",
+    "txt": "/root/tf_api_txt/tf_unique_with_counts.txt"
+  },
+  {
+    "api": "tf.nn.batch_normalization",
+    "yaml": "/root/yaml/tf.nn.batch_normalization.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_batch_normalization.txt"
+  },
+  {
+    "api": "tf.image.central_crop",
+    "yaml": "/root/yaml/tf.image.central_crop.yaml",
+    "txt": "/root/tf_api_txt/tf_image_central_crop.txt"
+  },
+  {
+    "api": "tf.math.polygamma",
+    "yaml": "/root/yaml/tf.math.polygamma.yaml",
+    "txt": "/root/tf_api_txt/tf_math_polygamma.txt"
+  },
+  {
+    "api": "tf.math.unsorted_segment_sum",
+    "yaml": "/root/yaml/tf.math.unsorted_segment_sum.yaml",
+    "txt": "/root/tf_api_txt/tf_math_unsorted_segment_sum.txt"
+  },
+  {
+    "api": "tf.clip_by_norm",
+    "yaml": "/root/yaml/tf.clip_by_norm.yaml",
+    "txt": "/root/tf_api_txt/tf_clip_by_norm.txt"
+  },
+  {
+    "api": "tf.broadcast_to",
+    "yaml": "/root/yaml/tf.broadcast_to.yaml",
+    "txt": "/root/tf_api_txt/tf_broadcast_to.txt"
+  },
+  {
+    "api": "tf.unstack",
+    "yaml": "/root/yaml/tf.unstack.yaml",
+    "txt": "/root/tf_api_txt/tf_unstack.txt"
+  },
+  {
+    "api": "tf.signal.dct",
+    "yaml": "/root/yaml/tf.signal.dct.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_dct.txt"
+  },
+  {
+    "api": "tf.ensure_shape",
+    "yaml": "/root/yaml/tf.ensure_shape.yaml",
+    "txt": "/root/tf_api_txt/tf_ensure_shape.txt"
+  },
+  {
+    "api": "tf.random.stateless_truncated_normal",
+    "yaml": "/root/yaml/tf.random.stateless_truncated_normal.yaml",
+    "txt": "/root/tf_api_txt/tf_random_stateless_truncated_normal.txt"
+  },
+  {
+    "api": "tf.range",
+    "yaml": "/root/yaml/tf.range.yaml",
+    "txt": "/root/tf_api_txt/tf_range.txt"
+  },
+  {
+    "api": "tf.reverse",
+    "yaml": "/root/yaml/tf.reverse.yaml",
+    "txt": "/root/tf_api_txt/tf_reverse.txt"
+  },
+  {
+    "api": "tf.nn.conv3d",
+    "yaml": "/root/yaml/tf.nn.conv3d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv3d.txt"
+  },
+  {
+    "api": "tf.image.ssim",
+    "yaml": "/root/yaml/tf.image.ssim.yaml",
+    "txt": "/root/tf_api_txt/tf_image_ssim.txt"
+  },
+  {
+    "api": "tf.math.ceil",
+    "yaml": "/root/yaml/tf.math.ceil.yaml",
+    "txt": "/root/tf_api_txt/tf_math_ceil.txt"
+  },
+  {
+    "api": "tf.math.less",
+    "yaml": "/root/yaml/tf.math.less.yaml",
+    "txt": "/root/tf_api_txt/tf_math_less.txt"
+  },
+  {
+    "api": "tf.image.total_variation",
+    "yaml": "/root/yaml/tf.image.total_variation.yaml",
+    "txt": "/root/tf_api_txt/tf_image_total_variation.txt"
+  },
+  {
+    "api": "tf.image.adjust_saturation",
+    "yaml": "/root/yaml/tf.image.adjust_saturation.yaml",
+    "txt": "/root/tf_api_txt/tf_image_adjust_saturation.txt"
+  },
+  {
+    "api": "tf.image.flip_left_right",
+    "yaml": "/root/yaml/tf.image.flip_left_right.yaml",
+    "txt": "/root/tf_api_txt/tf_image_flip_left_right.txt"
+  },
+  {
+    "api": "tf.math.softplus",
+    "yaml": "/root/yaml/tf.math.softplus.yaml",
+    "txt": "/root/tf_api_txt/tf_math_softplus.txt"
+  },
+  {
+    "api": "tf.nn.conv2d_transpose",
+    "yaml": "/root/yaml/tf.nn.conv2d_transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv2d_transpose.txt"
+  },
+  {
+    "api": "tf.image.hsv_to_rgb",
+    "yaml": "/root/yaml/tf.image.hsv_to_rgb.yaml",
+    "txt": "/root/tf_api_txt/tf_image_hsv_to_rgb.txt"
+  },
+  {
+    "api": "tf.image.ssim_multiscale",
+    "yaml": "/root/yaml/tf.image.ssim_multiscale.yaml",
+    "txt": "/root/tf_api_txt/tf_image_ssim_multiscale.txt"
+  },
+  {
+    "api": "tf.math.is_nan",
+    "yaml": "/root/yaml/tf.math.is_nan.yaml",
+    "txt": "/root/tf_api_txt/tf_math_is_nan.txt"
+  },
+  {
+    "api": "tf.linalg.tridiagonal_solve",
+    "yaml": "/root/yaml/tf.linalg.tridiagonal_solve.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_tridiagonal_solve.txt"
+  },
+  {
+    "api": "tf.image.flip_up_down",
+    "yaml": "/root/yaml/tf.image.flip_up_down.yaml",
+    "txt": "/root/tf_api_txt/tf_image_flip_up_down.txt"
+  },
+  {
+    "api": "tf.sparse.expand_dims",
+    "yaml": "/root/yaml/tf.sparse.expand_dims.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_expand_dims.txt"
+  },
+  {
+    "api": "tf.vectorized_map",
+    "yaml": "/root/yaml/tf.vectorized_map.yaml",
+    "txt": "/root/tf_api_txt/tf_vectorized_map.txt"
+  },
+  {
+    "api": "tf.sparse.mask",
+    "yaml": "/root/yaml/tf.sparse.mask.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_mask.txt"
+  },
+  {
+    "api": "tf.random.gamma",
+    "yaml": "/root/yaml/tf.random.gamma.yaml",
+    "txt": "/root/tf_api_txt/tf_random_gamma.txt"
+  },
+  {
+    "api": "tf.math.unsorted_segment_prod",
+    "yaml": "/root/yaml/tf.math.unsorted_segment_prod.yaml",
+    "txt": "/root/tf_api_txt/tf_math_unsorted_segment_prod.txt"
+  },
+  {
+    "api": "tf.squeeze",
+    "yaml": "/root/yaml/tf.squeeze.yaml",
+    "txt": "/root/tf_api_txt/tf_squeeze.txt"
+  },
+  {
+    "api": "tf.where",
+    "yaml": "/root/yaml/tf.where.yaml",
+    "txt": "/root/tf_api_txt/tf_where.txt"
+  },
+  {
+    "api": "tf.math.sqrt",
+    "yaml": "/root/yaml/tf.math.sqrt.yaml",
+    "txt": "/root/tf_api_txt/tf_math_sqrt.txt"
+  },
+  {
+    "api": "tf.nn.crelu",
+    "yaml": "/root/yaml/tf.nn.crelu.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_crelu.txt"
+  },
+  {
+    "api": "tf.image.adjust_gamma",
+    "yaml": "/root/yaml/tf.image.adjust_gamma.yaml",
+    "txt": "/root/tf_api_txt/tf_image_adjust_gamma.txt"
+  },
+  {
+    "api": "tf.extract_volume_patches",
+    "yaml": "/root/yaml/tf.extract_volume_patches.yaml",
+    "txt": "/root/tf_api_txt/tf_extract_volume_patches.txt"
+  },
+  {
+    "api": "tf.nn.compute_average_loss",
+    "yaml": "/root/yaml/tf.nn.compute_average_loss.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_compute_average_loss.txt"
+  },
+  {
+    "api": "tf.math.is_finite",
+    "yaml": "/root/yaml/tf.math.is_finite.yaml",
+    "txt": "/root/tf_api_txt/tf_math_is_finite.txt"
+  },
+  {
+    "api": "tf.image.crop_to_bounding_box",
+    "yaml": "/root/yaml/tf.image.crop_to_bounding_box.yaml",
+    "txt": "/root/tf_api_txt/tf_image_crop_to_bounding_box.txt"
+  },
+  {
+    "api": "tf.signal.ifft3d",
+    "yaml": "/root/yaml/tf.signal.ifft3d.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_ifft3d.txt"
+  },
+  {
+    "api": "tf.math.reciprocal_no_nan",
+    "yaml": "/root/yaml/tf.math.reciprocal_no_nan.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reciprocal_no_nan.txt"
+  },
+  {
+    "api": "tf.linalg.qr",
+    "yaml": "/root/yaml/tf.linalg.qr.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_qr.txt"
+  },
+  {
+    "api": "tf.nn.depthwise_conv2d_backprop_filter",
+    "yaml": "/root/yaml/tf.nn.depthwise_conv2d_backprop_filter.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_depthwise_conv2d_backprop_filter.txt"
+  },
+  {
+    "api": "tf.required_space_to_batch_paddings",
+    "yaml": "/root/yaml/tf.required_space_to_batch_paddings.yaml",
+    "txt": "/root/tf_api_txt/tf_required_space_to_batch_paddings.txt"
+  },
+  {
+    "api": "tf.signal.stft",
+    "yaml": "/root/yaml/tf.signal.stft.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_stft.txt"
+  },
+  {
+    "api": "tf.math.atan",
+    "yaml": "/root/yaml/tf.math.atan.yaml",
+    "txt": "/root/tf_api_txt/tf_math_atan.txt"
+  },
+  {
+    "api": "tf.nn.depthwise_conv2d",
+    "yaml": "/root/yaml/tf.nn.depthwise_conv2d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_depthwise_conv2d.txt"
+  },
+  {
+    "api": "tf.signal.fft",
+    "yaml": "/root/yaml/tf.signal.fft.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_fft.txt"
+  },
+  {
+    "api": "tf.nn.max_pool",
+    "yaml": "/root/yaml/tf.nn.max_pool.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_max_pool.txt"
+  },
+  {
+    "api": "tf.nn.sigmoid_cross_entropy_with_logits",
+    "yaml": "/root/yaml/tf.nn.sigmoid_cross_entropy_with_logits.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_sigmoid_cross_entropy_with_logits.txt"
+  },
+  {
+    "api": "tf.sort",
+    "yaml": "/root/yaml/tf.sort.yaml",
+    "txt": "/root/tf_api_txt/tf_sort.txt"
+  },
+  {
+    "api": "tf.split",
+    "yaml": "/root/yaml/tf.split.yaml",
+    "txt": "/root/tf_api_txt/tf_split.txt"
+  },
+  {
+    "api": "tf.image.extract_glimpse",
+    "yaml": "/root/yaml/tf.image.extract_glimpse.yaml",
+    "txt": "/root/tf_api_txt/tf_image_extract_glimpse.txt"
+  },
+  {
+    "api": "tf.bitwise.bitwise_xor",
+    "yaml": "/root/yaml/tf.bitwise.bitwise_xor.yaml",
+    "txt": "/root/tf_api_txt/tf_bitwise_bitwise_xor.txt"
+  },
+  {
+    "api": "tf.nn.space_to_depth",
+    "yaml": "/root/yaml/tf.nn.space_to_depth.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_space_to_depth.txt"
+  },
+  {
+    "api": "tf.pad",
+    "yaml": "/root/yaml/tf.pad.yaml",
+    "txt": "/root/tf_api_txt/tf_pad.txt"
+  },
+  {
+    "api": "tf.random.uniform",
+    "yaml": "/root/yaml/tf.random.uniform.yaml",
+    "txt": "/root/tf_api_txt/tf_random_uniform.txt"
+  },
+  {
+    "api": "tf.math.segment_min",
+    "yaml": "/root/yaml/tf.math.segment_min.yaml",
+    "txt": "/root/tf_api_txt/tf_math_segment_min.txt"
+  },
+  {
+    "api": "tf.math.zeta",
+    "yaml": "/root/yaml/tf.math.zeta.yaml",
+    "txt": "/root/tf_api_txt/tf_math_zeta.txt"
+  },
+  {
+    "api": "tf.nn.embedding_lookup",
+    "yaml": "/root/yaml/tf.nn.embedding_lookup.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_embedding_lookup.txt"
+  },
+  {
+    "api": "tf.nn.max_pool2d",
+    "yaml": "/root/yaml/tf.nn.max_pool2d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_max_pool2d.txt"
+  },
+  {
+    "api": "tf.math.bincount",
+    "yaml": "/root/yaml/tf.math.bincount.yaml",
+    "txt": "/root/tf_api_txt/tf_math_bincount.txt"
+  },
+  {
+    "api": "tf.nn.l2_loss",
+    "yaml": "/root/yaml/tf.nn.l2_loss.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_l2_loss.txt"
+  },
+  {
+    "api": "tf.signal.inverse_stft",
+    "yaml": "/root/yaml/tf.signal.inverse_stft.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_inverse_stft.txt"
+  },
+  {
+    "api": "tf.eigvals",
+    "yaml": "/root/yaml/tf.eigvals.yaml",
+    "txt": "/root/tf_api_txt/tf_eigvals.txt"
+  },
+  {
+    "api": "tf.math.xdivy",
+    "yaml": "/root/yaml/tf.math.xdivy.yaml",
+    "txt": "/root/tf_api_txt/tf_math_xdivy.txt"
+  },
+  {
+    "api": "tf.image.non_max_suppression_overlaps",
+    "yaml": "/root/yaml/tf.image.non_max_suppression_overlaps.yaml",
+    "txt": "/root/tf_api_txt/tf_image_non_max_suppression_overlaps.txt"
+  },
+  {
+    "api": "tf.nn.weighted_cross_entropy_with_logits",
+    "yaml": "/root/yaml/tf.nn.weighted_cross_entropy_with_logits.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_weighted_cross_entropy_with_logits.txt"
+  },
+  {
+    "api": "tf.math.logical_not",
+    "yaml": "/root/yaml/tf.math.logical_not.yaml",
+    "txt": "/root/tf_api_txt/tf_math_logical_not.txt"
+  },
+  {
+    "api": "tf.image.resize_with_crop_or_pad",
+    "yaml": "/root/yaml/tf.image.resize_with_crop_or_pad.yaml",
+    "txt": "/root/tf_api_txt/tf_image_resize_with_crop_or_pad.txt"
+  },
+  {
+    "api": "tf.nn.ctc_unique_labels",
+    "yaml": "/root/yaml/tf.nn.ctc_unique_labels.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_ctc_unique_labels.txt"
+  },
+  {
+    "api": "tf.nn.depthwise_conv2d_backprop_input",
+    "yaml": "/root/yaml/tf.nn.depthwise_conv2d_backprop_input.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_depthwise_conv2d_backprop_input.txt"
+  },
+  {
+    "api": "tf.nn.conv3d_transpose",
+    "yaml": "/root/yaml/tf.nn.conv3d_transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv3d_transpose.txt"
+  },
+  {
+    "api": "tf.fingerprint",
+    "yaml": "/root/yaml/tf.fingerprint.yaml",
+    "txt": "/root/tf_api_txt/tf_fingerprint.txt"
+  },
+  {
+    "api": "tf.sparse.add",
+    "yaml": "/root/yaml/tf.sparse.add.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_add.txt"
+  },
+  {
+    "api": "tf.math.sin",
+    "yaml": "/root/yaml/tf.math.sin.yaml",
+    "txt": "/root/tf_api_txt/tf_math_sin.txt"
+  },
+  {
+    "api": "tf.math.lbeta",
+    "yaml": "/root/yaml/tf.math.lbeta.yaml",
+    "txt": "/root/tf_api_txt/tf_math_lbeta.txt"
+  },
+  {
+    "api": "tf.nn.sparse_softmax_cross_entropy_with_logits",
+    "yaml": "/root/yaml/tf.nn.sparse_softmax_cross_entropy_with_logits.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_sparse_softmax_cross_entropy_with_logits.txt"
+  },
+  {
+    "api": "tf.gather",
+    "yaml": "/root/yaml/tf.gather.yaml",
+    "txt": "/root/tf_api_txt/tf_gather.txt"
+  },
+  {
+    "api": "tf.math.asinh",
+    "yaml": "/root/yaml/tf.math.asinh.yaml",
+    "txt": "/root/tf_api_txt/tf_math_asinh.txt"
+  },
+  {
+    "api": "tf.nn.dilation2d",
+    "yaml": "/root/yaml/tf.nn.dilation2d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_dilation2d.txt"
+  },
+  {
+    "api": "tf.image.resize",
+    "yaml": "/root/yaml/tf.image.resize.yaml",
+    "txt": "/root/tf_api_txt/tf_image_resize.txt"
+  },
+  {
+    "api": "tf.sparse.reduce_sum",
+    "yaml": "/root/yaml/tf.sparse.reduce_sum.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_reduce_sum.txt"
+  },
+  {
+    "api": "tf.argsort",
+    "yaml": "/root/yaml/tf.argsort.yaml",
+    "txt": "/root/tf_api_txt/tf_argsort.txt"
+  },
+  {
+    "api": "tf.image.random_crop",
+    "yaml": "/root/yaml/tf.image.random_crop.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_crop.txt"
+  },
+  {
+    "api": "tf.linalg.cholesky_solve",
+    "yaml": "/root/yaml/tf.linalg.cholesky_solve.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_cholesky_solve.txt"
+  },
+  {
+    "api": "tf.math.logical_and",
+    "yaml": "/root/yaml/tf.math.logical_and.yaml",
+    "txt": "/root/tf_api_txt/tf_math_logical_and.txt"
+  },
+  {
+    "api": "tf.math.atan2",
+    "yaml": "/root/yaml/tf.math.atan2.yaml",
+    "txt": "/root/tf_api_txt/tf_math_atan2.txt"
+  },
+  {
+    "api": "tf.math.subtract",
+    "yaml": "/root/yaml/tf.math.subtract.yaml",
+    "txt": "/root/tf_api_txt/tf_math_subtract.txt"
+  },
+  {
+    "api": "tf.math.cumulative_logsumexp",
+    "yaml": "/root/yaml/tf.math.cumulative_logsumexp.yaml",
+    "txt": "/root/tf_api_txt/tf_math_cumulative_logsumexp.txt"
+  },
+  {
+    "api": "tf.bitwise.bitwise_and",
+    "yaml": "/root/yaml/tf.bitwise.bitwise_and.yaml",
+    "txt": "/root/tf_api_txt/tf_bitwise_bitwise_and.txt"
+  },
+  {
+    "api": "tf.math.bessel_i0e",
+    "yaml": "/root/yaml/tf.math.bessel_i0e.yaml",
+    "txt": "/root/tf_api_txt/tf_math_bessel_i0e.txt"
+  },
+  {
+    "api": "tf.nn.fractional_max_pool",
+    "yaml": "/root/yaml/tf.nn.fractional_max_pool.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_fractional_max_pool.txt"
+  },
+  {
+    "api": "tf.image.sample_distorted_bounding_box",
+    "yaml": "/root/yaml/tf.image.sample_distorted_bounding_box.yaml",
+    "txt": "/root/tf_api_txt/tf_image_sample_distorted_bounding_box.txt"
+  },
+  {
+    "api": "tf.signal.ifftshift",
+    "yaml": "/root/yaml/tf.signal.ifftshift.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_ifftshift.txt"
+  },
+  {
+    "api": "tf.nn.safe_embedding_lookup_sparse",
+    "yaml": "/root/yaml/tf.nn.safe_embedding_lookup_sparse.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_safe_embedding_lookup_sparse.txt"
+  },
+  {
+    "api": "tf.transpose",
+    "yaml": "/root/yaml/tf.transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_transpose.txt"
+  },
+  {
+    "api": "tf.math.tan",
+    "yaml": "/root/yaml/tf.math.tan.yaml",
+    "txt": "/root/tf_api_txt/tf_math_tan.txt"
+  },
+  {
+    "api": "tf.math.multiply_no_nan",
+    "yaml": "/root/yaml/tf.math.multiply_no_nan.yaml",
+    "txt": "/root/tf_api_txt/tf_math_multiply_no_nan.txt"
+  },
+  {
+    "api": "tf.math.segment_prod",
+    "yaml": "/root/yaml/tf.math.segment_prod.yaml",
+    "txt": "/root/tf_api_txt/tf_math_segment_prod.txt"
+  },
+  {
+    "api": "tf.signal.idct",
+    "yaml": "/root/yaml/tf.signal.idct.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_idct.txt"
+  },
+  {
+    "api": "tf.bitwise.invert",
+    "yaml": "/root/yaml/tf.bitwise.invert.yaml",
+    "txt": "/root/tf_api_txt/tf_bitwise_invert.txt"
+  },
+  {
+    "api": "tf.math.erfinv",
+    "yaml": "/root/yaml/tf.math.erfinv.yaml",
+    "txt": "/root/tf_api_txt/tf_math_erfinv.txt"
+  },
+  {
+    "api": "tf.linalg.cholesky",
+    "yaml": "/root/yaml/tf.linalg.cholesky.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_cholesky.txt"
+  },
+  {
+    "api": "tf.repeat",
+    "yaml": "/root/yaml/tf.repeat.yaml",
+    "txt": "/root/tf_api_txt/tf_repeat.txt"
+  },
+  {
+    "api": "tf.nn.avg_pool1d",
+    "yaml": "/root/yaml/tf.nn.avg_pool1d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_avg_pool1d.txt"
+  },
+  {
+    "api": "tf.math.reduce_min",
+    "yaml": "/root/yaml/tf.math.reduce_min.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_min.txt"
+  },
+  {
+    "api": "tf.image.sobel_edges",
+    "yaml": "/root/yaml/tf.image.sobel_edges.yaml",
+    "txt": "/root/tf_api_txt/tf_image_sobel_edges.txt"
+  },
+  {
+    "api": "tf.linalg.lstsq",
+    "yaml": "/root/yaml/tf.linalg.lstsq.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_lstsq.txt"
+  },
+  {
+    "api": "tf.math.add_n",
+    "yaml": "/root/yaml/tf.math.add_n.yaml",
+    "txt": "/root/tf_api_txt/tf_math_add_n.txt"
+  },
+  {
+    "api": "tf.linalg.global_norm",
+    "yaml": "/root/yaml/tf.linalg.global_norm.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_global_norm.txt"
+  },
+  {
+    "api": "tf.nn.avg_pool3d",
+    "yaml": "/root/yaml/tf.nn.avg_pool3d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_avg_pool3d.txt"
+  },
+  {
+    "api": "tf.switch_case",
+    "yaml": "/root/yaml/tf.switch_case.yaml",
+    "txt": "/root/tf_api_txt/tf_switch_case.txt"
+  },
+  {
+    "api": "tf.linalg.inv",
+    "yaml": "/root/yaml/tf.linalg.inv.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_inv.txt"
+  },
+  {
+    "api": "tf.math.ndtri",
+    "yaml": "/root/yaml/tf.math.ndtri.yaml",
+    "txt": "/root/tf_api_txt/tf_math_ndtri.txt"
+  },
+  {
+    "api": "tf.nn.dropout",
+    "yaml": "/root/yaml/tf.nn.dropout.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_dropout.txt"
+  },
+  {
+    "api": "tf.linalg.eigh",
+    "yaml": "/root/yaml/tf.linalg.eigh.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_eigh.txt"
+  },
+  {
+    "api": "tf.sparse.to_dense",
+    "yaml": "/root/yaml/tf.sparse.to_dense.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_to_dense.txt"
+  },
+  {
+    "api": "tf.nn.moments",
+    "yaml": "/root/yaml/tf.nn.moments.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_moments.txt"
+  },
+  {
+    "api": "tf.math.acosh",
+    "yaml": "/root/yaml/tf.math.acosh.yaml",
+    "txt": "/root/tf_api_txt/tf_math_acosh.txt"
+  },
+  {
+    "api": "tf.linalg.adjoint",
+    "yaml": "/root/yaml/tf.linalg.adjoint.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_adjoint.txt"
+  },
+  {
+    "api": "tf.linalg.tensor_diag",
+    "yaml": "/root/yaml/tf.linalg.tensor_diag.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_tensor_diag.txt"
+  },
+  {
+    "api": "tf.math.reduce_logsumexp",
+    "yaml": "/root/yaml/tf.math.reduce_logsumexp.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_logsumexp.txt"
+  },
+  {
+    "api": "tf.math.l2_normalize",
+    "yaml": "/root/yaml/tf.math.l2_normalize.yaml",
+    "txt": "/root/tf_api_txt/tf_math_l2_normalize.txt"
+  },
+  {
+    "api": "tf.signal.ifft2d",
+    "yaml": "/root/yaml/tf.signal.ifft2d.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_ifft2d.txt"
+  },
+  {
+    "api": "tf.math.erfc",
+    "yaml": "/root/yaml/tf.math.erfc.yaml",
+    "txt": "/root/tf_api_txt/tf_math_erfc.txt"
+  },
+  {
+    "api": "tf.sparse.from_dense",
+    "yaml": "/root/yaml/tf.sparse.from_dense.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_from_dense.txt"
+  },
+  {
+    "api": "tf.quantization.fake_quant_with_min_max_vars",
+    "yaml": "/root/yaml/tf.quantization.fake_quant_with_min_max_vars.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_fake_quant_with_min_max_vars.txt"
+  },
+  {
+    "api": "tf.math.argmax",
+    "yaml": "/root/yaml/tf.math.argmax.yaml",
+    "txt": "/root/tf_api_txt/tf_math_argmax.txt"
+  },
+  {
+    "api": "tf.image.rgb_to_hsv",
+    "yaml": "/root/yaml/tf.image.rgb_to_hsv.yaml",
+    "txt": "/root/tf_api_txt/tf_image_rgb_to_hsv.txt"
+  },
+  {
+    "api": "tf.math.squared_difference",
+    "yaml": "/root/yaml/tf.math.squared_difference.yaml",
+    "txt": "/root/tf_api_txt/tf_math_squared_difference.txt"
+  },
+  {
+    "api": "tf.image.non_max_suppression_padded",
+    "yaml": "/root/yaml/tf.image.non_max_suppression_padded.yaml",
+    "txt": "/root/tf_api_txt/tf_image_non_max_suppression_padded.txt"
+  },
+  {
+    "api": "tf.math.abs",
+    "yaml": "/root/yaml/tf.math.abs.yaml",
+    "txt": "/root/tf_api_txt/tf_math_abs.txt"
+  },
+  {
+    "api": "tf.nn.softmax",
+    "yaml": "/root/yaml/tf.nn.softmax.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_softmax.txt"
+  },
+  {
+    "api": "tf.math.log",
+    "yaml": "/root/yaml/tf.math.log.yaml",
+    "txt": "/root/tf_api_txt/tf_math_log.txt"
+  },
+  {
+    "api": "tf.linalg.tridiagonal_matmul",
+    "yaml": "/root/yaml/tf.linalg.tridiagonal_matmul.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_tridiagonal_matmul.txt"
+  },
+  {
+    "api": "tf.histogram_fixed_width",
+    "yaml": "/root/yaml/tf.histogram_fixed_width.yaml",
+    "txt": "/root/tf_api_txt/tf_histogram_fixed_width.txt"
+  },
+  {
+    "api": "tf.math.expm1",
+    "yaml": "/root/yaml/tf.math.expm1.yaml",
+    "txt": "/root/tf_api_txt/tf_math_expm1.txt"
+  },
+  {
+    "api": "tf.math.reduce_prod",
+    "yaml": "/root/yaml/tf.math.reduce_prod.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_prod.txt"
+  },
+  {
+    "api": "tf.math.greater",
+    "yaml": "/root/yaml/tf.math.greater.yaml",
+    "txt": "/root/tf_api_txt/tf_math_greater.txt"
+  },
+  {
+    "api": "tf.scatter_nd",
+    "yaml": "/root/yaml/tf.scatter_nd.yaml",
+    "txt": "/root/tf_api_txt/tf_scatter_nd.txt"
+  },
+  {
+    "api": "tf.math.reduce_max",
+    "yaml": "/root/yaml/tf.math.reduce_max.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_max.txt"
+  },
+  {
+    "api": "tf.sparse.softmax",
+    "yaml": "/root/yaml/tf.sparse.softmax.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_softmax.txt"
+  },
+  {
+    "api": "tf.tile",
+    "yaml": "/root/yaml/tf.tile.yaml",
+    "txt": "/root/tf_api_txt/tf_tile.txt"
+  },
+  {
+    "api": "tf.nn.conv1d_transpose",
+    "yaml": "/root/yaml/tf.nn.conv1d_transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv1d_transpose.txt"
+  },
+  {
+    "api": "tf.nn.avg_pool",
+    "yaml": "/root/yaml/tf.nn.avg_pool.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_avg_pool.txt"
+  },
+  {
+    "api": "tf.image.extract_patches",
+    "yaml": "/root/yaml/tf.image.extract_patches.yaml",
+    "txt": "/root/tf_api_txt/tf_image_extract_patches.txt"
+  },
+  {
+    "api": "tf.math.acos",
+    "yaml": "/root/yaml/tf.math.acos.yaml",
+    "txt": "/root/tf_api_txt/tf_math_acos.txt"
+  },
+  {
+    "api": "tf.nn.softmax_cross_entropy_with_logits",
+    "yaml": "/root/yaml/tf.nn.softmax_cross_entropy_with_logits.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_softmax_cross_entropy_with_logits.txt"
+  },
+  {
+    "api": "tf.image.transpose",
+    "yaml": "/root/yaml/tf.image.transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_image_transpose.txt"
+  },
+  {
+    "api": "tf.math.negative",
+    "yaml": "/root/yaml/tf.math.negative.yaml",
+    "txt": "/root/tf_api_txt/tf_math_negative.txt"
+  },
+  {
+    "api": "tf.linalg.matrix_transpose",
+    "yaml": "/root/yaml/tf.linalg.matrix_transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_matrix_transpose.txt"
+  },
+  {
+    "api": "tf.math.unsorted_segment_min",
+    "yaml": "/root/yaml/tf.math.unsorted_segment_min.yaml",
+    "txt": "/root/tf_api_txt/tf_math_unsorted_segment_min.txt"
+  },
+  {
+    "api": "tf.math.polyval",
+    "yaml": "/root/yaml/tf.math.polyval.yaml",
+    "txt": "/root/tf_api_txt/tf_math_polyval.txt"
+  },
+  {
+    "api": "tf.shape_n",
+    "yaml": "/root/yaml/tf.shape_n.yaml",
+    "txt": "/root/tf_api_txt/tf_shape_n.txt"
+  },
+  {
+    "api": "tf.math.cumsum",
+    "yaml": "/root/yaml/tf.math.cumsum.yaml",
+    "txt": "/root/tf_api_txt/tf_math_cumsum.txt"
+  },
+  {
+    "api": "tf.math.logical_or",
+    "yaml": "/root/yaml/tf.math.logical_or.yaml",
+    "txt": "/root/tf_api_txt/tf_math_logical_or.txt"
+  },
+  {
+    "api": "tf.nn.softsign",
+    "yaml": "/root/yaml/tf.nn.softsign.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_softsign.txt"
+  },
+  {
+    "api": "tf.math.segment_max",
+    "yaml": "/root/yaml/tf.math.segment_max.yaml",
+    "txt": "/root/tf_api_txt/tf_math_segment_max.txt"
+  },
+  {
+    "api": "tf.searchsorted",
+    "yaml": "/root/yaml/tf.searchsorted.yaml",
+    "txt": "/root/tf_api_txt/tf_searchsorted.txt"
+  },
+  {
+    "api": "tf.sparse.reorder",
+    "yaml": "/root/yaml/tf.sparse.reorder.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_reorder.txt"
+  },
+  {
+    "api": "tf.image.random_flip_left_right",
+    "yaml": "/root/yaml/tf.image.random_flip_left_right.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_flip_left_right.txt"
+  },
+  {
+    "api": "tf.dynamic_partition",
+    "yaml": "/root/yaml/tf.dynamic_partition.yaml",
+    "txt": "/root/tf_api_txt/tf_dynamic_partition.txt"
+  },
+  {
+    "api": "tf.bitwise.left_shift",
+    "yaml": "/root/yaml/tf.bitwise.left_shift.yaml",
+    "txt": "/root/tf_api_txt/tf_bitwise_left_shift.txt"
+  },
+  {
+    "api": "tf.broadcast_static_shape",
+    "yaml": "/root/yaml/tf.broadcast_static_shape.yaml",
+    "txt": "/root/tf_api_txt/tf_broadcast_static_shape.txt"
+  },
+  {
+    "api": "tf.math.xlogy",
+    "yaml": "/root/yaml/tf.math.xlogy.yaml",
+    "txt": "/root/tf_api_txt/tf_math_xlogy.txt"
+  },
+  {
+    "api": "tf.signal.frame",
+    "yaml": "/root/yaml/tf.signal.frame.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_frame.txt"
+  },
+  {
+    "api": "tf.linalg.normalize",
+    "yaml": "/root/yaml/tf.linalg.normalize.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_normalize.txt"
+  },
+  {
+    "api": "tf.math.count_nonzero",
+    "yaml": "/root/yaml/tf.math.count_nonzero.yaml",
+    "txt": "/root/tf_api_txt/tf_math_count_nonzero.txt"
+  },
+  {
+    "api": "tf.math.add",
+    "yaml": "/root/yaml/tf.math.add.yaml",
+    "txt": "/root/tf_api_txt/tf_math_add.txt"
+  },
+  {
+    "api": "tf.shape",
+    "yaml": "/root/yaml/tf.shape.yaml",
+    "txt": "/root/tf_api_txt/tf_shape.txt"
+  },
+  {
+    "api": "tf.tensor_scatter_nd_update",
+    "yaml": "/root/yaml/tf.tensor_scatter_nd_update.yaml",
+    "txt": "/root/tf_api_txt/tf_tensor_scatter_nd_update.txt"
+  },
+  {
+    "api": "tf.constant",
+    "yaml": "/root/yaml/tf.constant.yaml",
+    "txt": "/root/tf_api_txt/tf_constant.txt"
+  },
+  {
+    "api": "tf.math.zero_fraction",
+    "yaml": "/root/yaml/tf.math.zero_fraction.yaml",
+    "txt": "/root/tf_api_txt/tf_math_zero_fraction.txt"
+  },
+  {
+    "api": "tf.math.maximum",
+    "yaml": "/root/yaml/tf.math.maximum.yaml",
+    "txt": "/root/tf_api_txt/tf_math_maximum.txt"
+  },
+  {
+    "api": "tf.linalg.lu_solve",
+    "yaml": "/root/yaml/tf.linalg.lu_solve.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_lu_solve.txt"
+  },
+  {
+    "api": "tf.linalg.lu",
+    "yaml": "/root/yaml/tf.linalg.lu.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_lu.txt"
+  },
+  {
+    "api": "tf.space_to_batch",
+    "yaml": "/root/yaml/tf.space_to_batch.yaml",
+    "txt": "/root/tf_api_txt/tf_space_to_batch.txt"
+  },
+  {
+    "api": "tf.convert_to_tensor",
+    "yaml": "/root/yaml/tf.convert_to_tensor.yaml",
+    "txt": "/root/tf_api_txt/tf_convert_to_tensor.txt"
+  },
+  {
+    "api": "tf.math.pow",
+    "yaml": "/root/yaml/tf.math.pow.yaml",
+    "txt": "/root/tf_api_txt/tf_math_pow.txt"
+  },
+  {
+    "api": "tf.math.is_inf",
+    "yaml": "/root/yaml/tf.math.is_inf.yaml",
+    "txt": "/root/tf_api_txt/tf_math_is_inf.txt"
+  },
+  {
+    "api": "tf.quantization.dequantize",
+    "yaml": "/root/yaml/tf.quantization.dequantize.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_dequantize.txt"
+  },
+  {
+    "api": "tf.fill",
+    "yaml": "/root/yaml/tf.fill.yaml",
+    "txt": "/root/tf_api_txt/tf_fill.txt"
+  },
+  {
+    "api": "tf.linalg.diag_part",
+    "yaml": "/root/yaml/tf.linalg.diag_part.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_diag_part.txt"
+  },
+  {
+    "api": "tf.math.sign",
+    "yaml": "/root/yaml/tf.math.sign.yaml",
+    "txt": "/root/tf_api_txt/tf_math_sign.txt"
+  },
+  {
+    "api": "tf.tensor_scatter_nd_sub",
+    "yaml": "/root/yaml/tf.tensor_scatter_nd_sub.yaml",
+    "txt": "/root/tf_api_txt/tf_tensor_scatter_nd_sub.txt"
+  },
+  {
+    "api": "tf.bitcast",
+    "yaml": "/root/yaml/tf.bitcast.yaml",
+    "txt": "/root/tf_api_txt/tf_bitcast.txt"
+  },
+  {
+    "api": "tf.nn.elu",
+    "yaml": "/root/yaml/tf.nn.elu.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_elu.txt"
+  },
+  {
+    "api": "tf.tensor_scatter_nd_add",
+    "yaml": "/root/yaml/tf.tensor_scatter_nd_add.yaml",
+    "txt": "/root/tf_api_txt/tf_tensor_scatter_nd_add.txt"
+  },
+  {
+    "api": "tf.image.adjust_hue",
+    "yaml": "/root/yaml/tf.image.adjust_hue.yaml",
+    "txt": "/root/tf_api_txt/tf_image_adjust_hue.txt"
+  },
+  {
+    "api": "tf.nn.log_poisson_loss",
+    "yaml": "/root/yaml/tf.nn.log_poisson_loss.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_log_poisson_loss.txt"
+  },
+  {
+    "api": "tf.space_to_batch_nd",
+    "yaml": "/root/yaml/tf.space_to_batch_nd.yaml",
+    "txt": "/root/tf_api_txt/tf_space_to_batch_nd.txt"
+  },
+  {
+    "api": "tf.nn.conv1d",
+    "yaml": "/root/yaml/tf.nn.conv1d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv1d.txt"
+  },
+  {
+    "api": "tf.image.per_image_standardization",
+    "yaml": "/root/yaml/tf.image.per_image_standardization.yaml",
+    "txt": "/root/tf_api_txt/tf_image_per_image_standardization.txt"
+  },
+  {
+    "api": "tf.image.pad_to_bounding_box",
+    "yaml": "/root/yaml/tf.image.pad_to_bounding_box.yaml",
+    "txt": "/root/tf_api_txt/tf_image_pad_to_bounding_box.txt"
+  },
+  {
+    "api": "tf.linalg.lu_reconstruct",
+    "yaml": "/root/yaml/tf.linalg.lu_reconstruct.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_lu_reconstruct.txt"
+  },
+  {
+    "api": "tf.linalg.trace",
+    "yaml": "/root/yaml/tf.linalg.trace.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_trace.txt"
+  },
+  {
+    "api": "tf.sparse.eye",
+    "yaml": "/root/yaml/tf.sparse.eye.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_eye.txt"
+  },
+  {
+    "api": "tf.math.in_top_k",
+    "yaml": "/root/yaml/tf.math.in_top_k.yaml",
+    "txt": "/root/tf_api_txt/tf_math_in_top_k.txt"
+  },
+  {
+    "api": "tf.tensordot",
+    "yaml": "/root/yaml/tf.tensordot.yaml",
+    "txt": "/root/tf_api_txt/tf_tensordot.txt"
+  },
+  {
+    "api": "tf.signal.mfccs_from_log_mel_spectrograms",
+    "yaml": "/root/yaml/tf.signal.mfccs_from_log_mel_spectrograms.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_mfccs_from_log_mel_spectrograms.txt"
+  },
+  {
+    "api": "tf.math.floordiv",
+    "yaml": "/root/yaml/tf.math.floordiv.yaml",
+    "txt": "/root/tf_api_txt/tf_math_floordiv.txt"
+  },
+  {
+    "api": "tf.math.square",
+    "yaml": "/root/yaml/tf.math.square.yaml",
+    "txt": "/root/tf_api_txt/tf_math_square.txt"
+  },
+  {
+    "api": "tf.math.equal",
+    "yaml": "/root/yaml/tf.math.equal.yaml",
+    "txt": "/root/tf_api_txt/tf_math_equal.txt"
+  },
+  {
+    "api": "tf.math.digamma",
+    "yaml": "/root/yaml/tf.math.digamma.yaml",
+    "txt": "/root/tf_api_txt/tf_math_digamma.txt"
+  },
+  {
+    "api": "tf.image.draw_bounding_boxes",
+    "yaml": "/root/yaml/tf.image.draw_bounding_boxes.yaml",
+    "txt": "/root/tf_api_txt/tf_image_draw_bounding_boxes.txt"
+  },
+  {
+    "api": "tf.linalg.logdet",
+    "yaml": "/root/yaml/tf.linalg.logdet.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_logdet.txt"
+  },
+  {
+    "api": "tf.nn.relu",
+    "yaml": "/root/yaml/tf.nn.relu.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_relu.txt"
+  },
+  {
+    "api": "tf.signal.fft2d",
+    "yaml": "/root/yaml/tf.signal.fft2d.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_fft2d.txt"
+  },
+  {
+    "api": "tf.math.asin",
+    "yaml": "/root/yaml/tf.math.asin.yaml",
+    "txt": "/root/tf_api_txt/tf_math_asin.txt"
+  },
+  {
+    "api": "tf.sparse.sparse_dense_matmul",
+    "yaml": "/root/yaml/tf.sparse.sparse_dense_matmul.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_sparse_dense_matmul.txt"
+  },
+  {
+    "api": "tf.nn.sufficient_statistics",
+    "yaml": "/root/yaml/tf.nn.sufficient_statistics.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_sufficient_statistics.txt"
+  },
+  {
+    "api": "tf.concat",
+    "yaml": "/root/yaml/tf.concat.yaml",
+    "txt": "/root/tf_api_txt/tf_concat.txt"
+  },
+  {
+    "api": "tf.nn.avg_pool2d",
+    "yaml": "/root/yaml/tf.nn.avg_pool2d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_avg_pool2d.txt"
+  },
+  {
+    "api": "tf.quantization.fake_quant_with_min_max_vars_per_channel_gradient",
+    "yaml": "/root/yaml/tf.quantization.fake_quant_with_min_max_vars_per_channel_gradient.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_fake_quant_with_min_max_vars_per_channel_gradient.txt"
+  },
+  {
+    "api": "tf.math.is_strictly_increasing",
+    "yaml": "/root/yaml/tf.math.is_strictly_increasing.yaml",
+    "txt": "/root/tf_api_txt/tf_math_is_strictly_increasing.txt"
+  },
+  {
+    "api": "tf.tuple",
+    "yaml": "/root/yaml/tf.tuple.yaml",
+    "txt": "/root/tf_api_txt/tf_tuple.txt"
+  },
+  {
+    "api": "tf.ones_like",
+    "yaml": "/root/yaml/tf.ones_like.yaml",
+    "txt": "/root/tf_api_txt/tf_ones_like.txt"
+  },
+  {
+    "api": "tf.nn.normalize_moments",
+    "yaml": "/root/yaml/tf.nn.normalize_moments.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_normalize_moments.txt"
+  },
+  {
+    "api": "tf.eig",
+    "yaml": "/root/yaml/tf.eig.yaml",
+    "txt": "/root/tf_api_txt/tf_eig.txt"
+  },
+  {
+    "api": "tf.math.confusion_matrix",
+    "yaml": "/root/yaml/tf.math.confusion_matrix.yaml",
+    "txt": "/root/tf_api_txt/tf_math_confusion_matrix.txt"
+  },
+  {
+    "api": "tf.signal.overlap_and_add",
+    "yaml": "/root/yaml/tf.signal.overlap_and_add.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_overlap_and_add.txt"
+  },
+  {
+    "api": "tf.image.resize_with_pad",
+    "yaml": "/root/yaml/tf.image.resize_with_pad.yaml",
+    "txt": "/root/tf_api_txt/tf_image_resize_with_pad.txt"
+  },
+  {
+    "api": "tf.random.stateless_categorical",
+    "yaml": "/root/yaml/tf.random.stateless_categorical.yaml",
+    "txt": "/root/tf_api_txt/tf_random_stateless_categorical.txt"
+  },
+  {
+    "api": "tf.image.adjust_jpeg_quality",
+    "yaml": "/root/yaml/tf.image.adjust_jpeg_quality.yaml",
+    "txt": "/root/tf_api_txt/tf_image_adjust_jpeg_quality.txt"
+  },
+  {
+    "api": "tf.linalg.slogdet",
+    "yaml": "/root/yaml/tf.linalg.slogdet.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_slogdet.txt"
+  },
+  {
+    "api": "tf.image.grayscale_to_rgb",
+    "yaml": "/root/yaml/tf.image.grayscale_to_rgb.yaml",
+    "txt": "/root/tf_api_txt/tf_image_grayscale_to_rgb.txt"
+  },
+  {
+    "api": "tf.boolean_mask",
+    "yaml": "/root/yaml/tf.boolean_mask.yaml",
+    "txt": "/root/tf_api_txt/tf_boolean_mask.txt"
+  },
+  {
+    "api": "tf.math.reduce_mean",
+    "yaml": "/root/yaml/tf.math.reduce_mean.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_mean.txt"
+  },
+  {
+    "api": "tf.image.random_jpeg_quality",
+    "yaml": "/root/yaml/tf.image.random_jpeg_quality.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_jpeg_quality.txt"
+  },
+  {
+    "api": "tf.linalg.pinv",
+    "yaml": "/root/yaml/tf.linalg.pinv.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_pinv.txt"
+  },
+  {
+    "api": "tf.cast",
+    "yaml": "/root/yaml/tf.cast.yaml",
+    "txt": "/root/tf_api_txt/tf_cast.txt"
+  },
+  {
+    "api": "tf.math.reduce_variance",
+    "yaml": "/root/yaml/tf.math.reduce_variance.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_variance.txt"
+  },
+  {
+    "api": "tf.linalg.triangular_solve",
+    "yaml": "/root/yaml/tf.linalg.triangular_solve.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_triangular_solve.txt"
+  },
+  {
+    "api": "tf.math.minimum",
+    "yaml": "/root/yaml/tf.math.minimum.yaml",
+    "txt": "/root/tf_api_txt/tf_math_minimum.txt"
+  },
+  {
+    "api": "tf.math.atanh",
+    "yaml": "/root/yaml/tf.math.atanh.yaml",
+    "txt": "/root/tf_api_txt/tf_math_atanh.txt"
+  },
+  {
+    "api": "tf.clip_by_global_norm",
+    "yaml": "/root/yaml/tf.clip_by_global_norm.yaml",
+    "txt": "/root/tf_api_txt/tf_clip_by_global_norm.txt"
+  },
+  {
+    "api": "tf.sparse.slice",
+    "yaml": "/root/yaml/tf.sparse.slice.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_slice.txt"
+  },
+  {
+    "api": "tf.nn.log_softmax",
+    "yaml": "/root/yaml/tf.nn.log_softmax.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_log_softmax.txt"
+  },
+  {
+    "api": "tf.linalg.tensor_diag_part",
+    "yaml": "/root/yaml/tf.linalg.tensor_diag_part.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_tensor_diag_part.txt"
+  },
+  {
+    "api": "tf.image.random_hue",
+    "yaml": "/root/yaml/tf.image.random_hue.yaml",
+    "txt": "/root/tf_api_txt/tf_image_random_hue.txt"
+  },
+  {
+    "api": "tf.math.reduce_euclidean_norm",
+    "yaml": "/root/yaml/tf.math.reduce_euclidean_norm.yaml",
+    "txt": "/root/tf_api_txt/tf_math_reduce_euclidean_norm.txt"
+  },
+  {
+    "api": "tf.signal.hamming_window",
+    "yaml": "/root/yaml/tf.signal.hamming_window.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_hamming_window.txt"
+  },
+  {
+    "api": "tf.nn.max_pool_with_argmax",
+    "yaml": "/root/yaml/tf.nn.max_pool_with_argmax.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_max_pool_with_argmax.txt"
+  },
+  {
+    "api": "tf.sequence_mask",
+    "yaml": "/root/yaml/tf.sequence_mask.yaml",
+    "txt": "/root/tf_api_txt/tf_sequence_mask.txt"
+  },
+  {
+    "api": "tf.math.not_equal",
+    "yaml": "/root/yaml/tf.math.not_equal.yaml",
+    "txt": "/root/tf_api_txt/tf_math_not_equal.txt"
+  },
+  {
+    "api": "tf.nn.sampled_softmax_loss",
+    "yaml": "/root/yaml/tf.nn.sampled_softmax_loss.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_sampled_softmax_loss.txt"
+  },
+  {
+    "api": "tf.nn.ctc_loss",
+    "yaml": "/root/yaml/tf.nn.ctc_loss.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_ctc_loss.txt"
+  },
+  {
+    "api": "tf.dynamic_stitch",
+    "yaml": "/root/yaml/tf.dynamic_stitch.yaml",
+    "txt": "/root/tf_api_txt/tf_dynamic_stitch.txt"
+  },
+  {
+    "api": "tf.math.igamma",
+    "yaml": "/root/yaml/tf.math.igamma.yaml",
+    "txt": "/root/tf_api_txt/tf_math_igamma.txt"
+  },
+  {
+    "api": "tf.random.normal",
+    "yaml": "/root/yaml/tf.random.normal.yaml",
+    "txt": "/root/tf_api_txt/tf_random_normal.txt"
+  },
+  {
+    "api": "tf.reshape",
+    "yaml": "/root/yaml/tf.reshape.yaml",
+    "txt": "/root/tf_api_txt/tf_reshape.txt"
+  },
+  {
+    "api": "tf.math.nextafter",
+    "yaml": "/root/yaml/tf.math.nextafter.yaml",
+    "txt": "/root/tf_api_txt/tf_math_nextafter.txt"
+  },
+  {
+    "api": "tf.sparse.reshape",
+    "yaml": "/root/yaml/tf.sparse.reshape.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_reshape.txt"
+  },
+  {
+    "api": "tf.nn.depth_to_space",
+    "yaml": "/root/yaml/tf.nn.depth_to_space.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_depth_to_space.txt"
+  },
+  {
+    "api": "tf.linalg.band_part",
+    "yaml": "/root/yaml/tf.linalg.band_part.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_band_part.txt"
+  },
+  {
+    "api": "tf.math.sigmoid",
+    "yaml": "/root/yaml/tf.math.sigmoid.yaml",
+    "txt": "/root/tf_api_txt/tf_math_sigmoid.txt"
+  },
+  {
+    "api": "tf.signal.inverse_stft_window_fn",
+    "yaml": "/root/yaml/tf.signal.inverse_stft_window_fn.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_inverse_stft_window_fn.txt"
+  },
+  {
+    "api": "tf.math.bessel_i1",
+    "yaml": "/root/yaml/tf.math.bessel_i1.yaml",
+    "txt": "/root/tf_api_txt/tf_math_bessel_i1.txt"
+  },
+  {
+    "api": "tf.nn.max_pool1d",
+    "yaml": "/root/yaml/tf.nn.max_pool1d.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_max_pool1d.txt"
+  },
+  {
+    "api": "tf.math.segment_sum",
+    "yaml": "/root/yaml/tf.math.segment_sum.yaml",
+    "txt": "/root/tf_api_txt/tf_math_segment_sum.txt"
+  },
+  {
+    "api": "tf.linalg.solve",
+    "yaml": "/root/yaml/tf.linalg.solve.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_solve.txt"
+  },
+  {
+    "api": "tf.slice",
+    "yaml": "/root/yaml/tf.slice.yaml",
+    "txt": "/root/tf_api_txt/tf_slice.txt"
+  },
+  {
+    "api": "tf.nn.selu",
+    "yaml": "/root/yaml/tf.nn.selu.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_selu.txt"
+  },
+  {
+    "api": "tf.nn.pool",
+    "yaml": "/root/yaml/tf.nn.pool.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_pool.txt"
+  },
+  {
+    "api": "tf.quantization.fake_quant_with_min_max_vars_gradient",
+    "yaml": "/root/yaml/tf.quantization.fake_quant_with_min_max_vars_gradient.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_fake_quant_with_min_max_vars_gradient.txt"
+  },
+  {
+    "api": "tf.linalg.lu_matrix_inverse",
+    "yaml": "/root/yaml/tf.linalg.lu_matrix_inverse.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_lu_matrix_inverse.txt"
+  },
+  {
+    "api": "tf.roll",
+    "yaml": "/root/yaml/tf.roll.yaml",
+    "txt": "/root/tf_api_txt/tf_roll.txt"
+  },
+  {
+    "api": "tf.nn.convolution",
+    "yaml": "/root/yaml/tf.nn.convolution.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_convolution.txt"
+  },
+  {
+    "api": "tf.norm",
+    "yaml": "/root/yaml/tf.norm.yaml",
+    "txt": "/root/tf_api_txt/tf_norm.txt"
+  },
+  {
+    "api": "tf.identity_n",
+    "yaml": "/root/yaml/tf.identity_n.yaml",
+    "txt": "/root/tf_api_txt/tf_identity_n.txt"
+  },
+  {
+    "api": "tf.math.invert_permutation",
+    "yaml": "/root/yaml/tf.math.invert_permutation.yaml",
+    "txt": "/root/tf_api_txt/tf_math_invert_permutation.txt"
+  },
+  {
+    "api": "tf.image.encode_png",
+    "yaml": "/root/yaml/tf.image.encode_png.yaml",
+    "txt": "/root/tf_api_txt/tf_image_encode_png.txt"
+  },
+  {
+    "api": "tf.signal.fftshift",
+    "yaml": "/root/yaml/tf.signal.fftshift.yaml",
+    "txt": "/root/tf_api_txt/tf_signal_fftshift.txt"
+  },
+  {
+    "api": "tf.math.multiply",
+    "yaml": "/root/yaml/tf.math.multiply.yaml",
+    "txt": "/root/tf_api_txt/tf_math_multiply.txt"
+  },
+  {
+    "api": "tf.nn.conv_transpose",
+    "yaml": "/root/yaml/tf.nn.conv_transpose.yaml",
+    "txt": "/root/tf_api_txt/tf_nn_conv_transpose.txt"
+  },
+  {
+    "api": "tf.edit_distance",
+    "yaml": "/root/yaml/tf.edit_distance.yaml",
+    "txt": "/root/tf_api_txt/tf_edit_distance.txt"
+  },
+  {
+    "api": "tf.einsum",
+    "yaml": "/root/yaml/tf.einsum.yaml",
+    "txt": "/root/tf_api_txt/tf_einsum.txt"
+  },
+  {
+    "api": "tf.linalg.svd",
+    "yaml": "/root/yaml/tf.linalg.svd.yaml",
+    "txt": "/root/tf_api_txt/tf_linalg_svd.txt"
+  },
+  {
+    "api": "tf.math.rint",
+    "yaml": "/root/yaml/tf.math.rint.yaml",
+    "txt": "/root/tf_api_txt/tf_math_rint.txt"
+  },
+  {
+    "api": "tf.histogram_fixed_width_bins",
+    "yaml": "/root/yaml/tf.histogram_fixed_width_bins.yaml",
+    "txt": "/root/tf_api_txt/tf_histogram_fixed_width_bins.txt"
+  },
+  {
+    "api": "tf.math.tanh",
+    "yaml": "/root/yaml/tf.math.tanh.yaml",
+    "txt": "/root/tf_api_txt/tf_math_tanh.txt"
+  },
+  {
+    "api": "tf.parallel_stack",
+    "yaml": "/root/yaml/tf.parallel_stack.yaml",
+    "txt": "/root/tf_api_txt/tf_parallel_stack.txt"
+  },
+  {
+    "api": "tf.sparse.reduce_max",
+    "yaml": "/root/yaml/tf.sparse.reduce_max.yaml",
+    "txt": "/root/tf_api_txt/tf_sparse_reduce_max.txt"
+  },
+  {
+    "api": "tf.quantization.fake_quant_with_min_max_vars_per_channel",
+    "yaml": "/root/yaml/tf.quantization.fake_quant_with_min_max_vars_per_channel.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_fake_quant_with_min_max_vars_per_channel.txt"
+  },
+  {
+    "api": "tf.quantization.quantize_and_dequantize",
+    "yaml": "/root/yaml/tf.quantization.quantize_and_dequantize.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_quantize_and_dequantize.txt"
+  },
+  {
+    "api": "tf.math.logical_xor",
+    "yaml": "/root/yaml/tf.math.logical_xor.yaml",
+    "txt": "/root/tf_api_txt/tf_math_logical_xor.txt"
+  },
+  {
+    "api": "tf.quantization.quantized_concat",
+    "yaml": "/root/yaml/tf.quantization.quantized_concat.yaml",
+    "txt": "/root/tf_api_txt/tf_quantization_quantized_concat.txt"
+  }
+]
