@@ -50,9 +50,9 @@ echo "[$(date '+%F %T')] Log file: $LOG_FILE" | tee -a "$LOG_FILE"
 
 CMD=(
   python3 -u -m screen.cli.main
-  --harnesses_json /root/screen/auto_harnesses.json
+  --harnesses_json /root/screen/auto_harness_experiment.json
   --groups_map /root/screen/groups_map.json
-  --root /root/fuzz_output_smoke
+  --root /root/fuzz_output_result
   --epoch 30
   --steps 0
   --audit_every 3

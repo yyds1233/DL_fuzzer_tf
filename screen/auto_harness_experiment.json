@@ -1,0 +1,1812 @@
+[
+    {
+        "harness_id": "tf.nn.conv1d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv1d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.add",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.add.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.adjust_hue",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.adjust_hue.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reciprocal_no_nan",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reciprocal_no_nan.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.crelu",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.crelu.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.tuple",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.tuple.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.bitwise.invert",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.bitwise.invert.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.stft",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.stft.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.roll",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.roll.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.sampled_softmax_loss",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.sampled_softmax_loss.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.slice",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.slice.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.where",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.where.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_crop",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_crop.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.bitwise.bitwise_and",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.bitwise.bitwise_and.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.segment_max",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.segment_max.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.combined_non_max_suppression",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.combined_non_max_suppression.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.imag",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.imag.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.lu_solve",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.lu_solve.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.frame",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.frame.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_logsumexp",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_logsumexp.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.is_finite",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.is_finite.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.segment_mean",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.segment_mean.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.segment_prod",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.segment_prod.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.l2_loss",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.l2_loss.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.zeros_like",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.zeros_like.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.depthwise_conv2d_backprop_input",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.depthwise_conv2d_backprop_input.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.reduce_max",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.reduce_max.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.gather_nd",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.gather_nd.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.argsort",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.argsort.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.log",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.log.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.triangular_solve",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.triangular_solve.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.collapse_repeated",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.collapse_repeated.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.normalize_moments",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.normalize_moments.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.softsign",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.softsign.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.non_max_suppression_padded",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.non_max_suppression_padded.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.tanh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.tanh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_mean",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_mean.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.relu6",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.relu6.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.square",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.square.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.range",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.range.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.rint",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.rint.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.scatter_nd",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.scatter_nd.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.softmax_cross_entropy_with_logits",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.softmax_cross_entropy_with_logits.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.ssim_multiscale",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.ssim_multiscale.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.atan",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.atan.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.svd",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.svd.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.ifft2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.ifft2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.resize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.resize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.floormod",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.floormod.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.rsqrt",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.rsqrt.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.argmax",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.argmax.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.eigh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.eigh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.reshape",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.reshape.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.tensor_scatter_nd_sub",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.tensor_scatter_nd_sub.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.zeta",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.zeta.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.expand_dims",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.expand_dims.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.squeeze",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.squeeze.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.space_to_batch_nd",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.space_to_batch_nd.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_hue",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_hue.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.det",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.det.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.global_norm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.global_norm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.sqrtm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.sqrtm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.space_to_batch",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.space_to_batch.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.lstsq",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.lstsq.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.rgb_to_grayscale",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.rgb_to_grayscale.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.in_top_k",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.in_top_k.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.tan",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.tan.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.identity_n",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.identity_n.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.atan2",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.atan2.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.lu_reconstruct",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.lu_reconstruct.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.asin",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.asin.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.sin",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.sin.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.crop_to_bounding_box",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.crop_to_bounding_box.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.unstack",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.unstack.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.ifftshift",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.ifftshift.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.required_space_to_batch_paddings",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.required_space_to_batch_paddings.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.solve",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.solve.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.fingerprint",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.fingerprint.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.softplus",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.softplus.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.normalize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.normalize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.cumulative_logsumexp",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.cumulative_logsumexp.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.is_strictly_increasing",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.is_strictly_increasing.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.fractional_max_pool",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.fractional_max_pool.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.clip_by_value",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.clip_by_value.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.angle",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.angle.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.elu",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.elu.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.fill_empty_rows",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.fill_empty_rows.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.not_equal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.not_equal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.max_pool_with_argmax",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.max_pool_with_argmax.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.total_variation",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.total_variation.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.floor",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.floor.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_flip_left_right",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_flip_left_right.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.quantized_concat",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.quantized_concat.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.extract_volume_patches",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.extract_volume_patches.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.avg_pool3d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.avg_pool3d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_max",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_max.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.conv_transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv_transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.batch_normalization",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.batch_normalization.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.batch_to_space",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.batch_to_space.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.idct",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.idct.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.digamma",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.digamma.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.acosh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.acosh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.depthwise_conv2d_backprop_filter",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.depthwise_conv2d_backprop_filter.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.non_max_suppression_with_scores",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.non_max_suppression_with_scores.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.fractional_avg_pool",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.fractional_avg_pool.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.depthwise_conv2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.depthwise_conv2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.fft2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.fft2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.expand_dims",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.expand_dims.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.unsorted_segment_min",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.unsorted_segment_min.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.real",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.real.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.broadcast_static_shape",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.broadcast_static_shape.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.inverse_stft",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.inverse_stft.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.convolution",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.convolution.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.crop_and_resize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.crop_and_resize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.tensor_diag",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.tensor_diag.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.clip_by_global_norm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.clip_by_global_norm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.one_hot",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.one_hot.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.retain",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.retain.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.histogram_fixed_width",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.histogram_fixed_width.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.sign",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.sign.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.bitwise.bitwise_or",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.bitwise.bitwise_or.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.tensor_scatter_nd_add",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.tensor_scatter_nd_add.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.unique",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.unique.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.exp",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.exp.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.max_pool1d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.max_pool1d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.hann_window",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.hann_window.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.ifft3d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.ifft3d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.dilation2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.dilation2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_variance",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_variance.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.round",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.round.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.cos",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.cos.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.gamma",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.gamma.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.non_max_suppression_overlaps",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.non_max_suppression_overlaps.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.depth_to_space",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.depth_to_space.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.hamming_window",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.hamming_window.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.conv3d_transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv3d_transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.searchsorted",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.searchsorted.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.pow",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.pow.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.conv2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.tensor_scatter_nd_update",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.tensor_scatter_nd_update.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.bias_add",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.bias_add.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.compute_average_loss",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.compute_average_loss.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.draw_bounding_boxes",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.draw_bounding_boxes.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.identity",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.identity.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.log_sigmoid",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.log_sigmoid.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.sufficient_statistics",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.sufficient_statistics.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.shape",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.shape.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.greater_equal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.greater_equal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.resize_with_pad",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.resize_with_pad.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.gather",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.gather.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.cross",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.cross.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.lbeta",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.lbeta.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.max_pool3d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.max_pool3d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.histogram_fixed_width_bins",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.histogram_fixed_width_bins.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.invert_permutation",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.invert_permutation.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.unsorted_segment_sum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.unsorted_segment_sum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.lu_matrix_inverse",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.lu_matrix_inverse.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.repeat",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.repeat.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.tensordot",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.tensordot.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.tridiagonal_solve",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.tridiagonal_solve.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.softmax",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.softmax.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.squared_difference",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.squared_difference.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.ones_like",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.ones_like.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.xlogy",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.xlogy.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.categorical",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.categorical.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.tridiagonal_matmul",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.tridiagonal_matmul.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.logdet",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.logdet.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.conv2d_transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv2d_transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.reverse",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.reverse.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.relu",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.relu.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.logical_and",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.logical_and.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.fftshift",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.fftshift.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.cholesky_solve",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.cholesky_solve.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.stateless_normal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.stateless_normal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.central_crop",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.central_crop.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.count_nonzero",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.count_nonzero.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.safe_embedding_lookup_sparse",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.safe_embedding_lookup_sparse.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.pad",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.pad.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_contrast",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_contrast.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.poisson",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.poisson.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.moments",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.moments.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.switch_case",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.switch_case.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.igammac",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.igammac.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.ctc_greedy_decoder",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.ctc_greedy_decoder.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.avg_pool2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.avg_pool2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.sinh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.sinh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_jpeg_quality",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_jpeg_quality.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.ssim",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.ssim.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.dequantize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.dequantize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.ndtri",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.ndtri.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.max_pool",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.max_pool.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reciprocal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reciprocal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.extract_glimpse",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.extract_glimpse.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.cumprod",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.cumprod.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_min",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_min.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.igamma",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.igamma.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.weighted_cross_entropy_with_logits",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.weighted_cross_entropy_with_logits.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.tensor_diag_part",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.tensor_diag_part.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.equal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.equal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.normal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.normal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.cosh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.cosh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.dropout",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.dropout.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.fft",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.fft.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.add",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.add.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.argmin",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.argmin.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.bincount",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.bincount.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.segment_min",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.segment_min.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.conv3d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv3d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.expm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.expm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.slogdet",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.slogdet.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.encode_png",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.encode_png.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_brightness",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_brightness.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.dct",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.dct.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.qr",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.qr.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.is_inf",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.is_inf.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.confusion_matrix",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.confusion_matrix.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.erf",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.erf.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.polygamma",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.polygamma.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.adjust_jpeg_quality",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.adjust_jpeg_quality.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.bitwise.bitwise_xor",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.bitwise.bitwise_xor.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.fake_quant_with_min_max_vars_per_channel_gradient",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.fake_quant_with_min_max_vars_per_channel_gradient.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.negative",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.negative.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sort",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sort.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.slice",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.slice.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.constant",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.constant.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.selu",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.selu.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.embedding_lookup",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.embedding_lookup.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.is_non_decreasing",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.is_non_decreasing.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.vectorized_map",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.vectorized_map.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.diag",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.diag.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.expm1",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.expm1.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.per_image_standardization",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.per_image_standardization.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_flip_up_down",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_flip_up_down.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.adjust_gamma",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.adjust_gamma.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.reduce_sum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.reduce_sum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.inverse_stft_window_fn",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.inverse_stft_window_fn.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.convert_to_tensor",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.convert_to_tensor.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.unsorted_segment_prod",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.unsorted_segment_prod.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.maximum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.maximum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.sqrt",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.sqrt.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.bessel_i0",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.bessel_i0.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_euclidean_norm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_euclidean_norm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.fake_quant_with_min_max_args_gradient",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.fake_quant_with_min_max_args_gradient.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.trace",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.trace.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.zero_fraction",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.zero_fraction.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.greater",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.greater.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.random_saturation",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.random_saturation.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.multiply_no_nan",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.multiply_no_nan.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.floordiv",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.floordiv.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.softmax",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.softmax.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.logical_xor",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.logical_xor.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.sparse_dense_matmul",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.sparse_dense_matmul.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.fake_quant_with_min_max_vars_gradient",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.fake_quant_with_min_max_vars_gradient.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.bessel_i0e",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.bessel_i0e.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.bitwise.left_shift",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.bitwise.left_shift.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.band_part",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.band_part.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.adjoint",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.adjoint.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sequence_mask",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sequence_mask.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.bitcast",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.bitcast.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.atanh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.atanh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.erfc",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.erfc.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.matrix_rank",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.matrix_rank.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.subtract",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.subtract.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.ctc_loss",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.ctc_loss.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.add_n",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.add_n.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.flip_up_down",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.flip_up_down.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.mask",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.mask.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.flip_left_right",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.flip_left_right.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.set_diag",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.set_diag.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.adjust_saturation",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.adjust_saturation.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.weighted_moments",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.weighted_moments.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.log_poisson_loss",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.log_poisson_loss.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.xdivy",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.xdivy.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.hsv_to_rgb",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.hsv_to_rgb.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.norm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.norm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.eye",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.eye.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.sigmoid",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.sigmoid.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.nextafter",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.nextafter.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.clip_by_norm",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.clip_by_norm.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.less_equal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.less_equal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.log1p",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.log1p.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.conj",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.conj.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.ceil",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.ceil.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.uniform",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.uniform.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.eigvals",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.eigvals.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.from_dense",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.from_dense.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.ensure_shape",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.ensure_shape.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.dynamic_stitch",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.dynamic_stitch.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.polyval",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.polyval.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.avg_pool1d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.avg_pool1d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.quantize_and_dequantize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.quantize_and_dequantize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.cholesky",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.cholesky.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.abs",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.abs.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.broadcast_to",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.broadcast_to.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.pool",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.pool.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.inv",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.inv.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.erfinv",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.erfinv.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.ifft",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.ifft.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.eye",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.eye.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.lgamma",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.lgamma.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.to_dense",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.to_dense.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.diag_part",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.diag_part.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.quantize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.quantize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.concat",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.concat.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.unravel_index",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.unravel_index.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.betainc",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.betainc.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.boolean_mask",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.boolean_mask.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.reorder",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.reorder.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.conv1d_transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.conv1d_transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.fake_quant_with_min_max_vars_per_channel",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.fake_quant_with_min_max_vars_per_channel.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.sparse.reshape",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.sparse.reshape.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.sobel_edges",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.sobel_edges.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.pinv",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.pinv.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.edit_distance",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.edit_distance.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.segment_sum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.segment_sum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.matrix_transpose",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.matrix_transpose.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.fill",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.fill.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.eigvalsh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.eigvalsh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.avg_pool",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.avg_pool.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.logical_not",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.logical_not.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.parallel_stack",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.parallel_stack.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.dynamic_partition",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.dynamic_partition.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.sigmoid_cross_entropy_with_logits",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.sigmoid_cross_entropy_with_logits.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.acos",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.acos.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.eig",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.eig.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.reduce_prod",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.reduce_prod.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.pad_to_bounding_box",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.pad_to_bounding_box.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.l2_normalize",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.l2_normalize.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.multiply",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.multiply.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.cumsum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.cumsum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.asinh",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.asinh.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.logical_or",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.logical_or.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.matmul",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.matmul.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.stateless_categorical",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.stateless_categorical.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.is_nan",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.is_nan.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.mfccs_from_log_mel_spectrograms",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.mfccs_from_log_mel_spectrograms.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.random.stateless_truncated_normal",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.random.stateless_truncated_normal.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.space_to_depth",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.space_to_depth.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.ctc_unique_labels",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.ctc_unique_labels.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.sample_distorted_bounding_box",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.sample_distorted_bounding_box.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.rgb_to_hsv",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.rgb_to_hsv.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.bessel_i1e",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.bessel_i1e.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.minimum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.minimum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.unique_with_counts",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.unique_with_counts.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.bessel_i1",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.bessel_i1.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.split",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.split.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.tile",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.tile.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.einsum",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.einsum.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.grayscale_to_rgb",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.grayscale_to_rgb.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.signal.overlap_and_add",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.signal.overlap_and_add.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.log_softmax",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.log_softmax.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.quantization.fake_quant_with_min_max_vars",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.quantization.fake_quant_with_min_max_vars.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.resize_with_crop_or_pad",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.resize_with_crop_or_pad.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.image.extract_patches",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.image.extract_patches.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.cast",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.cast.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.shape_n",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.shape_n.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.sparse_softmax_cross_entropy_with_logits",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.sparse_softmax_cross_entropy_with_logits.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.linalg.lu",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.linalg.lu.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.nn.max_pool2d",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.nn.max_pool2d.py",
+        "profiles": []
+    },
+    {
+        "harness_id": "tf.math.less",
+        "harness_path": "/root/fuzz_output_experiment/llm.tf.math.less.py",
+        "profiles": []
+    }
+]

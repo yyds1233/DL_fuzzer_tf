@@ -18,7 +18,10 @@ def _consume_small_dim(fdp):
 
 
 def _consume_shape(fdp):
-    rank = fdp.ConsumeIntInRange(1, 4)
+    # +++ 修改：rank 从 0 开始，允许生成标量 +++
+    rank = fdp.ConsumeIntInRange(0, 4)
+    if rank == 0:
+        return []      # 标量，不消耗任何维度数据
     c = _consume_small_dim(fdp)
     if rank == 1:
         return [c]
@@ -61,10 +64,12 @@ def _make_input_tensor(fdp, shape):
         base_choices = [-10.0, -6.0, -1.0, -0.0, 0.0, 1e-6, 0.5, 1.0, 6.0, 10.0, 127.0, 255.0]
         values = [base_choices[fdp.ConsumeIntInRange(0, len(base_choices) - 1)] for _ in range(count)]
 
+    # 注意：当 shape=[] 时，count 为 1（空 shape 的乘积为 1），tf.constant 会生成标量
     return tf.constant(values, dtype=tf.float32, shape=shape)
 
 
 def _make_min_max_tensors(fdp, channels):
+    # +++ 注意：channels 现在由外部随机决定，不再依赖 inputs.shape[-1] +++
     strategy = fdp.ConsumeIntInRange(0, 5)
     mins = []
     maxs = []
@@ -108,29 +113,54 @@ def TestOneInput(data: bytes):
     try:
         shape = _consume_shape(fdp)
         inputs = _make_input_tensor(fdp, shape)
-        channels = shape[-1]
+
+        # +++ 修改：随机确定 min/max 的通道数，而不是依赖 shape[-1] +++
+        # 50% 概率使用 shape[-1]（当 shape 非空），50% 概率随机生成（1~8）
+        if fdp.ConsumeBool() and len(shape) > 0:
+            channels = shape[-1]
+        else:
+            channels = fdp.ConsumeIntInRange(1, 8)  # 可以为 1，正好命中 PoC
+
         min_tensor, max_tensor = _make_min_max_tensors(fdp, channels)
 
-        num_bits_candidates = [-1, 0, 1, 2, 4, 7, 8, 16, 31, 32]
-        num_bits = num_bits_candidates[fdp.ConsumeIntInRange(0, len(num_bits_candidates) - 1)]
-        narrow_range = fdp.ConsumeBool()
-
-        result = tf.quantization.fake_quant_with_min_max_vars_per_channel(
-            inputs=inputs,
-            min=min_tensor,
-            max=max_tensor,
-            num_bits=num_bits,
-            narrow_range=narrow_range,
-        )
-
-        if fdp.ConsumeBool():
-            _ = tf.raw_ops.FakeQuantWithMinMaxVarsPerChannel(
+        num_bits_candidates = [-1, 0, 1, 2, 4, 7, 8, 16, 31, 32, 64, 128, None]  # 加了 None 和更多极端值
+        idx = fdp.ConsumeIntInRange(0, len(num_bits_candidates) - 1)
+        num_bits = num_bits_candidates[idx]
+        if num_bits is None:
+            # 不传 num_bits，使用默认值
+            result = tf.quantization.fake_quant_with_min_max_vars_per_channel(
+                inputs=inputs,
+                min=min_tensor,
+                max=max_tensor,
+                narrow_range=fdp.ConsumeBool(),
+            )
+        else:
+            narrow_range = fdp.ConsumeBool()
+            result = tf.quantization.fake_quant_with_min_max_vars_per_channel(
                 inputs=inputs,
                 min=min_tensor,
                 max=max_tensor,
                 num_bits=num_bits,
                 narrow_range=narrow_range,
             )
+
+        if fdp.ConsumeBool():
+            # 同样将 raw_ops 版本也覆盖
+            if num_bits is None:
+                tf.raw_ops.FakeQuantWithMinMaxVarsPerChannel(
+                    inputs=inputs,
+                    min=min_tensor,
+                    max=max_tensor,
+                    narrow_range=fdp.ConsumeBool(),
+                )
+            else:
+                tf.raw_ops.FakeQuantWithMinMaxVarsPerChannel(
+                    inputs=inputs,
+                    min=min_tensor,
+                    max=max_tensor,
+                    num_bits=num_bits,
+                    narrow_range=fdp.ConsumeBool(),
+                )
 
         if fdp.ConsumeBool():
             _ = tf.shape(result)
